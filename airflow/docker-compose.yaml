@@ -77,9 +77,9 @@ services:
   postgres:
     image: postgres:13
     environment:
-      POSTGRES_USER: ${AIRFLOW_PG_USER}
-      POSTGRES_PASSWORD: ${AIRFLOW_PG_PASSWORD}
-      POSTGRES_DB: ${AIRFLOW_PG_DB}
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
     volumes:
       - postgres-db-volume:/var/lib/postgresql/data
     healthcheck:

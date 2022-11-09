@@ -14,9 +14,6 @@ Export the following environment variables:
 
 ```bash
 AIRFLOW_UID=502
-AIRFLOW_PG_USER=<DEFAULT_AIRFLOW_USER>
-AIRFLOW_PG_PASSWORD=<DEFAULT_AIRFLOW_USER_PW>
-AIRFLOW_PG_DB=<AIRFLOW_DB>
 export AIRFLOW_CONN_LIMESURVEY_SSH='ssh://<SSH_USER>:<SSH_PASSWORD>@<SSH_HOST>:<SSH_PORT>'
 export AIRFLOW_VAR_LIMESURVEY_SECRET_DATABASE_NAME="<LIMESURVEY_DB_NAME>"
 export AIRFLOW_VAR_LIMESURVEY_SECRET_DATABASE_PORT="<LIMESURVEY_DB_PORT>"
@@ -45,7 +42,7 @@ airflow-init_1       | 2.4.2
 start_airflow-init_1 exited with code 0
 ``` 
 
-The account created has the login `<DEFAULT_AIRFLOW_USER>` and the password `<DEFAULT_AIRFLOW_USER_PW>` exported in the `.env` file.
+The account created has the login airflow and the password airflow.
 
 To run airflow, start all services:
 
