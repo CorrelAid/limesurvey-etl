@@ -47,7 +47,7 @@ airflow-init_1       | 2.4.2
 start_airflow-init_1 exited with code 0
 ``` 
 
-The account created has the login airflow and the password airflow.
+The account created has the login <_AIRFLOW_WWW_USER_USERNAME> and the password <_AIRFLOW_WWW_USER_PASSWORD>.
 
 To run airflow, start all services:
 
