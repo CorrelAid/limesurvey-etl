@@ -3,8 +3,6 @@ import pandas as pd
 from datetime import timedelta
 from sqlalchemy import create_engine, inspect, exc
 
-import socket
-
 from airflow.utils.dates import days_ago
 from airflow.contrib.operators.ssh_operator import SSHOperator
 from airflow.contrib.hooks.ssh_hook import SSHHook
@@ -63,11 +61,14 @@ def extract_limesurvey(config, table_names=None):
         sys.exit(1)
 
     if not table_names:
-        inspector = inspect(engine_source)
-        table_names = [table for table in inspector.get_table_names() \
+        source_inspector = inspect(engine_source)
+        table_names = [table for table in source_inspector.get_table_names() \
             if not table.startswith("lime_old_survey")]
 
     # load tables to target DB
+    with engine_target.connect() as con:
+        con.execute("CREATE SCHEMA IF NOT EXISTS raw;")
+
     for table in table_names:
         print(f"table: {table}")
         dataFrame = pd.read_sql(f"SELECT * FROM {table};", engine_source)
@@ -75,6 +76,7 @@ def extract_limesurvey(config, table_names=None):
         dataFrame.to_sql(
             name=table,
             con=engine_target,
+            schema="raw",
             if_exists='replace',
             index=False
         )
