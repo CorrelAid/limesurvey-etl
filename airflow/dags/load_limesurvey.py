@@ -1,15 +1,20 @@
 import sys
 import pandas as pd
 from datetime import timedelta
-from sqlalchemy import create_engine, inspect, exc
+from sqlalchemy import create_engine, inspect, exc, text
+import sqlparse
 
 from airflow.utils.dates import days_ago
 from airflow.contrib.operators.ssh_operator import SSHOperator
 from airflow.contrib.hooks.ssh_hook import SSHHook
+from airflow.providers.postgres.hooks.postgres import PostgresHook
 from airflow import DAG
 from airflow.models import Variable
+from airflow.operators.empty import EmptyOperator
 from airflow.operators.python_operator import PythonOperator
+from airflow.utils.task_group import TaskGroup
 
+OWNER = "timo"
 # list of table names
 TABLE_NAMES = ["lime_question_attributes", "lime_questions", "lime_survey_916481", "lime_survey_916481_timings"]
 CONFIG = {
@@ -81,9 +86,77 @@ def extract_limesurvey(config, table_names=None):
             index=False
         )
 
+def transform(config, sql_file):
+    # connect to target MariaDB Platform
+    try:
+        print("Connecting to MariaDB")
+        target_url = (
+            f"mariadb+mariadbconnector"
+            f"://{config['COOLIFY_MARIADB_USER']}"
+            f":{config['COOLIFY_MARIADB_PASSWORD']}"
+            f"@{config['COOLIFY_MARIADB_HOST']}"
+            f":{config['COOLIFY_MARIADB_PORT']}"
+            f"/{config['COOLIFY_MARIADB_DATABASE']}"
+        )
+        engine =  create_engine(target_url, echo=True)
+        print("Connection to target MariaDB established")
+    except exc.SQLAlchemyError as e:
+        print(f"Error connecting to target MariaDB Platform: {e}")
+        sys.exit(1)
+    
+    with engine.connect() as con:
+        with open(sql_file, 'r') as f:
+            sql = f.read()
+            sql_stmts = sqlparse.split(sql)
+            print(sql_stmts)
+        for sql_stmt in sql_stmts:
+            con.execute(text(sql_stmt))
 
+
+def load(config, schema='reporting', table_names=None):
+    # connect to source MariaDB Platform
+    try:
+        print("Connecting to target MariaDB")
+        source_url = (
+            f"mariadb+mariadbconnector"
+            f"://{config['COOLIFY_MARIADB_USER']}"
+            f":{config['COOLIFY_MARIADB_PASSWORD']}"
+            f"@{config['COOLIFY_MARIADB_HOST']}"
+            f":{config['COOLIFY_MARIADB_PORT']}"
+            f"/{config['COOLIFY_MARIADB_DATABASE']}"
+        )
+        engine_source =  create_engine(source_url, echo=True)
+       
+        print("Connection to target MariaDB established")
+    except exc.SQLAlchemyError as e:
+        print(f"Error connecting to target MariaDB Platform: {e}")
+        sys.exit(1)
+
+    # connect to target PG DB
+    pg_hook = PostgresHook(
+        postgres_conn_id="coolify_pg"
+    )
+    engine_target = pg_hook.get_sqlalchemy_engine()
+    print("Connected to target Postgres DB")
+
+    if not table_names:
+        source_inspector = inspect(engine_source)
+        table_names = source_inspector.get_table_names(schema=schema)
+
+    for table in table_names:
+        print(f"table: {table}")
+        dataFrame = pd.read_sql(f"SELECT * FROM {schema}.{table};", engine_source)
+
+        dataFrame.to_sql(
+            name=table,
+            con=engine_target,
+            schema="temp_dwh",
+            if_exists='replace',
+            index=False
+        )
+    
 default_args = {
-    'owner': 'airflow',    
+    'owner': OWNER,    
     'start_date': days_ago(1),
     #'email': ['airflow@example.com'],
     #'email_on_failure': True,
@@ -112,10 +185,29 @@ with DAG(
         command='ls -al',
     )
 
-    load_limesurvey_data = PythonOperator(
+    extract_limesurvey_data = PythonOperator(
         task_id="limesurvey_to_mariadb",
         python_callable=extract_limesurvey,
+        op_kwargs={"config": CONFIG, "table_names": ["lime_group_l10ns"]}
+    )
+
+    with TaskGroup(group_id='transform') as tg1:
+        get_question_groups = PythonOperator(
+            task_id='get_question_groups',
+            python_callable=transform,
+            op_kwargs={"config": CONFIG, "sql_file": "./include/question_groups.sql"}
+        )
+
+        dummy_task = EmptyOperator(
+            task_id="finish_transform"
+        )
+
+        get_question_groups >> dummy_task
+
+    load_task = PythonOperator(
+        task_id="load",
+        python_callable=load,
         op_kwargs={"config": CONFIG}
     )
 
-ssh_operator >> load_limesurvey_data
+ssh_operator >> extract_limesurvey_data >> tg1 >> load_task
