@@ -17,7 +17,7 @@ SELECT DISTINCT
 FROM raw.lime_group_l10ns lg
 WHERE NOT EXISTS (
 	SELECT
-		*
+		1
 	FROM reporting.question_groups qg
 	WHERE qg.question_group_id = lg.gid
 );

@@ -188,7 +188,13 @@ with DAG(
     extract_limesurvey_data = PythonOperator(
         task_id="limesurvey_to_mariadb",
         python_callable=extract_limesurvey,
-        op_kwargs={"config": CONFIG, "table_names": ["lime_group_l10ns"]}
+        op_kwargs={
+            "config": CONFIG,
+            "table_names": [
+                "lime_group_l10ns",
+                "lime_questions"
+            ]
+        }
     )
 
     with TaskGroup(group_id='transform') as tg1:
@@ -198,11 +204,14 @@ with DAG(
             op_kwargs={"config": CONFIG, "sql_file": "./include/question_groups.sql"}
         )
 
-        dummy_task = EmptyOperator(
-            task_id="finish_transform"
+        get_question_items = PythonOperator(
+            task_id='get_question_items',
+            python_callable=transform,
+            op_kwargs={"config": CONFIG, "sql_file": "./include/question_items.sql"}
         )
 
-        get_question_groups >> dummy_task
+        get_question_groups >> \
+            get_question_items
 
     load_task = PythonOperator(
         task_id="load",
