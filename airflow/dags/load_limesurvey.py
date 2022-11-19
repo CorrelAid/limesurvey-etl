@@ -210,8 +210,15 @@ with DAG(
             op_kwargs={"config": CONFIG, "sql_file": "./include/question_items.sql"}
         )
 
+        get_subquestions = PythonOperator(
+            task_id='get_subquestions',
+            python_callable=transform,
+            op_kwargs={"config": CONFIG, "sql_file": "./include/subquestions.sql"}
+        )
+
         get_question_groups >> \
-            get_question_items
+        get_question_items >> \
+        get_subquestions    
 
     load_task = PythonOperator(
         task_id="load",

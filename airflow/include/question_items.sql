@@ -12,12 +12,13 @@ INSERT INTO reporting.question_items (
     , type_minor
 )
 SELECT DISTINCT
-    qid AS question_idem_id
+    qid AS question_item_id
 	, gid AS question_group_id
 	, type AS type_major
     , NULL AS type_minor
 FROM raw.lime_questions lq
-WHERE NOT EXISTS (
+WHERE parent_qid = 0
+AND NOT EXISTS (
     SELECT 
         1
     FROM reporting.question_items qi
