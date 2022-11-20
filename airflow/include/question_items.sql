@@ -14,8 +14,8 @@ INSERT INTO reporting.question_items (
 SELECT DISTINCT
     qid AS question_item_id
 	, gid AS question_group_id
-	, type AS type_major
-    , NULL AS type_minor
+	, "MAPPING_REQUIRED" AS type_major
+    , type AS type_minor
 FROM raw.lime_questions lq
 WHERE parent_qid = 0
 AND NOT EXISTS (
