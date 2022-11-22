@@ -16,7 +16,6 @@ from airflow.utils.task_group import TaskGroup
 
 from question_items import GET_QUESTION_ITEMS
 
-OWNER = "timo"
 # list of table names
 TABLE_NAMES = ["lime_question_attributes", "lime_questions", "lime_survey_916481", "lime_survey_916481_timings"]
 CONFIG = {
@@ -162,7 +161,7 @@ def load(config, schema='reporting', table_names=None):
         )
     
 default_args = {
-    'owner': OWNER,    
+    'owner': 'airflow',    
     'start_date': days_ago(1),
     #'email': ['airflow@example.com'],
     #'email_on_failure': True,
