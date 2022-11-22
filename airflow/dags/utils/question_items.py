@@ -41,8 +41,6 @@ mappings_path = 'include/mappings/Mapping_LS-QuestionTypesMajor.csv'
 
 mappings_df = pd.read_csv(mappings_path, delimiter=';')
 mappings_df = mappings_df.dropna(subset=['Fragetyp Major (CFE)'])
-print(mappings_df[['Fragetyp-ID (LS)','Fragetyp Major (CFE)']])
 mappings = list(zip(mappings_df['Fragetyp-ID (LS)'], mappings_df['Fragetyp Major (CFE)']))
 
 GET_QUESTION_ITEMS = Template(sql).render(mappings=mappings)
-print(GET_QUESTION_ITEMS)

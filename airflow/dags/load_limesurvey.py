@@ -10,11 +10,10 @@ from airflow.contrib.hooks.ssh_hook import SSHHook
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 from airflow import DAG
 from airflow.models import Variable
-from airflow.operators.empty import EmptyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.task_group import TaskGroup
 
-from question_items import GET_QUESTION_ITEMS
+from utils.question_items import GET_QUESTION_ITEMS
 
 # list of table names
 TABLE_NAMES = ["lime_question_attributes", "lime_questions", "lime_survey_916481", "lime_survey_916481_timings"]
