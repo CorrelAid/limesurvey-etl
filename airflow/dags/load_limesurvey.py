@@ -14,6 +14,8 @@ from airflow.operators.empty import EmptyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.task_group import TaskGroup
 
+from question_items import GET_QUESTION_ITEMS
+
 OWNER = "timo"
 # list of table names
 TABLE_NAMES = ["lime_question_attributes", "lime_questions", "lime_survey_916481", "lime_survey_916481_timings"]
@@ -85,8 +87,10 @@ def extract_limesurvey(config, table_names=None):
             if_exists='replace',
             index=False
         )
+    
+    
 
-def transform(config, sql_file):
+def transform(config, sql_file=None, sql_stmts=None):
     # connect to target MariaDB Platform
     try:
         print("Connecting to MariaDB")
@@ -105,10 +109,12 @@ def transform(config, sql_file):
         sys.exit(1)
     
     with engine.connect() as con:
-        with open(sql_file, 'r') as f:
-            sql = f.read()
-            sql_stmts = sqlparse.split(sql)
-            print(sql_stmts)
+        if sql_file:
+            with open(sql_file, 'r') as f:
+                sql = f.read()
+        else:
+            sql = sql_stmts
+        sql_stmts = sqlparse.split(sql)
         for sql_stmt in sql_stmts:
             con.execute(text(sql_stmt))
 
@@ -201,19 +207,19 @@ with DAG(
         get_question_groups = PythonOperator(
             task_id='get_question_groups',
             python_callable=transform,
-            op_kwargs={"config": CONFIG, "sql_file": "./include/question_groups.sql"}
+            op_kwargs={"config": CONFIG, "sql_file": "./include/sql/question_groups.sql"}
         )
 
         get_question_items = PythonOperator(
             task_id='get_question_items',
             python_callable=transform,
-            op_kwargs={"config": CONFIG, "sql_file": "./include/question_items.sql"}
+            op_kwargs={"config": CONFIG, "sql_stmts": GET_QUESTION_ITEMS}
         )
 
         get_subquestions = PythonOperator(
             task_id='get_subquestions',
             python_callable=transform,
-            op_kwargs={"config": CONFIG, "sql_file": "./include/subquestions.sql"}
+            op_kwargs={"config": CONFIG, "sql_file": "./include/sql/subquestions.sql"}
         )
 
         get_question_groups >> \
