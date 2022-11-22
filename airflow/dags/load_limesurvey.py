@@ -1,19 +1,20 @@
 import sys
 import pandas as pd
 from datetime import timedelta
-from sqlalchemy import create_engine, inspect, exc, text
-import sqlparse
 
 from airflow.utils.dates import days_ago
 from airflow.contrib.operators.ssh_operator import SSHOperator
 from airflow.contrib.hooks.ssh_hook import SSHHook
-from airflow.providers.postgres.hooks.postgres import PostgresHook
 from airflow import DAG
 from airflow.models import Variable
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.task_group import TaskGroup
 
-from utils.question_items import GET_QUESTION_ITEMS
+from utils.jinja_templates.question_items import GET_QUESTION_ITEMS
+from utils.load import load
+from utils.transform import sql_transform
+from utils.extract import extract_limesurvey
+
 
 # list of table names
 TABLE_NAMES = ["lime_question_attributes", "lime_questions", "lime_survey_916481", "lime_survey_916481_timings"]
@@ -29,136 +30,6 @@ CONFIG = {
     "COOLIFY_MARIADB_DATABASE": Variable.get("COOLIFY_SECRET_MARIADB_DATABASE")
 }
 
-
-def extract_limesurvey(config, table_names=None):
-    # connect to source MariaDB Platform
-    try:
-        print("Connecting to Limesurvey DB")
-        source_url = (
-            f"mariadb+mariadbconnector://{config['LIMESURVEY_SQL_USER']}"
-            f":{config['LIMESURVEY_SQL_PASSWORD']}"
-            f"@127.0.0.1"
-            f":{config['LIMESURVEY_DATABASE_PORT']}"
-            f"/{config['LIMESURVEY_DATABASE_NAME']}"
-        )
-        engine_source = create_engine(source_url, echo=True)
-        print("Connection to Limesurvey DB established")
-    except exc.SQLAlchemyError as e:
-        print(f"Error connecting to source MariaDB Platform: {e}")
-        sys.exit(1)
-
-    # connect to target MariaDB Platform
-    try:
-        print("Connecting to target MariaDB")
-        target_url = (
-            f"mariadb+mariadbconnector"
-            f"://{config['COOLIFY_MARIADB_USER']}"
-            f":{config['COOLIFY_MARIADB_PASSWORD']}"
-            f"@{config['COOLIFY_MARIADB_HOST']}"
-            f":{config['COOLIFY_MARIADB_PORT']}"
-            f"/{config['COOLIFY_MARIADB_DATABASE']}"
-        )
-        engine_target =  create_engine(target_url, echo=True)
-       
-        print("Connection to target MariaDB established")
-    except exc.SQLAlchemyError as e:
-        print(f"Error connecting to target MariaDB Platform: {e}")
-        sys.exit(1)
-
-    if not table_names:
-        source_inspector = inspect(engine_source)
-        table_names = [table for table in source_inspector.get_table_names() \
-            if not table.startswith("lime_old_survey")]
-
-    # load tables to target DB
-    with engine_target.connect() as con:
-        con.execute("CREATE SCHEMA IF NOT EXISTS raw;")
-
-    for table in table_names:
-        print(f"table: {table}")
-        dataFrame = pd.read_sql(f"SELECT * FROM {table};", engine_source)
-
-        dataFrame.to_sql(
-            name=table,
-            con=engine_target,
-            schema="raw",
-            if_exists='replace',
-            index=False
-        )
-    
-    
-
-def transform(config, sql_file=None, sql_stmts=None):
-    # connect to target MariaDB Platform
-    try:
-        print("Connecting to MariaDB")
-        target_url = (
-            f"mariadb+mariadbconnector"
-            f"://{config['COOLIFY_MARIADB_USER']}"
-            f":{config['COOLIFY_MARIADB_PASSWORD']}"
-            f"@{config['COOLIFY_MARIADB_HOST']}"
-            f":{config['COOLIFY_MARIADB_PORT']}"
-            f"/{config['COOLIFY_MARIADB_DATABASE']}"
-        )
-        engine =  create_engine(target_url, echo=True)
-        print("Connection to target MariaDB established")
-    except exc.SQLAlchemyError as e:
-        print(f"Error connecting to target MariaDB Platform: {e}")
-        sys.exit(1)
-    
-    with engine.connect() as con:
-        if sql_file:
-            with open(sql_file, 'r') as f:
-                sql = f.read()
-        else:
-            sql = sql_stmts
-        sql_stmts = sqlparse.split(sql)
-        for sql_stmt in sql_stmts:
-            con.execute(text(sql_stmt))
-
-
-def load(config, schema='reporting', table_names=None):
-    # connect to source MariaDB Platform
-    try:
-        print("Connecting to target MariaDB")
-        source_url = (
-            f"mariadb+mariadbconnector"
-            f"://{config['COOLIFY_MARIADB_USER']}"
-            f":{config['COOLIFY_MARIADB_PASSWORD']}"
-            f"@{config['COOLIFY_MARIADB_HOST']}"
-            f":{config['COOLIFY_MARIADB_PORT']}"
-            f"/{config['COOLIFY_MARIADB_DATABASE']}"
-        )
-        engine_source =  create_engine(source_url, echo=True)
-       
-        print("Connection to target MariaDB established")
-    except exc.SQLAlchemyError as e:
-        print(f"Error connecting to target MariaDB Platform: {e}")
-        sys.exit(1)
-
-    # connect to target PG DB
-    pg_hook = PostgresHook(
-        postgres_conn_id="coolify_pg"
-    )
-    engine_target = pg_hook.get_sqlalchemy_engine()
-    print("Connected to target Postgres DB")
-
-    if not table_names:
-        source_inspector = inspect(engine_source)
-        table_names = source_inspector.get_table_names(schema=schema)
-
-    for table in table_names:
-        print(f"table: {table}")
-        dataFrame = pd.read_sql(f"SELECT * FROM {schema}.{table};", engine_source)
-
-        dataFrame.to_sql(
-            name=table,
-            con=engine_target,
-            schema="temp_dwh",
-            if_exists='replace',
-            index=False
-        )
-    
 default_args = {
     'owner': 'airflow',    
     'start_date': days_ago(1),
@@ -204,19 +75,19 @@ with DAG(
     with TaskGroup(group_id='transform') as tg1:
         get_question_groups = PythonOperator(
             task_id='get_question_groups',
-            python_callable=transform,
+            python_callable=sql_transform,
             op_kwargs={"config": CONFIG, "sql_file": "./include/sql/question_groups.sql"}
         )
 
         get_question_items = PythonOperator(
             task_id='get_question_items',
-            python_callable=transform,
+            python_callable=sql_transform,
             op_kwargs={"config": CONFIG, "sql_stmts": GET_QUESTION_ITEMS}
         )
 
         get_subquestions = PythonOperator(
             task_id='get_subquestions',
-            python_callable=transform,
+            python_callable=sql_transform,
             op_kwargs={"config": CONFIG, "sql_file": "./include/sql/subquestions.sql"}
         )
 
