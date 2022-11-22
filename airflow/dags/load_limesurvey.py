@@ -12,7 +12,7 @@ from airflow.utils.task_group import TaskGroup
 
 from utils.jinja_templates.question_items import GET_QUESTION_ITEMS
 from utils.load import load
-from utils.transform import sql_transform
+from utils.transform import sql_transform, transform_survey
 from utils.extract import extract_limesurvey
 
 
@@ -91,9 +91,16 @@ with DAG(
             op_kwargs={"config": CONFIG, "sql_file": "./include/sql/subquestions.sql"}
         )
 
+        transform_surveys = PythonOperator(
+            task_id='transform_surveys',
+            python_callable=transform_survey,
+            op_kwargs={'config': CONFIG}
+        )
+
         get_question_groups >> \
         get_question_items >> \
-        get_subquestions    
+        get_subquestions >> \
+        transform_surveys
 
     load_task = PythonOperator(
         task_id="load",

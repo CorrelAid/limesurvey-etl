@@ -1,10 +1,11 @@
 import sys
 
-from sqlalchemy import create_engine, inspect, exc, text
+import re
+from sqlalchemy import create_engine, inspect, exc
 import pandas as pd
 
 
-def extract_limesurvey(config, table_names=None):
+def extract_limesurvey(config: dict, table_names: list[str] = None):
     # connect to source MariaDB Platform
     try:
         print("Connecting to Limesurvey DB")
@@ -38,12 +39,14 @@ def extract_limesurvey(config, table_names=None):
     except exc.SQLAlchemyError as e:
         print(f"Error connecting to target MariaDB Platform: {e}")
         sys.exit(1)
-
+    
+    source_inspector = inspect(engine_source)
     if not table_names:
-        source_inspector = inspect(engine_source)
         table_names = [table for table in source_inspector.get_table_names() \
             if not table.startswith("lime_old_survey")]
-
+    else: 
+        table_names.extend([table for table in source_inspector.get_table_names() \
+            if re.match(r'lime_survey_[0-9]+', table)])
     # load tables to target DB
     with engine_target.connect() as con:
         con.execute("CREATE SCHEMA IF NOT EXISTS raw;")
