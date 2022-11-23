@@ -5,12 +5,12 @@ Install [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https
 
 ## Usage
 
-Create a `.env` file.
+Create a `.env` file and set the Airflow UID:
 
 ```bash
-touch .env
+echo -e "AIRFLOW_UID=$(id -u)" > .env
 ```
-Export the following environment variables:
+Add the following environment variables to the `.env` file:
 
 ```bash
 AIRFLOW_UID=502

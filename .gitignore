@@ -91,3 +91,6 @@ target/
 
 # airflow
 airflow/logs/
+
+# python venv
+.venv
