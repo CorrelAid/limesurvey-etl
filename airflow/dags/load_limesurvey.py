@@ -8,6 +8,7 @@ from airflow.contrib.hooks.ssh_hook import SSHHook
 from airflow import DAG
 from airflow.models import Variable
 from airflow.operators.python_operator import PythonOperator
+from airflow.operators.bash_operator import BashOperator
 from airflow.utils.task_group import TaskGroup
 
 from utils.jinja_templates.question_items import GET_QUESTION_ITEMS
@@ -97,10 +98,16 @@ with DAG(
             op_kwargs={'config': CONFIG}
         )
 
+        dbt_dummy_task = BashOperator(
+            task_id='dbt_test',
+            bash_command='dbt --version'
+        )
+
         get_question_groups >> \
         get_question_items >> \
         get_subquestions >> \
-        transform_surveys
+        transform_surveys >> \
+        dbt_dummy_task
 
     load_task = PythonOperator(
         task_id="load",
