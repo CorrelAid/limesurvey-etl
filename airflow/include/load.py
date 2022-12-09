@@ -1,29 +1,22 @@
 import sys
 
-from sqlalchemy import create_engine, inspect, exc
+from sqlalchemy import create_engine, inspect
 import pandas as pd
 
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 
+from include.utils import connect_to_mariadb
+
 
 def load(config, schema='reporting', table_names=None):
     # connect to source MariaDB Platform
-    try:
-        print("Connecting to target MariaDB")
-        source_url = (
-            f"mariadb+mariadbconnector"
-            f"://{config['COOLIFY_MARIADB_USER']}"
-            f":{config['COOLIFY_MARIADB_PASSWORD']}"
-            f"@{config['COOLIFY_MARIADB_HOST']}"
-            f":{config['COOLIFY_MARIADB_PORT']}"
-            f"/{config['COOLIFY_MARIADB_DATABASE']}"
-        )
-        engine_source =  create_engine(source_url, echo=True)
-       
-        print("Connection to target MariaDB established")
-    except exc.SQLAlchemyError as e:
-        print(f"Error connecting to target MariaDB Platform: {e}")
-        sys.exit(1)
+    engine_source = connect_to_mariadb(
+        db_host=config['COOLIFY_MARIADB_HOST'],
+        db_port=config['COOLIFY_MARIADB_PORT'],
+        db_user=config['COOLIFY_MARIADB_USER'],
+        db_password=config['COOLIFY_MARIADB_PASSWORD'],
+        db_name=config['COOLIFY_MARIADB_DATABASE']
+    )
 
     # connect to target PG DB
     pg_hook = PostgresHook(

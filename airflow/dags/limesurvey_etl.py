@@ -11,14 +11,20 @@ from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
 from airflow.utils.task_group import TaskGroup
 
-from utils.jinja_templates.question_items import GET_QUESTION_ITEMS
-from utils.load import load
-from utils.transform import sql_transform, transform_survey
-from utils.extract import extract_limesurvey
+from include.jinja_transformations.question_items import GET_QUESTION_ITEMS
+from include.load import load
+from include.transformations.questions import get_question_groups, get_subquestions, \
+    get_question_items
+from include.extract import extract_limesurvey
+from include.transformations.respondents import get_respondents
 
 
 # list of table names
-TABLE_NAMES = ["lime_question_attributes", "lime_questions", "lime_survey_916481", "lime_survey_916481_timings"]
+TABLE_NAMES = [
+    "lime_group_l10ns",
+    "lime_questions"
+]
+
 CONFIG = {
     "LIMESURVEY_SQL_USER": Variable.get('LIMESURVEY_SECRET_SQL_USER'),
     "LIMESURVEY_SQL_PASSWORD": Variable.get('LIMESURVEY_SQL_PASSWORD'),
@@ -41,7 +47,7 @@ default_args = {
 }
 
 with DAG(
-    dag_id="extract_limesurvey_data",
+    dag_id="Limesurvey_ETL",
     catchup=False,
     default_args=default_args,
     max_active_runs=1,
@@ -66,48 +72,39 @@ with DAG(
         python_callable=extract_limesurvey,
         op_kwargs={
             "config": CONFIG,
-            "table_names": [
-                "lime_group_l10ns",
-                "lime_questions"
-            ]
+            "table_names": TABLE_NAMES
         }
     )
 
     with TaskGroup(group_id='transform') as tg1:
-        get_question_groups = PythonOperator(
+        respondents = PythonOperator(
+            task_id='get_respondents',
+            python_callable=get_respondents,
+            op_kwargs={"config": CONFIG}
+        )
+
+        question_groups = PythonOperator(
             task_id='get_question_groups',
-            python_callable=sql_transform,
-            op_kwargs={"config": CONFIG, "sql_file": "./include/sql/question_groups.sql"}
+            python_callable=get_question_groups,
+            op_kwargs={"config": CONFIG}
         )
 
-        get_question_items = PythonOperator(
+        question_items = PythonOperator(
             task_id='get_question_items',
-            python_callable=sql_transform,
-            op_kwargs={"config": CONFIG, "sql_stmts": GET_QUESTION_ITEMS}
+            python_callable=get_question_items,
+            op_kwargs={"config": CONFIG}
         )
 
-        get_subquestions = PythonOperator(
+        subquestions = PythonOperator(
             task_id='get_subquestions',
-            python_callable=sql_transform,
-            op_kwargs={"config": CONFIG, "sql_file": "./include/sql/subquestions.sql"}
+            python_callable=get_subquestions,
+            op_kwargs={"config": CONFIG}
         )
 
-        transform_surveys = PythonOperator(
-            task_id='transform_surveys',
-            python_callable=transform_survey,
-            op_kwargs={'config': CONFIG}
-        )
-
-        dbt_dummy_task = BashOperator(
-            task_id='dbt_test',
-            bash_command='dbt --version'
-        )
-
-        get_question_groups >> \
-        get_question_items >> \
-        get_subquestions >> \
-        transform_surveys >> \
-        dbt_dummy_task
+        respondents >> \
+        question_groups >> \
+        question_items >> \
+        subquestions
 
     load_task = PythonOperator(
         task_id="load",
