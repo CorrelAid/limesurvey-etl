@@ -1,5 +1,3 @@
-import sys
-import pandas as pd
 from datetime import timedelta
 
 from airflow.utils.dates import days_ago
@@ -11,7 +9,6 @@ from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
 from airflow.utils.task_group import TaskGroup
 
-from include.jinja_transformations.question_items import GET_QUESTION_ITEMS
 from include.load import load
 from include.transformations.questions import get_question_groups, get_subquestions, \
     get_question_items
