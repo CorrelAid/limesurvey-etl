@@ -9,4 +9,4 @@ RUN apt-get update \
 USER airflow
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-COPY --chown=airflow:root dags/ /opt/airflow/dags
+COPY dags/ /opt/airflow/dags
