@@ -15,6 +15,8 @@ from include.transformations.questions import get_question_groups, get_subquesti
 from include.extract import extract_limesurvey
 from include.transformations.respondents import get_respondents
 
+from include import cleaning
+from include.config import CLEANING
 
 # list of table names
 TABLE_NAMES = [
@@ -103,10 +105,31 @@ with DAG(
         question_items >> \
         subquestions
 
+    with TaskGroup(group_id="cleaning") as tg2:
+        previous = None
+        for clean in CLEANING:
+            if clean["filter_by"] == "string":
+                callable = cleaning.filter_str
+                clean["value"] = str(clean["value"])
+            else:
+                callable = cleaning.filter_out_int
+                clean["value"] = int(clean["value"])
+            clean_task = PythonOperator(
+                    task_id=clean["name"],
+                    python_callable=callable,
+                    op_kwargs={"df": clean["question"],
+                               "condition": clean["condition"],
+                               "value": clean["value"]}
+                    )
+            if previous is not None:
+                clean_task.set_upstream(previous)
+            previous = clean_task
+
+
     load_task = PythonOperator(
         task_id="load",
         python_callable=load,
         op_kwargs={"config": CONFIG}
     )
 
-ssh_operator >> extract_limesurvey_data >> tg1 >> load_task
+ssh_operator >> extract_limesurvey_data >> tg1 >> tg2 >> load_task

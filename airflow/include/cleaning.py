@@ -1,9 +1,11 @@
 import sys
 import logging
 import pandas as pd
+from config import CLEANING
 
 from airflow.models import Variable
 from airflow.operators.python import PythonOperator
+from airflow.utils.task_group import TaskGroup
 
 
 def concate_df() -> pd.DataFrame:
@@ -13,10 +15,11 @@ def concate_df() -> pd.DataFrame:
     """
     pass
 
-def create_cleaning_task():
+def create_cleaning_task(task_id, python_callable, op_kwags):
     """
     use this function to dynamically create a cleaning task.
     """
+    
     pass
 
 
