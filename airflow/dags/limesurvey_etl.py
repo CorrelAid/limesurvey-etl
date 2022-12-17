@@ -14,7 +14,7 @@ from include.transformations.questions import get_question_groups, get_subquesti
     get_question_items
 from include.extract import extract_limesurvey
 from include.transformations.respondents import get_respondents
-
+from include.config import REPORTING_TABLES_SCHEMAS
 
 # list of table names
 TABLE_NAMES = [
@@ -77,25 +77,37 @@ with DAG(
         respondents = PythonOperator(
             task_id='get_respondents',
             python_callable=get_respondents,
-            op_kwargs={"config": CONFIG}
+            op_kwargs={
+                "config": CONFIG,
+                "columns": REPORTING_TABLES_SCHEMAS['respondents']    
+            }
         )
 
         question_groups = PythonOperator(
             task_id='get_question_groups',
             python_callable=get_question_groups,
-            op_kwargs={"config": CONFIG}
+            op_kwargs={
+                "config": CONFIG,
+                "columns": REPORTING_TABLES_SCHEMAS['question_groups']    
+            }
         )
 
         question_items = PythonOperator(
             task_id='get_question_items',
             python_callable=get_question_items,
-            op_kwargs={"config": CONFIG}
+            op_kwargs={
+                "config": CONFIG,
+                "columns": REPORTING_TABLES_SCHEMAS['question_items']    
+            }
         )
 
         subquestions = PythonOperator(
             task_id='get_subquestions',
             python_callable=get_subquestions,
-            op_kwargs={"config": CONFIG}
+            op_kwargs={
+                "config": CONFIG,
+                "columns": REPORTING_TABLES_SCHEMAS['subquestions']
+            }
         )
 
         respondents >> \

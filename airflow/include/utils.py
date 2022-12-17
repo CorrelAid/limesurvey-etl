@@ -1,5 +1,6 @@
 import sys
-from sqlalchemy import create_engine, exc, engine, MetaData, Column, Table, ForeignKey
+from sqlalchemy import create_engine, text, \
+    exc, engine, MetaData, Column, Table, ForeignKey
 from sqlalchemy.dialects.mysql import insert
 
 

@@ -1,12 +1,13 @@
+import os
+
 import pandas as pd
 from jinja2 import Template
 
-from sqlalchemy import Integer, VARCHAR
 from utils import connect_to_mariadb, insert_on_duplicate, \
     create_table_if_not_exists
 
 
-def get_question_groups(config):
+def get_question_groups(config: dict, columns: dict):
     engine = connect_to_mariadb(
         db_host=config['COOLIFY_MARIADB_HOST'],
         db_port=config['COOLIFY_MARIADB_PORT'],
@@ -15,21 +16,6 @@ def get_question_groups(config):
         db_name=config['COOLIFY_MARIADB_DATABASE']
     )
     # create table in reporting layer if not exists
-    columns = {
-        "question_group_id": {
-            "type": Integer,
-            "primary_key": True,
-            "nullable": False
-        },
-        "question_group_name": {
-            "type": VARCHAR(255),
-            "nullable": False
-        },
-        "description": {
-            "type": VARCHAR(255)
-        }
-    }
-
     create_table_if_not_exists(
         engine=engine,
         table_name="question_groups",
@@ -61,7 +47,7 @@ def get_question_groups(config):
         con.execute(sql_stmt)
 
 
-def get_question_items(config):
+def get_question_items(config: dict, columns: dict):
     engine = connect_to_mariadb(
         db_host=config['COOLIFY_MARIADB_HOST'],
         db_port=config['COOLIFY_MARIADB_PORT'],
@@ -71,24 +57,6 @@ def get_question_items(config):
     )
 
     # create table in reporting layer if not exists
-    columns = {
-        "question_item_id": {
-            "type": VARCHAR(50),
-            "primary_key": True,
-            "nullable": False
-        },
-        "question_group_id": {
-            "type": Integer,
-            "nullable": False,
-            "foreign_key": "reporting.question_groups.question_group_id"
-        },
-        "type_major": {
-            "type": VARCHAR(255)
-        },
-        "type_minor": {
-            "type": VARCHAR(255)
-        }
-    }
     create_table_if_not_exists(
         engine=engine,
         table_name="question_items",
@@ -133,7 +101,7 @@ def get_question_items(config):
         con.execute(sql_stmt)
 
 
-def get_subquestions(config):
+def get_subquestions(config: dict, columns: dict):
     engine = connect_to_mariadb(
         db_host=config['COOLIFY_MARIADB_HOST'],
         db_port=config['COOLIFY_MARIADB_PORT'],
@@ -142,19 +110,6 @@ def get_subquestions(config):
         db_name=config['COOLIFY_MARIADB_DATABASE']
     )
     # create table in reporting layer if not exists
-    columns = {
-        "subquestion_id": {
-            "type": VARCHAR(50),
-            "primary_key": True,
-            "nullable": False
-        },
-        "question_item_id": {
-            "type": VARCHAR(50),
-            "nullable": False,
-            "foreign_key": "reporting.question_items.question_item_id"
-        }
-    }
-
     create_table_if_not_exists(
         engine=engine,
         table_name="subquestions",
