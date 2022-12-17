@@ -1,6 +1,6 @@
 from sqlalchemy import Integer, VARCHAR
 
-REPORTING_TABLES_SCHEMAS = {
+REPORTING_SCHEMAS = {
     "question_groups": {
         "question_group_id": {
             "type": Integer,

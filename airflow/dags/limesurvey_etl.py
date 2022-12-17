@@ -14,7 +14,7 @@ from include.transformations.questions import get_question_groups, get_subquesti
     get_question_items
 from include.extract import extract_limesurvey
 from include.transformations.respondents import get_respondents
-from include.config import REPORTING_TABLES_SCHEMAS
+from include.config import REPORTING_SCHEMAS
 
 # list of table names
 TABLE_NAMES = [
@@ -79,7 +79,7 @@ with DAG(
             python_callable=get_respondents,
             op_kwargs={
                 "config": CONFIG,
-                "columns": REPORTING_TABLES_SCHEMAS['respondents']    
+                "columns": REPORTING_SCHEMAS['respondents']    
             }
         )
 
@@ -88,7 +88,7 @@ with DAG(
             python_callable=get_question_groups,
             op_kwargs={
                 "config": CONFIG,
-                "columns": REPORTING_TABLES_SCHEMAS['question_groups']    
+                "columns": REPORTING_SCHEMAS['question_groups']    
             }
         )
 
@@ -97,7 +97,7 @@ with DAG(
             python_callable=get_question_items,
             op_kwargs={
                 "config": CONFIG,
-                "columns": REPORTING_TABLES_SCHEMAS['question_items']    
+                "columns": REPORTING_SCHEMAS['question_items']    
             }
         )
 
@@ -106,7 +106,7 @@ with DAG(
             python_callable=get_subquestions,
             op_kwargs={
                 "config": CONFIG,
-                "columns": REPORTING_TABLES_SCHEMAS['subquestions']
+                "columns": REPORTING_SCHEMAS['subquestions']
             }
         )
 
