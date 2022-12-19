@@ -6,7 +6,7 @@ from sqlalchemy import inspect, MetaData, Column, Integer, Table
 from utils import connect_to_mariadb, insert_on_duplicate, create_table_if_not_exists
 
 
-def get_respondents(config):
+def get_respondents(config: dict, columns: dict):
     engine = connect_to_mariadb(
         db_host=config['COOLIFY_MARIADB_HOST'],
         db_port=config['COOLIFY_MARIADB_PORT'],
@@ -19,13 +19,7 @@ def get_respondents(config):
     create_table_if_not_exists(
         engine=engine,
         table_name="respondents",
-        columns={
-            "respondent_id": {
-                "type": Integer,
-                "primary_key": True,
-                "nullable": False
-            }
-        },
+        columns=columns,
         schema="reporting"
     )
 
