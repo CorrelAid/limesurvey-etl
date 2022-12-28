@@ -15,8 +15,8 @@ from include.transformations.questions import get_question_groups, get_subquesti
 from include.extract import extract_limesurvey
 from include.transformations.respondents import get_respondents
 
-from include import cleaning
-from include.config import CLEANING
+from include.cleaning import filter_out_int, filter_str
+from include.cleaning_config import CLEANING
 
 # list of table names
 TABLE_NAMES = [
@@ -109,10 +109,10 @@ with DAG(
         previous = None
         for clean in CLEANING:
             if clean["filter_by"] == "string":
-                callable = cleaning.filter_str
+                callable = filter_str
                 clean["value"] = str(clean["value"])
             else:
-                callable = cleaning.filter_out_int
+                callable = filter_out_int
                 clean["value"] = int(clean["value"])
             clean_task = PythonOperator(
                     task_id=clean["name"],

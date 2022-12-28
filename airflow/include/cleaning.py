@@ -1,7 +1,7 @@
 import sys
 import logging
 import pandas as pd
-from config import CLEANING
+from cleaning_config import CLEANING
 
 from airflow.models import Variable
 from airflow.operators.python import PythonOperator
