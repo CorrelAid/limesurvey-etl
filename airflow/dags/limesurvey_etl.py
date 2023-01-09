@@ -14,6 +14,7 @@ from include.transformations.questions import get_question_groups, get_subquesti
     get_question_items
 from include.extract import extract_limesurvey
 from include.transformations.respondents import get_respondents
+from include.transformations.answers import get_answers
 
 from include.cleaning import filter_out_int, filter_str
 from include.cleaning_config import CLEANING
@@ -100,10 +101,17 @@ with DAG(
             op_kwargs={"config": CONFIG}
         )
 
+        answers = PythonOperator(
+            task_id="get_answers",
+            python_callable=get_answers,
+            op_kwargs={"config": CONFIG}
+                )
+
         respondents >> \
         question_groups >> \
         question_items >> \
-        subquestions
+        subquestions >> \
+        answers
 
     with TaskGroup(group_id="cleaning") as tg2:
         previous = None
