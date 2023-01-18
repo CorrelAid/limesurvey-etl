@@ -1,0 +1,14 @@
+diversity_item_id,lang,label_long,label_short,type_major,type_minor
+agedestat,de,Age categories,Age categories,Single Choice,L
+agegen,de,Age generations,Age generations,Single Choice,L
+alleinerz,de,Single parent,Single parent,Single Choice,L
+antimuslim,de,Muslim,Muslim,Single Choice,L
+beeint,de,Impairment,Impairment,Single Choice,L
+beh,de,Disability,Disability,Single Choice,L
+bildung,de,Educational background,Education,Single Choice,L
+einkommen_cat_simple,de,Net income,Net income,Single Choice,L
+FluchtE,de,Own/family refugee experience,Refugee experience,Single Choice,L
+genderid_alle,de,Gender identity,Gender identity,Single Choice,L
+lsbaq,de,LGBAQ,LGBAQ,Single Choice,L
+migH,de,Migrant background,Migrant background,Single Choice,L
+stat_dtpass,de,German Citizenship,Citizenship,Single Choice,L

@@ -1,0 +1,37 @@
+diversity_item_id,lang,answer_id,label
+agedestat,de,1,16-17
+agedestat,de,2,18-19
+agedestat,de,3,20-39
+agedestat,de,4,40-59
+agedestat,de,5,60-79
+agedestat,de,6,over 80
+agegen,de,1,Boomer
+agegen,de,2,Millennials
+agegen,de,3,Gen X
+agegen,de,4,Gen Z
+agegen,de,5,Silent Generation
+alleinerz,de,0,no
+alleinerz,de,1,yes
+antimuslim,de,0,no
+antimuslim,de,1,yes
+beeint,de,0,no
+beeint,de,1,yes
+beh,de,0,no
+beh,de,1,yes
+bildung,de,1,low
+bildung,de,2,middle
+bildung,de,3,high
+einkommen_cat_simple,de,1,low
+einkommen_cat_simple,de,2,middle
+einkommen_cat_simple,de,3,high
+FluchtE,de,0,no
+FluchtE,de,1,yes
+genderid_alle,de,1,Cis-Woman
+genderid_alle,de,2,Cis-Man
+genderid_alle,de,3,TIN*
+lsbaq,de,0,no
+lsbaq,de,1,yes
+migH,de,0,no
+migH,de,1,yes
+stat_dtpass,de,0,no
+stat_dtpass,de,1,yes
