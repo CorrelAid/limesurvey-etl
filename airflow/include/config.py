@@ -70,6 +70,35 @@ REPORTING_SCHEMAS = {
             "foreign_key": "reporting.question_items.question_item_id"
         }
     },
+    "subquestions_dict": {
+        "subquestion_id": {
+            "type": VARCHAR(50),
+            "nullable": False,
+            "foreign_key": "reporting.subquestions.subquestion_id",
+            "primary_key": True
+        },
+        "question_item_id": {
+            "type": VARCHAR(50),
+            "nullable": False
+        },
+        "subquestion_id_minor": {
+            "type": VARCHAR(50),
+            "nullable": True
+        },
+        "lang": {
+            "type": VARCHAR(2),
+            "nullable": False,
+            "primary_key": True
+        },
+        "label_major": {
+            "type": VARCHAR(10000),
+            "nullable": True
+        },
+        "label_minor": {
+            "type": VARCHAR(255),
+            "nullable": True
+        }
+    },
     "respondents": {
         "respondent_id": {
             "type": Integer,

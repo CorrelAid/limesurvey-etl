@@ -12,7 +12,7 @@ from airflow.utils.task_group import TaskGroup
 from include.load import load
 from include.transformations.questions import get_question_groups, get_subquestions, \
     get_question_items
-from include.transformations.meta_data import get_question_items_dict
+from include.transformations.meta_data import get_question_items_dict, get_subquestions_dict
 from include.extract import extract_limesurvey
 from include.transformations.respondents import get_respondents
 from include.config import REPORTING_SCHEMAS
@@ -120,11 +120,21 @@ with DAG(
             }
         )
 
+        subquestions_dict = PythonOperator(
+            task_id='get_subquestions_dict',
+            python_callable=get_subquestions_dict,
+            op_kwargs={
+                "config": CONFIG,
+                "columns": REPORTING_SCHEMAS['subquestions_dict']
+            }
+        )
+
         respondents >> \
         question_groups >> \
         question_items >> \
         question_items_dict >> \
-        subquestions
+        subquestions >> \
+        subquestions_dict
 
     load_task = PythonOperator(
         task_id="load",
