@@ -142,11 +142,11 @@ def get_subquestions(config: dict, columns: dict):
     # replace subquestion_ids with those from the mapping
     subquestions_df = pd.read_sql(sql_stmt, con=engine)
     subquestions_df = subquestions_df.replace(mapping_dict)
-    print(subquestions_df.head())
     subquestions_df.to_sql(
         name="subquestions",
         con=engine,
         schema="reporting",
-        if_exists="replace",
-        index=False
+        if_exists="append",
+        index=False,
+        method=insert_on_duplicate
     )
