@@ -13,9 +13,10 @@ from include.load import load
 from include.transformations.questions import get_question_groups, get_subquestions, \
     get_question_items
 from include.transformations.meta_data import get_question_items_dict, get_subquestions_dict, \
-    get_question_answers_dict
+    get_question_answers_dict, get_diversity_items_dict
 from include.extract import extract_limesurvey
 from include.transformations.respondents import get_respondents
+from include.transformations.diversity_dimensions import get_diversity_items
 from include.config import REPORTING_SCHEMAS
 
 # list of table names
@@ -139,13 +140,33 @@ with DAG(
             }
         )
 
+        diversity_items = PythonOperator(
+            task_id='get_diversity_items',
+            python_callable=get_diversity_items,
+            op_kwargs={
+                "config": CONFIG,
+                "columns": REPORTING_SCHEMAS['diversity_items']
+            }
+        )
+
+        diversity_items_dict = PythonOperator(
+            task_id='get_diversity_items_dict',
+            python_callable=get_diversity_items_dict,
+            op_kwargs={
+                "config": CONFIG,
+                "columns": REPORTING_SCHEMAS['diversity_items_dict']
+            }
+        )
+
         respondents >> \
         question_groups >> \
         question_items >> \
         question_items_dict >> \
         subquestions >> \
         subquestions_dict >> \
-        question_answers_dict
+        question_answers_dict >> \
+        diversity_items >> \
+        diversity_items_dict
 
     load_task = PythonOperator(
         task_id="load",

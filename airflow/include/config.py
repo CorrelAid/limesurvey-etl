@@ -127,5 +127,38 @@ REPORTING_SCHEMAS = {
             "primary_key": True,
             "nullable": False
         }
+    },
+    "diversity_items": {
+        "diversity_item_id": {
+            "type": VARCHAR(255),
+            "primary_key": True,
+            "nullable": False
+        },
+        "diversity_group_id": {
+            "type": VARCHAR(255),
+            "nullable": True
+        },
+        "type_major": {
+            "type": VARCHAR(10000),
+            "nullable": True
+        },
+        "type_minor": {
+            "type": VARCHAR(255),
+            "nullable": True
+        }
+    },
+    "diversity_items_dict": {
+        "diversity_item_id": {
+            "type": VARCHAR(255),
+            "primary_key": True
+        },
+        "lang": {
+            "type": VARCHAR(2),
+            "primary_key": True
+        },
+        "label_long": {
+            "type": VARCHAR(10000),
+            "nullable": True
+        }
     }
 }
