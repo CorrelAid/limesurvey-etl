@@ -1,6 +1,7 @@
 import os
 
 import pandas as pd
+import csv
 from jinja2 import Template
 
 from utils import connect_to_mariadb, insert_on_duplicate, \
@@ -118,24 +119,34 @@ def get_subquestions(config: dict, columns: dict):
     )
 
     # transform data
+    mapping_path = 'include/mappings/mapping_subquestions.csv'
+    mapping_dict = {}
+    with open(mapping_path, 'r') as f:
+        for i, line in enumerate(csv.reader(f)):
+            if i > 0 and line[2] not in mapping_dict.keys():
+                mapping_dict[line[2]] = line[0]
+                
+
+    mapping_df = pd.read_csv(mapping_path, delimiter=',')
+    
     sql_stmt = """
-        INSERT INTO reporting.subquestions (
-            subquestion_id
-            , question_item_id
-        )
         SELECT DISTINCT
-            CONCAT(parent.title, "_", lq.title) AS subquestion_id
+            subq.title AS subquestion_id
             , parent.title AS question_item_id
-        FROM raw.lime_questions lq
+        FROM raw.lime_questions subq
         JOIN raw.lime_questions parent
-        ON lq.parent_qid=parent.qid
-        WHERE lq.parent_qid != 0
-        AND NOT EXISTS (
-            SELECT
-                1
-            FROM reporting.subquestions sq
-            WHERE sq.subquestion_id = CONCAT(parent.title, "_", lq.title)
-        );
+        ON subq.parent_qid=parent.qid
+        WHERE subq.parent_qid != 0;
     """
-    with engine.connect() as con:
-        con.execute(sql_stmt)
+    
+    # replace subquestion_ids with those from the mapping
+    subquestions_df = pd.read_sql(sql_stmt, con=engine)
+    subquestions_df = subquestions_df.replace(mapping_dict)
+    print(subquestions_df.head())
+    subquestions_df.to_sql(
+        name="subquestions",
+        con=engine,
+        schema="reporting",
+        if_exists="replace",
+        index=False
+    )
