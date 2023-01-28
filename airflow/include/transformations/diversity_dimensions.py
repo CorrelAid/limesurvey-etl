@@ -24,5 +24,3 @@ def get_diversity_items(config: dict, columns: dict):
     #### TO DO: load the actual data
 
     sql_stmt = None # TO DO
-
-    
