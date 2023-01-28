@@ -57,6 +57,7 @@ def get_question_items_dict(config: dict, columns: dict):
         method=insert_on_duplicate
     )
 
+
 def get_subquestions_dict(config: dict, columns: dict):
     engine = connect_to_mariadb(
         db_host=config['COOLIFY_MARIADB_HOST'],
@@ -74,7 +75,7 @@ def get_subquestions_dict(config: dict, columns: dict):
     )
 
     sql_stmt = """
-        SELECT
+        SELECT DISTINCT
             subquestion_id
             , question_item_id
         FROM reporting.subquestions;
@@ -92,9 +93,56 @@ def get_subquestions_dict(config: dict, columns: dict):
     )
 
     subquestions_dict_df["lang"] = subquestions_dict_df["lang"].fillna("99")
-    
+
     subquestions_dict_df.to_sql(
         name="subquestions_dict",
+        con=engine,
+        schema="reporting",
+        if_exists="append",
+        index=False,
+        method=insert_on_duplicate
+    )
+
+
+def get_question_answers_dict(config: dict, columns: dict):
+    engine = connect_to_mariadb(
+        db_host=config['COOLIFY_MARIADB_HOST'],
+        db_port=config['COOLIFY_MARIADB_PORT'],
+        db_user=config['COOLIFY_MARIADB_USER'],
+        db_password=config['COOLIFY_MARIADB_PASSWORD'],
+        db_name=config['COOLIFY_MARIADB_DATABASE']
+    )
+
+    create_table_if_not_exists(
+        engine=engine,
+        table_name="question_answers_dict",
+        columns=columns,
+        schema="reporting"
+    )
+
+    sql_stmt = """
+        SELECT DISTINCT
+            question_item_id
+        FROM reporting.question_items;
+    """
+
+    question_items_df = pd.read_sql(sql_stmt, con=engine)
+
+    mapping_path = 'include/mappings/mapping_question_answers.csv'
+    mapping_df = pd.read_csv(mapping_path)
+
+    questions_answers_df = question_items_df.merge(
+        mapping_df,
+        on="question_item_id",
+        how="outer"
+    )
+
+    questions_answers_df["lang"] = questions_answers_df["lang"].fillna("99")
+    questions_answers_df["answer_id"] = questions_answers_df["answer_id"].fillna(-999)
+    questions_answers_df = questions_answers_df.rename(columns={"label": "answer_text"})
+
+    questions_answers_df.to_sql(
+        name="question_answers_dict",
         con=engine,
         schema="reporting",
         if_exists="append",

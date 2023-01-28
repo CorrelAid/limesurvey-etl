@@ -99,6 +99,28 @@ REPORTING_SCHEMAS = {
             "nullable": True
         }
     },
+    "question_answers_dict": {
+        "question_item_id": {
+            "type": VARCHAR(50),
+            "nullable": False,
+            "primary_key": True,
+            "foreign_key": "reporting.question_items.question_item_id"
+        },
+        "lang": {
+            "type": VARCHAR(2),
+            "nullable": False,
+            "primary_key": True
+        },
+        "answer_id": {
+            "type": VARCHAR(50),
+            "nullable": False,
+            "primary_key": True
+        },
+        "answer_text": {
+            "type": VARCHAR(10000),
+            "nullable": True
+        }
+    },
     "respondents": {
         "respondent_id": {
             "type": Integer,
