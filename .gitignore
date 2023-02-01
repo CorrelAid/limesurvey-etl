@@ -94,3 +94,6 @@ airflow/logs/
 
 # python venv
 .venv
+
+# CFE scripts
+42_mod-wrangle-sensitive-data.R
