@@ -5,7 +5,7 @@ import csv
 from jinja2 import Template
 
 from utils import connect_to_mariadb, insert_on_duplicate, \
-    create_table_if_not_exists
+    create_table_if_not_exists, log_missing_values
 
 
 def get_question_groups(config: dict, columns: dict):
@@ -101,6 +101,30 @@ def get_question_items(config: dict, columns: dict):
     with engine.connect() as con:
         con.execute(sql_stmt)
 
+    # log missing values in mapping
+    sql_stmt = """
+        SELECT 
+            question_item_id
+            , question_group_id
+            , type_major
+            , type_minor
+        FROM reporting.question_items
+        WHERE (
+            question_group_id IS NULL OR
+            type_major IS NULL OR
+            type_minor IS NULL
+        )
+        """
+
+    mapping_missing_values_df = pd.read_sql(sql_stmt, con=engine)
+    log_missing_values(
+        mapping_missing_values_df,
+        source_col="question_item_id",
+        target_cols=["question_group_id", "type_major", "type_minor"],
+        log_file_name="mapping_question_items.csv"
+    )    
+
+
 
 def get_subquestions(config: dict, columns: dict):
     engine = connect_to_mariadb(
@@ -141,7 +165,17 @@ def get_subquestions(config: dict, columns: dict):
     
     # replace subquestion_ids with those from the mapping
     subquestions_df = pd.read_sql(sql_stmt, con=engine)
-    subquestions_df = subquestions_df.replace(mapping_dict)
+    
+    # log missing values in mapping
+    log_missing_values_df = subquestions_df[~subquestions_df["subquestion_id"].isin(mapping_dict.keys())]
+    if len(log_missing_values_df) > 0:
+        logging_path = "logs/mappings"
+        if not os.path.exists(logging_path):
+            os.mkdir(logging_path)
+        log_missing_values_df.to_csv("logs/mappings/mappings_subquestions.csv", index=False)
+
+    subquestions_df["subquestion_id"] = subquestions_df["subquestion_id"].replace(mapping_dict)
+
     subquestions_df.to_sql(
         name="subquestions",
         con=engine,

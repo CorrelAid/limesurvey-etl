@@ -1,7 +1,7 @@
 import pandas as pd
 
 from utils import connect_to_mariadb, insert_on_duplicate, \
-    create_table_if_not_exists
+    create_table_if_not_exists, log_missing_values
 
 def get_question_items_dict(config: dict, columns: dict):
     engine = connect_to_mariadb(
@@ -44,9 +44,16 @@ def get_question_items_dict(config: dict, columns: dict):
     )
     # add missing column 'label_major_short' to dataframe -> empty, since no mapping available
     question_items_dict_df["label_major_short"] = pd.Series(dtype='str')
-
     target_cols = ["question_item_id", "lang", "label_major", "label_major_short", "label_minor"]
     question_items_dict_df = question_items_dict_df[target_cols]
+
+    log_missing_values(
+        question_items_dict_df,
+        source_col="question_item_id",
+        target_cols=["lang", "label_major", "label_major_short", "label_minor"],
+        log_file_name="mapping_question_items_dict.csv"
+    )
+
     print(question_items_dict_df)
     question_items_dict_df.to_sql(
         name="question_items_dict",
@@ -92,6 +99,12 @@ def get_subquestions_dict(config: dict, columns: dict):
         how='left'
     )
 
+    log_missing_values(
+        subquestions_dict_df,
+        "subquestion_id",
+        ["lang", "subquestion_id_minor", "label_major", "label_minor"],
+        log_file_name="mapping_subquestions_dict.csv"
+    )
     subquestions_dict_df["lang"] = subquestions_dict_df["lang"].fillna("99")
 
     subquestions_dict_df.to_sql(
@@ -136,6 +149,8 @@ def get_question_answers_dict(config: dict, columns: dict):
         on="question_item_id",
         how="outer"
     )
+
+    log_missing_values(questions_answers_df, "question_item_id", "answer_id", "mapping_question_answers.csv")
 
     questions_answers_df["lang"] = questions_answers_df["lang"].fillna("99")
     questions_answers_df["answer_id"] = questions_answers_df["answer_id"].fillna(-999)
@@ -182,6 +197,13 @@ def get_diversity_items_dict(config: dict, columns: dict):
         mapping_df,
         on="diversity_item_id",
         how="left"
+    )
+
+    log_missing_values(
+        diversity_items_dict_df,
+        source_col="diversity_item_id",
+        target_cols=["lang", "label_long"],
+        log_file_name="mapping_diversity_items_dict.csv"
     )
 
     target_cols = ["diversity_item_id", "lang", "label_long"]

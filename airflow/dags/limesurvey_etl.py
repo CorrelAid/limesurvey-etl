@@ -6,7 +6,6 @@ from airflow.contrib.hooks.ssh_hook import SSHHook
 from airflow import DAG
 from airflow.models import Variable
 from airflow.operators.python_operator import PythonOperator
-from airflow.operators.bash_operator import BashOperator
 from airflow.utils.task_group import TaskGroup
 
 from include.load import load
@@ -40,10 +39,12 @@ CONFIG = {
 default_args = {
     'owner': 'airflow',    
     'start_date': days_ago(1),
-    #'email': ['airflow@example.com'],
-    #'email_on_failure': True,
+    #'email': ['airflow@example.com'], # uncomment this line and the next and
+    # add your email address to get notified on task failure
+    #'email_on_failure': True, # uncomment this 
     'retries': 1,
-    'retry_delay': timedelta(minutes=5)
+    'retry_delay': timedelta(seconds=30),
+    'execution_timeout': timedelta(minutes=5),
 }
 
 with DAG(
@@ -51,7 +52,7 @@ with DAG(
     catchup=False,
     default_args=default_args,
     max_active_runs=1,
-    schedule="0 6 * * *"
+    schedule="0 6 * * *" # runs every day at 6 AM
 ) as dag:
 
     ssh_hook = SSHHook(ssh_conn_id='limesurvey_ssh', keepalive_interval=60).get_tunnel(

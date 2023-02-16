@@ -2,7 +2,9 @@ import sys
 from sqlalchemy import create_engine, text, \
     exc, engine, MetaData, Column, Table, ForeignKey
 from sqlalchemy.dialects.mysql import insert
-
+from typing import Union
+import pandas as pd
+import os
 
 def connect_to_mariadb(
     db_host: str,
@@ -96,3 +98,17 @@ def create_table_if_not_exists(
                     primary_key=config.get('primary_key', False)
                 ) for column_name, config in columns.items()),
             ).create()
+
+def log_missing_values(
+    df: pd.DataFrame, 
+    source_col: str,
+    target_cols: Union[str, list[str]],
+    log_file_name: str
+) -> None:
+    target_cols = target_cols if type(target_cols) == list else [target_cols]
+    missing_values_df = df.loc[df[[source_col] + target_cols].isna().any(axis=1)]
+    if len(missing_values_df) > 0:
+        path = "logs/mappings"
+        if not os.path.exists(path):
+            os.mkdir(path)
+        missing_values_df.to_csv(path + f"/{log_file_name}", index=False)
