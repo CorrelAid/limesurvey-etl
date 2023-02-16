@@ -4,24 +4,25 @@ import pandas as pd
 import csv
 from jinja2 import Template
 
-from utils import connect_to_mariadb, insert_on_duplicate, \
-    create_table_if_not_exists, log_missing_values
+from utils import (
+    connect_to_mariadb,
+    insert_on_duplicate,
+    create_table_if_not_exists,
+    log_missing_values,
+)
 
 
 def get_question_groups(config: dict, columns: dict):
     engine = connect_to_mariadb(
-        db_host=config['COOLIFY_MARIADB_HOST'],
-        db_port=config['COOLIFY_MARIADB_PORT'],
-        db_user=config['COOLIFY_MARIADB_USER'],
-        db_password=config['COOLIFY_MARIADB_PASSWORD'],
-        db_name=config['COOLIFY_MARIADB_DATABASE']
+        db_host=config["COOLIFY_MARIADB_HOST"],
+        db_port=config["COOLIFY_MARIADB_PORT"],
+        db_user=config["COOLIFY_MARIADB_USER"],
+        db_password=config["COOLIFY_MARIADB_PASSWORD"],
+        db_name=config["COOLIFY_MARIADB_DATABASE"],
     )
     # create table in reporting layer if not exists
     create_table_if_not_exists(
-        engine=engine,
-        table_name="question_groups",
-        columns=columns,
-        schema="reporting"
+        engine=engine, table_name="question_groups", columns=columns, schema="reporting"
     )
 
     # execute transformation
@@ -50,25 +51,24 @@ def get_question_groups(config: dict, columns: dict):
 
 def get_question_items(config: dict, columns: dict):
     engine = connect_to_mariadb(
-        db_host=config['COOLIFY_MARIADB_HOST'],
-        db_port=config['COOLIFY_MARIADB_PORT'],
-        db_user=config['COOLIFY_MARIADB_USER'],
-        db_password=config['COOLIFY_MARIADB_PASSWORD'],
-        db_name=config['COOLIFY_MARIADB_DATABASE']
+        db_host=config["COOLIFY_MARIADB_HOST"],
+        db_port=config["COOLIFY_MARIADB_PORT"],
+        db_user=config["COOLIFY_MARIADB_USER"],
+        db_password=config["COOLIFY_MARIADB_PASSWORD"],
+        db_name=config["COOLIFY_MARIADB_DATABASE"],
     )
 
     # create table in reporting layer if not exists
     create_table_if_not_exists(
-        engine=engine,
-        table_name="question_items",
-        columns=columns,
-        schema="reporting"
+        engine=engine, table_name="question_items", columns=columns, schema="reporting"
     )
 
     # import mappings and apply transformations
-    mappings_path = 'include/mappings/Mapping_LS-QuestionTypesMajor.csv'
-    mappings_df = pd.read_csv(mappings_path, delimiter=';')
-    mappings = list(zip(mappings_df['Fragetyp-ID (LS)'], mappings_df['Fragetyp Major (CFE)']))
+    mappings_path = "include/mappings/Mapping_LS-QuestionTypesMajor.csv"
+    mappings_df = pd.read_csv(mappings_path, delimiter=";")
+    mappings = list(
+        zip(mappings_df["Fragetyp-ID (LS)"], mappings_df["Fragetyp Major (CFE)"])
+    )
 
     jinja_sql = """
         INSERT INTO reporting.question_items (
@@ -121,38 +121,33 @@ def get_question_items(config: dict, columns: dict):
         mapping_missing_values_df,
         source_col="question_item_id",
         target_cols=["question_group_id", "type_major", "type_minor"],
-        log_file_name="mapping_question_items.csv"
-    )    
-
+        log_file_name="mapping_question_items.csv",
+    )
 
 
 def get_subquestions(config: dict, columns: dict):
     engine = connect_to_mariadb(
-        db_host=config['COOLIFY_MARIADB_HOST'],
-        db_port=config['COOLIFY_MARIADB_PORT'],
-        db_user=config['COOLIFY_MARIADB_USER'],
-        db_password=config['COOLIFY_MARIADB_PASSWORD'],
-        db_name=config['COOLIFY_MARIADB_DATABASE']
+        db_host=config["COOLIFY_MARIADB_HOST"],
+        db_port=config["COOLIFY_MARIADB_PORT"],
+        db_user=config["COOLIFY_MARIADB_USER"],
+        db_password=config["COOLIFY_MARIADB_PASSWORD"],
+        db_name=config["COOLIFY_MARIADB_DATABASE"],
     )
     # create table in reporting layer if not exists
     create_table_if_not_exists(
-        engine=engine,
-        table_name="subquestions",
-        columns=columns,
-        schema="reporting"
+        engine=engine, table_name="subquestions", columns=columns, schema="reporting"
     )
 
     # transform data
-    mapping_path = 'include/mappings/mapping_subquestions.csv'
+    mapping_path = "include/mappings/mapping_subquestions.csv"
     mapping_dict = {}
-    with open(mapping_path, 'r') as f:
+    with open(mapping_path, "r") as f:
         for i, line in enumerate(csv.reader(f)):
             if i > 0 and line[2] not in mapping_dict.keys():
                 mapping_dict[line[2]] = line[0]
-                
 
-    mapping_df = pd.read_csv(mapping_path, delimiter=',')
-    
+    mapping_df = pd.read_csv(mapping_path, delimiter=",")
+
     sql_stmt = """
         SELECT DISTINCT
             subq.title AS subquestion_id
@@ -162,19 +157,25 @@ def get_subquestions(config: dict, columns: dict):
         ON subq.parent_qid=parent.qid
         WHERE subq.parent_qid != 0;
     """
-    
+
     # replace subquestion_ids with those from the mapping
     subquestions_df = pd.read_sql(sql_stmt, con=engine)
-    
+
     # log missing values in mapping
-    log_missing_values_df = subquestions_df[~subquestions_df["subquestion_id"].isin(mapping_dict.keys())]
+    log_missing_values_df = subquestions_df[
+        ~subquestions_df["subquestion_id"].isin(mapping_dict.keys())
+    ]
     if len(log_missing_values_df) > 0:
         logging_path = "logs/mappings"
         if not os.path.exists(logging_path):
             os.mkdir(logging_path)
-        log_missing_values_df.to_csv("logs/mappings/mappings_subquestions.csv", index=False)
+        log_missing_values_df.to_csv(
+            "logs/mappings/mappings_subquestions.csv", index=False
+        )
 
-    subquestions_df["subquestion_id"] = subquestions_df["subquestion_id"].replace(mapping_dict)
+    subquestions_df["subquestion_id"] = subquestions_df["subquestion_id"].replace(
+        mapping_dict
+    )
 
     subquestions_df.to_sql(
         name="subquestions",
@@ -182,5 +183,5 @@ def get_subquestions(config: dict, columns: dict):
         schema="reporting",
         if_exists="append",
         index=False,
-        method=insert_on_duplicate
+        method=insert_on_duplicate,
     )

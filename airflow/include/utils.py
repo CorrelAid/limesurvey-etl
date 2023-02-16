@@ -1,17 +1,22 @@
 import sys
-from sqlalchemy import create_engine, text, \
-    exc, engine, MetaData, Column, Table, ForeignKey
+from sqlalchemy import (
+    create_engine,
+    text,
+    exc,
+    engine,
+    MetaData,
+    Column,
+    Table,
+    ForeignKey,
+)
 from sqlalchemy.dialects.mysql import insert
 from typing import Union
 import pandas as pd
 import os
 
+
 def connect_to_mariadb(
-    db_host: str,
-    db_port: int,
-    db_user: str,
-    db_password: str,
-    db_name: str
+    db_host: str, db_port: int, db_user: str, db_password: str, db_name: str
 ):
     """
     Connects to a MariaDB database and returns a SQLAlchemy engine.
@@ -34,7 +39,7 @@ def connect_to_mariadb(
         )
         engine = create_engine(url, echo=True)
         print("Connection to MariaDB established")
-        
+
         return engine
     except exc.SQLAlchemyError as e:
         print(f"Error connecting to MariaDB: {e}")
@@ -43,7 +48,7 @@ def connect_to_mariadb(
 
 def insert_on_duplicate(table, conn, keys, data_iter):
     """
-    Method to be passed to pd.to_sql. Ensures no duplicates on primary keys are 
+    Method to be passed to pd.to_sql. Ensures no duplicates on primary keys are
     inserted into the given table.
     """
     insert_stmt = insert(table.table).values(list(data_iter))
@@ -52,10 +57,7 @@ def insert_on_duplicate(table, conn, keys, data_iter):
 
 
 def create_table_if_not_exists(
-    engine: engine.Engine,
-    table_name: str,
-    columns: dict,
-    schema: str = None
+    engine: engine.Engine, table_name: str, columns: dict, schema: str = None
 ):
     """
     Function to create a table if it does not exist using SQLAlchemy.
@@ -73,11 +75,7 @@ def create_table_if_not_exists(
                     }
     """
     with engine.connect() as con:
-        if not engine.dialect.has_table(
-            con,
-            table_name=table_name,
-            schema=schema
-        ):
+        if not engine.dialect.has_table(con, table_name=table_name, schema=schema):
             print("Creating table")
             metadata = MetaData(engine, schema=schema)
             metadata.reflect(bind=engine)
@@ -85,25 +83,31 @@ def create_table_if_not_exists(
                 table_name,
                 metadata,
                 schema=schema,
-                *(Column(
-                    column_name,
-                    config['type'],
-                    ForeignKey(config['foreign_key']),
-                    nullable=config.get('nullable', True),
-                    primary_key=config.get('primary_key', False)
-                ) if 'foreign_key' in config.keys() else Column(
-                    column_name,
-                    config['type'],
-                    nullable=config.get('nullable', True),
-                    primary_key=config.get('primary_key', False)
-                ) for column_name, config in columns.items()),
+                *(
+                    Column(
+                        column_name,
+                        config["type"],
+                        ForeignKey(config["foreign_key"]),
+                        nullable=config.get("nullable", True),
+                        primary_key=config.get("primary_key", False),
+                    )
+                    if "foreign_key" in config.keys()
+                    else Column(
+                        column_name,
+                        config["type"],
+                        nullable=config.get("nullable", True),
+                        primary_key=config.get("primary_key", False),
+                    )
+                    for column_name, config in columns.items()
+                ),
             ).create()
 
+
 def log_missing_values(
-    df: pd.DataFrame, 
+    df: pd.DataFrame,
     source_col: str,
     target_cols: Union[str, list[str]],
-    log_file_name: str
+    log_file_name: str,
 ) -> None:
     target_cols = target_cols if type(target_cols) == list else [target_cols]
     missing_values_df = df.loc[df[[source_col] + target_cols].isna().any(axis=1)]
