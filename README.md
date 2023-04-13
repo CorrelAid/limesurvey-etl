@@ -243,4 +243,6 @@ be honest about the limitations of your project, e.g.:
 - reproducibility: what are limits of reproducibility? is there something hard-coded/specific to the data that you used?
 - best practices: maybe some code is particularly messy and people working on it in the future should know about it in advance?
 
+# Partner organization
 
+This project was conducted in collaboration with the [Vielfalt entscheidet](https://citizensforeurope.org/advocating_for_inclusion_page/) project of Citizens For Europe gUG. 
