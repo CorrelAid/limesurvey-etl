@@ -97,3 +97,5 @@ airflow/logs/
 
 # CFE scripts
 42_mod-wrangle-sensitive-data.R
+
+logs
