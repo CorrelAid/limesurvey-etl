@@ -1,6 +1,5 @@
 name: Check resources
 
-
 on:
   push:
     branches:
