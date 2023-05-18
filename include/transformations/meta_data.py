@@ -63,7 +63,6 @@ def get_question_items_dict(config: dict, columns: dict):
 
     question_items_dict_df["lang"] = question_items_dict_df["lang"].fillna(99)
 
-    print(question_items_dict_df)
     question_items_dict_df.to_sql(
         name="question_items_dict",
         con=engine,

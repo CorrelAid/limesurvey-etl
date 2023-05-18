@@ -1,6 +1,6 @@
 from sqlalchemy import VARCHAR, Integer
 
-REPORTING_SCHEMAS = {
+CONFIG = {
     "question_groups": {
         "question_group_id": {"type": Integer, "primary_key": True, "nullable": False},
         "question_group_name": {"type": VARCHAR(255), "nullable": False},
