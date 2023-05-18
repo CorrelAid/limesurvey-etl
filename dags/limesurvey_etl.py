@@ -188,7 +188,7 @@ with DAG(
     load_task = PythonOperator(
         task_id="load",
         python_callable=load,
-        op_kwargs={"CONNECTION_CONF": CONNECTION_CONF},
+        op_kwargs={"config": CONNECTION_CONF},
     )
 
 ssh_operator >> extract_limesurvey_data >> tg1 >> load_task
