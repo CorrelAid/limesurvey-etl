@@ -1,29 +1,29 @@
 from datetime import timedelta
 
-from airflow.utils.dates import days_ago
-from airflow.contrib.operators.ssh_operator import SSHOperator
-from airflow.contrib.hooks.ssh_hook import SSHHook
 from airflow import DAG
+from airflow.contrib.hooks.ssh_hook import SSHHook
+from airflow.contrib.operators.ssh_operator import SSHOperator
 from airflow.models import Variable
 from airflow.operators.python_operator import PythonOperator
+from airflow.utils.dates import days_ago
 from airflow.utils.task_group import TaskGroup
 
+from include.config import REPORTING_SCHEMAS
+from include.extract import extract_limesurvey
 from include.load import load
-from include.transformations.questions import (
-    get_question_groups,
-    get_subquestions,
-    get_question_items,
-)
+from include.transformations.diversity_dimensions import get_diversity_items
 from include.transformations.meta_data import (
+    get_diversity_items_dict,
+    get_question_answers_dict,
     get_question_items_dict,
     get_subquestions_dict,
-    get_question_answers_dict,
-    get_diversity_items_dict,
 )
-from include.extract import extract_limesurvey
+from include.transformations.questions import (
+    get_question_groups,
+    get_question_items,
+    get_subquestions,
+)
 from include.transformations.respondents import get_respondents
-from include.transformations.diversity_dimensions import get_diversity_items
-from include.config import REPORTING_SCHEMAS
 
 # list of table names
 TABLE_NAMES = ["lime_group_l10ns", "lime_questions"]

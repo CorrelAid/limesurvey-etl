@@ -1,9 +1,8 @@
 import re
 
 import pandas as pd
-
-from sqlalchemy import inspect, MetaData, Column, Integer, Table
-from utils import connect_to_mariadb, insert_on_duplicate, create_table_if_not_exists
+from sqlalchemy import Column, Integer, MetaData, Table, inspect
+from utils import connect_to_mariadb, create_table_if_not_exists, insert_on_duplicate
 
 
 def get_respondents(config: dict, columns: dict):

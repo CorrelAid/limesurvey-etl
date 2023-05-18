@@ -1,13 +1,12 @@
+import csv
 import os
 
 import pandas as pd
-import csv
 from jinja2 import Template
-
 from utils import (
     connect_to_mariadb,
-    insert_on_duplicate,
     create_table_if_not_exists,
+    insert_on_duplicate,
     log_missing_values,
 )
 
@@ -27,13 +26,13 @@ def get_question_groups(config: dict, columns: dict):
 
     # execute transformation
     sql_stmt = """
-        INSERT INTO reporting.question_groups 
+        INSERT INTO reporting.question_groups
         (
             question_group_id
             , question_group_name
             , description
         )
-        SELECT DISTINCT 
+        SELECT DISTINCT
             gid
             , group_name
             , description
@@ -84,14 +83,14 @@ def get_question_items(config: dict, columns: dict):
                 {% for mapping in mappings %}
                 WHEN type = '{{ mapping[0] }}'
                 THEN "{{ mapping[1] }}"
-                {% endfor %} 
+                {% endfor %}
                 ELSE NULL
             END AS type_major
             , type AS type_minor
         FROM raw.lime_questions lq
         WHERE parent_qid = 0
         AND NOT EXISTS (
-            SELECT 
+            SELECT
                 1
             FROM reporting.question_items qi
             WHERE qi.question_item_id = lq.title
@@ -103,7 +102,7 @@ def get_question_items(config: dict, columns: dict):
 
     # log missing values in mapping
     sql_stmt = """
-        SELECT 
+        SELECT
             question_item_id
             , question_group_id
             , type_major

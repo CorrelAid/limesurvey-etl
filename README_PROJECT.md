@@ -1,13 +1,13 @@
 # What is this project about? - The Problem & Goal
 
-To become more data driven in their work, non-profits need to collect data. As an open source and privacy-aware software, [Limesurvey](https://www.limesurvey.org/) is a good choice, especially for German NPOs. 
+To become more data driven in their work, non-profits need to collect data. As an open source and privacy-aware software, [Limesurvey](https://www.limesurvey.org/) is a good choice, especially for German NPOs.
 
-CFE uses Limesurvey to collect anti-discrimination and inclusion data (also known as equality data). Right now, data extraction from Limesurvey and initial data cleaning is done with a quite hacky R script with 1500 lines. 
+CFE uses Limesurvey to collect anti-discrimination and inclusion data (also known as equality data). Right now, data extraction from Limesurvey and initial data cleaning is done with a quite hacky R script with 1500 lines.
 
-The goal of this  project track is to design a pipeline to 
+The goal of this  project track is to design a pipeline to
 
-1. **extract** data from Limesurvey from its database via SSH tunnel 
-2. perform necessary **transformations** to clean the raw data such as flagging speeders, creating variables for GDPR consent etc. and log the number of affected respondents for each step. 
+1. **extract** data from Limesurvey from its database via SSH tunnel
+2. perform necessary **transformations** to clean the raw data such as flagging speeders, creating variables for GDPR consent etc. and log the number of affected respondents for each step.
 3. **load** the cleaned data into a Postgres database
 
 The goal is that the resulting code is not specific to CFE data, but can be used by CFE and other NPOs working with Limesurvey in a “plug-and-play” way.
@@ -15,7 +15,7 @@ The goal is that the resulting code is not specific to CFE data, but can be used
 (from the [Calls for
 Applications](https://citizensforeurope.notion.site/Calls-for-Applications-Data4Good-Projects-A-survey-research-ecosystem-for-diversity-and-visibility-ed7b72486a8d4bff8b74eaa851b3f029#873799b87fff4abe86b932e9a261972f))
 
-# Setup 
+# Setup
 
 ## Project Organization
 
@@ -27,9 +27,9 @@ TO BE DISCUSSED:
     ├── Makefile            <- Makefile with commands like `make data` or `make train`
     ├── README.md           <- The top-level README for developers using this project.
     ├── data                <- see README in data folder
-    │   ├── processed_gdpr        
-    │   ├── processed     
-    │   └── raw        
+    │   ├── processed_gdpr
+    │   ├── processed
+    │   └── raw
     │
     ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
     │
@@ -63,19 +63,19 @@ TO BE DISCUSSED:
 
 TODO add information on python package management
 
-How can an environment for your project be created/updated? 
+How can an environment for your project be created/updated?
 
 Please make sure that the setup steps are:
 
 - platform-independent (e.g. be aware of issues [like this](https://stackoverflow.com/questions/41274007/anaconda-export-environment-file)), at least MacOS and Windows (this is important in case CorrelAid employees have to provide support after the project has ended.
 - computer-independent: must work for all team members!
 
-## Data Access 
+## Data Access
 
 You need the following data files in order to run this project:
 
 ``` r
-system2("tree", c("data/raw")) # works on mac and potentially linux. 
+system2("tree", c("data/raw")) # works on mac and potentially linux.
 ```
 
 To access the data for this project, you first need to get
@@ -88,7 +88,7 @@ To get them, proceed as follows:
 3.  Click on the link and enter the password to decrypt the message
 4.  Follow the specific instructions for your data below.
 
-### Access Data in Limesurvey Playground Server 
+### Access Data in Limesurvey Playground Server
 
 [Yopass Link](https://yopass.se/#/s/f3683c87-c3ee-42f6-affa-f0a94ac596c1)
 
@@ -101,7 +101,7 @@ Interesting tables to take a look at first are probably:
 
 - 'lime_questions'
 - 'lime_question_attributes'
-- 'lime_survey_916481' 
+- 'lime_survey_916481'
 - 'lime_survey_916481_timings'
 - 'lime_labels'
 - 'lime_answers'
@@ -109,8 +109,8 @@ Interesting tables to take a look at first are probably:
 #### Connect with your DB-Tool of Choice (e.g. Beekeeper Studio)
 Enter the information provided in the Yopass Textfile and save the connection.
 
-#### Connect with Python 
-TODO 
+#### Connect with Python
+TODO
 
 Store the authentification information in your local environment (it should never be commited to the git repo).
 
@@ -150,9 +150,9 @@ LIMESURVEY_DB_PORT='3306'
 
 Restart your R session (Session -> Restart R Session or `.rs.restartR()`)
 
-Now you have to create the SSH tunnel - don't worry if you don't know what this means. In essence, it allows us to a) connect from our laptop to the server and then b) use this connection to connect and interact with the Limesurvey database. 
+Now you have to create the SSH tunnel - don't worry if you don't know what this means. In essence, it allows us to a) connect from our laptop to the server and then b) use this connection to connect and interact with the Limesurvey database.
 
-In the R console, run: 
+In the R console, run:
 
 ```
 glue::glue("ssh -L localhost:5555:127.0.0.1:3306 {ssh_user}@{ssh_host}")
@@ -160,7 +160,7 @@ glue::glue("ssh -L localhost:5555:127.0.0.1:3306 {ssh_user}@{ssh_host}")
 
 this builds a "tunnel" from your local machine on port 5555 to the port 3306 (the MariaDB port) on the server. We can then use port 5555 on our machine to connect and communicate with the MariaDB.
 
-##### MacOS/Linux/Windows with WSL or working SSH 
+##### MacOS/Linux/Windows with WSL or working SSH
 If you have:
 
 - MacOS
@@ -173,7 +173,7 @@ Once you have successfully opened the connection, run `src/00-setup-limesurvey.R
 
 :warning: the SSH connection might close after a couple of minutes, so you might have to reconnect in the terminal.
 
-##### Windows 
+##### Windows
 If you have never worked with SSH before, ask Frie or the project lead about it. They'll have a look together with you.
 
 
@@ -190,7 +190,7 @@ Copy the content from the decrypted secret link. It should look something like t
 ```
 # logins for Coolify Postgres DB
 COOLIFY_PG_NAME='your-postgres-default-db-name'
-COOLIFY_PG_HOST='your-postgres-url' 
+COOLIFY_PG_HOST='your-postgres-url'
 COOLIFY_PG_PORT='9001'
 COOLIFY_PG_USER='your-postgres-user-name'
 COOLIFY_PG_PASSWORD='your-postgres-pw'
@@ -205,7 +205,7 @@ Copy the content from the decrypted secret link. It should look something like t
 ```
 # logins for Coolify Postgres DB
 COOLIFY_MARIA_NAME='your-maria-default-db-name'
-COOLIFY_MARIA_HOST='your-maria-url' 
+COOLIFY_MARIA_HOST='your-maria-url'
 COOLIFY_MARIA_PORT='9000'
 COOLIFY_MARIA_USER='your-maria-user-name'
 COOLIFY_MARIA_PASSWORD='your-maria-user-pw'
@@ -231,16 +231,14 @@ TODO
 explain how the output(s) of this project can be handled/operated, for example:
 
 - how to create reports
-- where to create/find the data visualizations 
-- how to update data 
+- where to create/find the data visualizations
+- how to update data
 - what would need to be updated if someone wanted to re-run your analysis with different data
 
 # Limitations
 
-be honest about the limitations of your project, e.g.: 
+be honest about the limitations of your project, e.g.:
 
 - methodological: maybe another model would be more suitable?
 - reproducibility: what are limits of reproducibility? is there something hard-coded/specific to the data that you used?
 - best practices: maybe some code is particularly messy and people working on it in the future should know about it in advance?
-
-

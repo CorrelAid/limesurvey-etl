@@ -1,4 +1,4 @@
-# COPY THIS CODE TO YOUR SCRIPTS 
+# COPY THIS CODE TO YOUR SCRIPTS
 library(DBI)
 library(readr)
 
@@ -11,13 +11,13 @@ sql_password <- Sys.getenv("LIMESURVEY_SQL_PASSWORD")
 
 # PREREQUISITE: ssh tunnel/port forwarding -> see README
 con <- DBI::dbConnect(
-  RMariaDB::MariaDB(), 
+  RMariaDB::MariaDB(),
   dbname = "ve_limesurvey_test",
-  host = "127.0.0.1", 
-  port = 5555, 
+  host = "127.0.0.1",
+  port = 5555,
   user = sql_user,
   password = sql_password)
-# if you get error "Error: Failed to connect: Can't connect to MySQL server on '127.0.0.1' (36)" 
+# if you get error "Error: Failed to connect: Can't connect to MySQL server on '127.0.0.1' (36)"
 # make sure that you have a working SSH tunnel/port forwarding (see README)
 
 # example command
