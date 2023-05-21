@@ -1,8 +1,5 @@
-import re
-import sys
-
 import pandas as pd
-from sqlalchemy import create_engine, exc, inspect
+from sqlalchemy import inspect
 
 from include.utils import connect_to_mariadb
 
@@ -33,14 +30,6 @@ def extract_limesurvey(config: dict, table_names: list[str] = None):
             for table in source_inspector.get_table_names()
             if not table.startswith("lime_old_survey")
         ]
-    else:
-        table_names.extend(
-            [
-                table
-                for table in source_inspector.get_table_names()
-                if re.match(r"lime_survey_\d+", table)
-            ]
-        )
     # load tables to target DB
     with engine_target.connect() as con:
         con.execute("CREATE SCHEMA IF NOT EXISTS raw;")

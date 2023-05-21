@@ -1,0 +1,96 @@
+question_groups:
+  reporting_table_name: question_groups
+  columns:
+    question_group_id:
+      type: Integer
+      primary_key: True
+      nullable: False
+    question_group_name:
+      type: VARCHAR(255)
+      nullable: False
+    description:
+      type: VARCHAR(255)
+  sql_stmt: >
+    INSERT INTO reporting.question_groups
+    (
+        question_group_id
+        , question_group_name
+        , description
+    )
+    SELECT DISTINCT
+        gid
+        , group_name
+        , description
+    FROM raw.lime_group_l10ns lg
+    WHERE NOT EXISTS (
+        SELECT
+            1
+        FROM reporting.question_groups qg
+        WHERE qg.question_group_id = lg.gid
+    );
+
+question_items:
+  reporting_table_name: question_items
+  columns:
+    question_item_id:
+      type: VARCHAR(50)
+      primary_key: True
+      nullable: False
+    question_group_id:
+      type: Integer
+      primary_key: True
+      nullable: False,
+      foreign_key: "reporting.question_groups.question_group_id"
+    type_major:
+      type: VARCHAR(255)
+    type_minor:
+      type: VARCHAR(255)
+  mapping_path: "include/mappings/Mapping_LS-QuestionTypesMajor.csv"
+  mapping_join_left_on: type
+  mapping_join_right_on: "Fragetyp-ID (LS)"
+  mapping_delimiter: ;
+  target_cols:
+    - question_item_id
+    - question_group_id
+    - "Fragetyp Major (CFE) AS type_major"
+    - type_minor
+  sql_stmt: >
+    SELECT DISTINCT
+        title AS question_item_id
+        , gid AS question_group_id
+        , type AS type
+        , type AS type_minor
+    FROM raw.lime_questions lq
+    WHERE parent_qid = 0
+    AND NOT EXISTS (
+        SELECT
+            1
+        FROM reporting.question_items qi
+        WHERE qi.question_item_id = lq.title
+    );
+
+subquestions:
+  reporting_table_name: subquestions
+  columns:
+    subquestion_id:
+      type: VARCHAR(50)
+      primary_key: True
+      nullable: False
+    question_item_id:
+      type: VARCHAR(50)
+      nullable: False
+      foreign_key: "reporting.question_items.question_item_id"
+  mapping_path: "include/mappings/mapping_subquestions.csv"
+  mapping_join_right_on: subquestion_id_minor
+  mapping_join_left_on: subquestion_id_x
+  sql_stmt: >
+    SELECT DISTINCT
+        subq.title AS subquestion_id_x
+        , parent.title AS question_item_id
+    FROM raw.lime_questions subq
+    JOIN raw.lime_questions parent
+    ON subq.parent_qid=parent.qid
+    WHERE subq.parent_qid != 0;
+  target_cols:
+    - subquestion_id
+    - question_item_id

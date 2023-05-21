@@ -1,9 +1,11 @@
+import logging
+
 import pandas as pd
 import yaml
 from airflow.models.baseoperator import BaseOperator
 from sqlalchemy import VARCHAR, Integer
-
-from include.utils import (
+from sqlalchemy.exc import ObjectNotExecutableError, ResourceClosedError
+from utils import (
     connect_to_mariadb,
     create_table_if_not_exists,
     insert_on_duplicate,
@@ -17,7 +19,6 @@ class LimesurveyTransformOperator(BaseOperator):
     """
 
     def __init__(self, config_path, table_name, connection_config, *args, **kwargs):
-        """ """
         super().__init__(*args, **kwargs)
         with open(config_path, "r") as config_yaml:
             config = yaml.safe_load(config_yaml)
@@ -26,7 +27,6 @@ class LimesurveyTransformOperator(BaseOperator):
         self.table_name = table_name
 
     def execute(self, context):
-        print(self.config)
         engine = connect_to_mariadb(
             db_host=self.connection_config["COOLIFY_MARIADB_HOST"],
             db_port=self.connection_config["COOLIFY_MARIADB_PORT"],
@@ -47,32 +47,78 @@ class LimesurveyTransformOperator(BaseOperator):
         )
 
         # transform data
-        df = pd.read_sql(self.config["sql_stmt"], con=engine)
+        try:
+            df = pd.read_sql(self.config.get("sql_stmt"), con=engine)
+        except ResourceClosedError:
+            logging.info("SQL statement returned 0 rows. Exiting operator.")
+            return
+        except ObjectNotExecutableError:
+            logging.info("SQL statement missing or of wrong type. Exiting operator.")
+            return
+
+        if len(df) == 0:
+            return
 
         if "mapping_path" in self.config.keys():
-            mapping_df = pd.read_csv(self.config["mapping_path"], delimiter=",")
+            mapping_df = pd.read_csv(
+                self.config["mapping_path"],
+                delimiter=self.config.get("mapping_delimiter", ","),
+            )
+            mapping_join_left_on = self.config.get("mapping_join_left_on")
+            if mapping_join_left_on:
+                if not self.config["mapping_join_right_on"] in mapping_df.columns:
+                    raise ValueError(
+                        f"{self.config['mapping_join_right_on']} not in {mapping_df.columns}"
+                    )
+                mapping_df = mapping_df.rename(
+                    columns={self.config["mapping_join_right_on"]: mapping_join_left_on}
+                )
+
             df = df.merge(
                 mapping_df,
-                on=self.config["mapping_join_on"],
+                on=mapping_join_left_on
+                if mapping_join_left_on
+                else self.config["mapping_join_on"],
                 how="left",
-                suffixes=("", "_y"),
+                suffixes=[None, "_y"],
             )
 
         if "empty_columns_to_add" in self.config.keys():
             for col in self.config["empty_columns_to_add"]:
                 df[col] = pd.Series(dtype="str")
 
-        target_cols = self.config["target_cols"]
-        df = df[target_cols]
+        target_cols = df.columns
+        if "target_cols" in self.config.keys():
+            target_cols = self.config["target_cols"]
 
-        log_missing_values(
-            df,
-            source_col=self.config["mapping_join_on"],
-            target_cols=[
-                col for col in target_cols if not col == self.config["mapping_join_on"]
-            ],
-            log_file_name=self.config["mapping_log_file_name"],
-        )
+            col_renaming = {
+                col.split(" AS ")[0]: col.split(" AS ")[1]
+                for col in target_cols
+                if len(col.split(" AS ")) > 1
+            }
+            df = df.rename(columns=col_renaming)
+            target_cols = [
+                col.split(" AS ")[1] if len(col.split(" AS ")) > 1 else col
+                for col in target_cols
+            ]
+
+        if "mapping_path" in self.config.keys():
+            log_missing_values(
+                df,
+                source_col=self.config.get("mapping_join_on", mapping_join_left_on),
+                target_cols=[
+                    col
+                    for col in target_cols
+                    if not col
+                    == self.config.get("mapping_join_on", mapping_join_left_on)
+                ],
+                log_file_name=self.config.get(
+                    "mapping_log_file_name", mapping_join_left_on
+                ),
+            )
+
+        # subselect target columns
+        df = df[target_cols]
 
         # fill nans in primary key cols
         for col_name, col in {

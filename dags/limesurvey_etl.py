@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta
 
 from airflow import DAG
@@ -11,25 +12,33 @@ from limesurvey_plugin.operators.limesurvey_transform_operator import (
     LimesurveyTransformOperator,
 )
 
-from include.config import CONFIG
 from include.extract import extract_limesurvey
 from include.load import load
-from include.transformations.diversity_dimensions import get_diversity_items
-from include.transformations.meta_data import (
-    get_diversity_items_dict,
-    get_question_answers_dict,
-    get_question_items_dict,
-    get_subquestions_dict,
-)
-from include.transformations.questions import (
-    get_question_groups,
-    get_question_items,
-    get_subquestions,
-)
-from include.transformations.respondents import get_respondents
 
 # list of table names
-TABLE_NAMES = ["lime_group_l10ns", "lime_questions"]
+SURVEY_ID = "977429"
+TABLE_NAMES = [
+    "lime_group_l10ns",
+    "lime_questions",
+    "lime_question_l10ns",
+    f"lime_survey_{SURVEY_ID}",
+]
+
+CONFIGS_BASE_PATH = "include/configs/"
+META_DATA_CONFIG_PATH = os.path.join(CONFIGS_BASE_PATH, "meta_data_config.yaml")
+QUESTIONS_CONFIG_PATH = os.path.join(CONFIGS_BASE_PATH, "questions_config.yaml")
+
+TRANSFORM_TASKS = [
+    ("respondents", os.path.join(CONFIGS_BASE_PATH, "respondents_config.yaml")),
+    ("question_groups", QUESTIONS_CONFIG_PATH),
+    ("question_items", QUESTIONS_CONFIG_PATH),
+    ("question_items_dict", META_DATA_CONFIG_PATH),
+    ("subquestions", QUESTIONS_CONFIG_PATH),
+    ("subquestions_dict", META_DATA_CONFIG_PATH),
+    ("question_answers_dict", META_DATA_CONFIG_PATH),
+    ("diversity_items", os.path.join(CONFIGS_BASE_PATH, "diversity_dims_config.yaml")),
+    ("diversity_items_dict", META_DATA_CONFIG_PATH),
+]
 
 CONNECTION_CONF = {
     "LIMESURVEY_SQL_USER": Variable.get("LIMESURVEY_SECRET_SQL_USER"),
@@ -85,105 +94,18 @@ with DAG(
     )
 
     with TaskGroup(group_id="transform") as tg1:
-        respondents = PythonOperator(
-            task_id="get_respondents",
-            python_callable=get_respondents,
-            op_kwargs={
-                "config": CONNECTION_CONF,
-                "columns": CONFIG["respondents"],
-            },
-        )
-
-        question_groups = PythonOperator(
-            task_id="get_question_groups",
-            python_callable=get_question_groups,
-            op_kwargs={
-                "config": CONNECTION_CONF,
-                "columns": CONFIG["question_groups"],
-            },
-        )
-
-        question_items = PythonOperator(
-            task_id="get_question_items",
-            python_callable=get_question_items,
-            op_kwargs={
-                "config": CONNECTION_CONF,
-                "columns": CONFIG["question_items"],
-            },
-        )
-
-        # question_items_dict = PythonOperator(
-        #     task_id="get_question_items_dict",
-        #     python_callable=get_question_items_dict,
-        #     op_kwargs={
-        #         "CONNECTION_CONF": CONNECTION_CONF,
-        #         "columns": CONFIG["question_items_dict"],
-        #     },
-        # )
-
-        question_items_dict = LimesurveyTransformOperator(
-            task_id="get_question_items_dict",
-            config_path="include/config.yaml",
-            table_name="question_items_dict",
-            connection_config=CONNECTION_CONF,
-        )
-
-        subquestions = PythonOperator(
-            task_id="get_subquestions",
-            python_callable=get_subquestions,
-            op_kwargs={
-                "config": CONNECTION_CONF,
-                "columns": CONFIG["subquestions"],
-            },
-        )
-
-        subquestions_dict = PythonOperator(
-            task_id="get_subquestions_dict",
-            python_callable=get_subquestions_dict,
-            op_kwargs={
-                "config": CONNECTION_CONF,
-                "columns": CONFIG["subquestions_dict"],
-            },
-        )
-
-        question_answers_dict = PythonOperator(
-            task_id="get_question_answers_dict",
-            python_callable=get_question_answers_dict,
-            op_kwargs={
-                "config": CONNECTION_CONF,
-                "columns": CONFIG["question_answers_dict"],
-            },
-        )
-
-        diversity_items = PythonOperator(
-            task_id="get_diversity_items",
-            python_callable=get_diversity_items,
-            op_kwargs={
-                "config": CONNECTION_CONF,
-                "columns": CONFIG["diversity_items"],
-            },
-        )
-
-        diversity_items_dict = PythonOperator(
-            task_id="get_diversity_items_dict",
-            python_callable=get_diversity_items_dict,
-            op_kwargs={
-                "config": CONNECTION_CONF,
-                "columns": CONFIG["diversity_items_dict"],
-            },
-        )
-
-        (
-            respondents
-            >> question_groups
-            >> question_items
-            >> question_items_dict
-            >> subquestions
-            >> subquestions_dict
-            >> question_answers_dict
-            >> diversity_items
-            >> diversity_items_dict
-        )
+        task_list = []
+        for task in TRANSFORM_TASKS:
+            task_list.append(
+                LimesurveyTransformOperator(
+                    task_id=f"get_{task[0]}",
+                    config_path=task[1],
+                    table_name=task[0],
+                    connection_config=CONNECTION_CONF,
+                )
+            )
+        for pos, _ in enumerate(task_list[:-1]):
+            task_list[pos] >> task_list[pos + 1]
 
     load_task = PythonOperator(
         task_id="load",
