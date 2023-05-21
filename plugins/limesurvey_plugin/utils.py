@@ -3,16 +3,7 @@ import sys
 from typing import Union
 
 import pandas as pd
-from sqlalchemy import (
-    Column,
-    ForeignKey,
-    MetaData,
-    Table,
-    create_engine,
-    engine,
-    exc,
-    text,
-)
+from sqlalchemy import Column, ForeignKey, MetaData, Table, create_engine, engine, exc
 from sqlalchemy.dialects.mysql import insert
 
 

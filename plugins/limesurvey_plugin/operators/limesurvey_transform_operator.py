@@ -3,14 +3,14 @@ import logging
 import pandas as pd
 import yaml
 from airflow.models.baseoperator import BaseOperator
-from sqlalchemy import VARCHAR, Integer
-from sqlalchemy.exc import ObjectNotExecutableError, ResourceClosedError
-from utils import (
+from limesurvey_plugin.utils import (
     connect_to_mariadb,
     create_table_if_not_exists,
     insert_on_duplicate,
     log_missing_values,
 )
+from sqlalchemy import Integer
+from sqlalchemy.exc import ObjectNotExecutableError, ResourceClosedError
 
 
 class LimesurveyTransformOperator(BaseOperator):
