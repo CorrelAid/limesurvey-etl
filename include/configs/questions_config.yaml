@@ -38,7 +38,6 @@ question_items:
       nullable: False
     question_group_id:
       type: Integer
-      primary_key: True
       nullable: False,
       foreign_key: "reporting.question_groups.question_group_id"
     type_major:

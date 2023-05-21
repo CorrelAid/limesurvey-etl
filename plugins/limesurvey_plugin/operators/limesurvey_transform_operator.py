@@ -9,7 +9,7 @@ from limesurvey_plugin.utils import (
     insert_on_duplicate,
     log_missing_values,
 )
-from sqlalchemy import Integer
+from sqlalchemy import VARCHAR, Integer
 from sqlalchemy.exc import ObjectNotExecutableError, ResourceClosedError
 
 
