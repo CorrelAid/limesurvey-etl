@@ -1,9 +1,8 @@
 import sys
 
-from sqlalchemy import create_engine, inspect
 import pandas as pd
-
 from airflow.providers.postgres.hooks.postgres import PostgresHook
+from sqlalchemy import create_engine, inspect
 
 from include.utils import connect_to_mariadb
 

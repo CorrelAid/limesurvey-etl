@@ -1,18 +1,20 @@
+import logging
+import os
 import sys
+from typing import Union
+
+import pandas as pd
 from sqlalchemy import (
-    create_engine,
-    text,
-    exc,
-    engine,
-    MetaData,
     Column,
-    Table,
     ForeignKey,
+    MetaData,
+    Table,
+    create_engine,
+    engine,
+    exc,
+    text,
 )
 from sqlalchemy.dialects.mysql import insert
-from typing import Union
-import pandas as pd
-import os
 
 
 def connect_to_mariadb(

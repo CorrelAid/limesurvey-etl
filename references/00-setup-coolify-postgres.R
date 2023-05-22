@@ -23,7 +23,7 @@ con <- DBI::dbConnect(drv = RPostgres::Postgres(),
                       user = db_user,
                       password = db_password)
 
-DBI::dbListTables(con) # shows tables and views :) 
+DBI::dbListTables(con) # shows tables and views :)
 
 # example to read the metadata and values about the diversity profile questions
 diversity_responses <- DBI::dbReadTable(con, "diversity_responses")

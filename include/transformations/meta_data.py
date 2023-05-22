@@ -1,9 +1,8 @@
 import pandas as pd
-
 from utils import (
     connect_to_mariadb,
-    insert_on_duplicate,
     create_table_if_not_exists,
+    insert_on_duplicate,
     log_missing_values,
 )
 
@@ -61,6 +60,8 @@ def get_question_items_dict(config: dict, columns: dict):
         target_cols=["lang", "label_major", "label_major_short", "label_minor"],
         log_file_name="mapping_question_items_dict.csv",
     )
+
+    question_items_dict_df["lang"] = question_items_dict_df["lang"].fillna(99)
 
     print(question_items_dict_df)
     question_items_dict_df.to_sql(

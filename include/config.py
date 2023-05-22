@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, VARCHAR
+from sqlalchemy import VARCHAR, Integer
 
 REPORTING_SCHEMAS = {
     "question_groups": {

@@ -45,7 +45,7 @@ airflow-init_1       | Upgrades done
 airflow-init_1       | Admin user <DEFAULT_AIRFLOW_USER> created
 airflow-init_1       | 2.4.2
 start_airflow-init_1 exited with code 0
-``` 
+```
 
 The account created has the login <_AIRFLOW_WWW_USER_USERNAME> and the password <_AIRFLOW_WWW_USER_PASSWORD>.
 
@@ -64,4 +64,4 @@ docker-compose down --volumes --rmi all
 ```
 # Partner organization
 
-This project was conducted in collaboration with the [Vielfalt entscheidet](https://citizensforeurope.org/advocating_for_inclusion_page/) project of Citizens For Europe gUG. 
+This project was conducted in collaboration with the [Vielfalt entscheidet](https://citizensforeurope.org/advocating_for_inclusion_page/) project of Citizens For Europe gUG.

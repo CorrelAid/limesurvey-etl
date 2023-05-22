@@ -1,8 +1,8 @@
+import re
 import sys
 
-import re
-from sqlalchemy import create_engine, inspect, exc
 import pandas as pd
+from sqlalchemy import create_engine, exc, inspect
 
 from include.utils import connect_to_mariadb
 

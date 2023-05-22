@@ -1,6 +1,5 @@
 import pandas as pd
-
-from utils import connect_to_mariadb, insert_on_duplicate, create_table_if_not_exists
+from utils import connect_to_mariadb, create_table_if_not_exists, insert_on_duplicate
 
 
 ### TO DO: load actual data, this is only a placeholder

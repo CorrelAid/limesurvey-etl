@@ -1,4 +1,4 @@
-FROM apache/airflow:2.4.2-python3.9
+FROM apache/airflow:2.4.3-python3.10
 USER root
 RUN apt-get update \
     && apt install -yy wget \
