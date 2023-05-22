@@ -1,0 +1,11 @@
+respondents:
+  reporting_table_name: respondents
+  columns:
+    respondent_id:
+      type: Integer
+      primary_key: True
+      nullable: False
+  sql_stmt: >
+    SELECT DISTINCT
+      id as respondent_id
+    FROM raw.lime_survey_977429
