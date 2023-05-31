@@ -1,4 +1,5 @@
 import logging
+import sys
 
 import pandas as pd
 import yaml
@@ -11,6 +12,10 @@ from limesurvey_plugin.utils import (
 )
 from sqlalchemy import VARCHAR, Integer
 from sqlalchemy.exc import ObjectNotExecutableError, ResourceClosedError
+
+
+def str_to_class(classname):
+    return getattr(sys.modules[__name__], classname)
 
 
 class LimesurveyTransformOperator(BaseOperator):
@@ -38,7 +43,10 @@ class LimesurveyTransformOperator(BaseOperator):
         # create table in reporting layer if not exists
         columns = self.config["columns"]
         for colname in columns.keys():
-            columns[colname]["type"] = eval(columns[colname]["type"])
+            column_type = columns[colname]["type"].split("(")
+            columns[colname]["type"] = str_to_class(column_type[0])
+            if len(column_type) > 1:
+                columns[colname]["type"] = columns[colname]["type"](column_type[1][:-1])
         create_table_if_not_exists(
             engine=engine,
             table_name=self.config["reporting_table_name"],
