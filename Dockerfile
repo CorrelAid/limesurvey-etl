@@ -11,5 +11,5 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY ./airflow/dags/ /opt/airflow/dags/
-COPY ../limesurvey_etl/ /opt/airflow/include/limesurvey_etl/
+COPY ./limesurvey_etl/ /opt/airflow/include/limesurvey_etl/
 WORKDIR /airflow
