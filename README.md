@@ -71,7 +71,7 @@ To run airflow, start all services:
 docker-compose up
 ```
 
-The Airflow UI is now running on `localhost:8080`.
+The Airflow UI is now running on `localhost:8080`. Open a web browser and enter 'localhost:8080'.
 
 To clean up the environment, run
 
