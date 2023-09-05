@@ -1,5 +1,7 @@
 # CFE Limesurvey
 
+⚠️ not production ready - documentation might not work ⚠️ check most up-to-date branches for updates if things do not work.  
+
 ## Prerequisites
 Install [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/).
 
