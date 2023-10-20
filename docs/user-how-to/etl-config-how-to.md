@@ -48,6 +48,52 @@ The `columns`, `data`, and `transform_steps` fields require additional configura
 
 ::: limesurvey_etl.config.transform_config.select_source_data.Join
 
+##### Example
+```yaml
+- table_name: subquestions
+  staging_schema: staging
+  columns:
+    - name: subquestion_id
+      type: INTEGER
+      primary_key: True
+      nullable: False
+    - name: question_item_id
+      type: INTEGER
+      nullable: False
+      foreign_key: staging.question_items.question_item_id
+    - name: subquestion_item_title
+      type: VARCHAR(50)
+    - name: question_item_title
+      type: VARCHAR(50)
+  source_data:
+    source_tables:
+      - table_name: lime_questions
+        columns:
+          - qid AS subquestion_id
+          - title AS subquestion_item_title
+      - table_name: lime_questions
+        columns:
+          - qid AS question_item_id
+          - title AS question_item_title
+    source_schema: raw
+    join:
+      type: JOIN
+      left_table: lime_questions
+      right_table: lime_questions
+      left_on: parent_qid
+      right_on: qid
+    filter: "WHERE left_table.parent_qid != 0"
+  transform_steps:
+    - transform_type: add_computed_column
+      column_name: subquestion_item_title
+      input_columns:
+        - question_item_title
+        - subquestion_item_title
+      operator:
+        name: concat
+        separator: "_"
+```
+
 The `transform_steps` field is a list of transformations that should be applied to the data. There are a number of different transform steps available as documented below.
 
 - `add_columns`
