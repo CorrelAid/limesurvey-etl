@@ -1,0 +1,84 @@
+# Getting Started
+The following documentation describes the installation process that will get you up and running to implement your own ETL jobs.
+
+## Prerequisites
+Install [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/).
+
+#### Additional prerequisites for local development:
+If you want to contribute to this project or run an ETL pipeline locally without Airflow, you need to install the required dependencies.
+
+- [`Python`](https://www.python.org/)>=3.10.0
+- [`poetry`](https://python-poetry.org/)>=1.6.1
+
+Once you installed the dependencies, `cd` into the project's root directory in your terminal and run `poetry install --with dev` to install the required python dependencies into a virtual environment. To activate the virtual environment, run `poetry shell`.
+
+## Running Airflow to orchestrate ETL jobs
+This project uses [Airflow](https://airflow.apache.org/) to orchestrate ETL pipelines.
+
+### Setting necessary environment variables
+In order to run Airflow and allow the ETL pipelines to communicate with the source and target databases, you must set a number of environment variables.
+
+Create a `.env` file and set the Airflow UID by running the following command from the project's root directory:
+
+```bash
+echo -e "AIRFLOW_UID=$(id -u)" > .env
+```
+
+Open the `.env` file you just created in your IDE or text editor and append the following environment variables to it.
+
+```bash
+AIRFLOW_PG_USER="<USERNAME_FOR_AIRFLOW_DB>" # choose a username for the airflow db
+AIRFLOW_PG_PASSWORD="<PASSWORD_FOR_AIRFLOW_DB_USER>" # set a password for the airflow db user
+AIRFLOW_PG_DB="<AIRFLOW_DB_NAME>" # choose a name for the airflow db
+_AIRFLOW_WWW_USER_USERNAME="<USERNAME_FOR_AIRFLOW_UI_LOGIN>" # choose an admin username for logging into the Airflow UI (you can add additional users later via the "Security" tab in the Airflow UI)
+_AIRFLOW_WWW_USER_PASSWORD="<PW_FOR_AIRFLOW_UI_LOGIN>" # choose a password to login to the Airflow UI
+
+LIMESURVEY_SSH_PORT="<LIMESURVEY_SSH_PORT_IF_SSH_IS_USED>"
+LIMESURVEY_SSH_HOST="<LIMESURVEY_SSH_HOST_IF_SSH_IS_USED>"
+LIMESURVEY_SSH_USERNAME="<LIMESURVEY_SSH_USER_IF_SSH_IS_USED>"
+LIMESURVEY_SSH_PASSWORD="<LIMESURVEY_SSH_PW_IF_SSH_IS_USED>"
+LIMESURVEY_DB_NAME="<NAME OF THE LIMESURVEY DB>"
+LIMESURVEY_DB_PORT="<PORT OF THE LIMESURVEY DB>"
+LIMESURVEY_DB_USERNAME="<LIMESURVEY DB SQL USER>"
+LIMESURVEY_DB_PASSWORD="LIMESURVEY DB SQL PASSWORD"
+LIMESURVEY_DB_HOST="127.0.0.1" # or actual host if SSH is not used
+
+STAGING_DB_SQLALCHEMY_DRIVER="postgresql" # or "mysql+pymysql" if Staging DB is a MYSQL DB (e.g., MariaDB)
+STAGING_DB_USERNAME="<SQL USER OF THE STAGING DB"
+STAGING_DB_PASSWORD="<PASSWORD OF THE STAGING DB SQL USER>"
+STAGING_DB_NAME="<NAME OF THE STAGING DB>"
+STAGING_DB_HOST="<HOST OF THE STAGING DB>" # host.docker.internal for usage with ariflow if DB is running on same machine as airflow
+STAGING_DB_PORT="<PORT OF THE STAGING DB>"
+
+
+REPORTING_DB_SQLALCHEMY_DRIVER="postgresql" # or "mysql+pymysql" if reporting DB is a MYSQL DB (e.g., MariaDB)
+REPORTING_DB_PASSWORD="<PW OF THE REPORTING DB SQL USER>"
+REPORTING_DB_NAME="<NAME OF THE REPORTING DB>"
+REPORTING_DB_HOST="<HOST OF THE REPORTING DB>" # host.docker.internal for usage with ariflow if DB is running on same machine as airflow
+REPORTING_DB_PORT="<PORT OF THE REPORTING DB>"
+REPORTING_DB_USERNAME="<SQL USER OF THE REPORTING DB>"
+```
+
+### Setup Airflow
+To start Airflow, make sure the Docker daemon is running (e.g., by starting docker desktop or starting the docker service) and run
+```bash
+docker compose up
+```
+This may take a while. Once the setup is complete, you should repeatedly see a message similar to the following in your terminal:
+```
+limesurvey-etl-airflow-webserver-1  | 127.0.0.1 - - [19/Oct/2023:14:16:17 +0000] "GET /health HTTP/1.1" 200 141 "-" "curl/7.74.0"
+```
+
+The Airflow Webserver is now running and the Airflow UI can be accessed through a regular browser by entering the following URL: `localhost:8080`. Use the credentials defined in your `.env` file (`_AIRFLOW_WWW_USER_USERNAME` and `_AIRFLOW_WWW_USER_PASSWORD`) to login. You can add additional users via the "Security" tab at the top of the Airflow UI after successful login. Airflow DAGs will run depending on their schedules as long as Airflow is running. Press `control+c` or `strg+c` to stop the process, depending on your operating system.
+
+### Adding ETL pipelines
+Once Airflow is up and running, you can start adding your ETL pipelines as described in the [User Guide](user-how-to/creating-dags.md).
+
+## Clean up
+To clean up the environment, run
+```
+docker compose down --volumes --rmi all
+```
+Note: This will not delete any Limesurvey data or data generated during an ETL pipeline run from your target databases, but only remove the Airflow environment.# Partner organization
+
+This project was conducted in collaboration with the [Vielfalt entscheidet](https://citizensforeurope.org/advocating_for_inclusion_page/) project of Citizens For Europe gUG.

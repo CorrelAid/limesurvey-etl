@@ -4,6 +4,16 @@ from pydantic import BaseModel, Field, validator
 
 
 class FilterCondition(BaseModel):
+    """
+    Represents a filtering condition.
+
+    Attributes:
+        column (str): The column name to apply the condition on.
+        value (str): The value to compare against.
+        operator (str): The comparison operator.
+
+    """
+
     column: str
     value: str
     operator: str
@@ -26,6 +36,17 @@ class FilterCondition(BaseModel):
 
 
 class FilterDataConfig(BaseModel):
+    """
+    Configuration for filtering data.
+
+    Attributes:
+        transform_type (Literal["filter_data"]): Type of transformation, should be "filter_data".
+        conditions (list[FilterCondition]): List of FilterCondition objects.
+        logical_operator (Union[Literal["AND"], Literal["OR"]], optional):
+            Logical operator to be applied if multiple conditions should be applied.
+
+    """
+
     transform_type: Literal["filter_data"]
     conditions: list[FilterCondition] = Field(
         ..., description="List of FilterCondition objects"

@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "Limesurvey ETL"
+version = "0.1.0"
+description = ""
+authors = ["Timo Hartmann <timo.hartmann@posteo.de>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10.0"
+black = "^23.9.1"
+mariadb = "1.*"
+pydantic = "1.10.9"
+pandas = "1.5.1"
+SQLAlchemy = "1.4.42"
+PyMySQL = "1.0.2"
+sqlparse = "0.4.3"
+jinja2 = "3.1.2"
+pyyaml = "6.0"
+azure-servicebus = "7.11.3"
+
+[tool.poetry.group.dev.dependencies]
+mkdocs = "1.5.*"
+mkdocstrings-python = "1.7.*"
+mkdocs-material = "9.*"
+mkdocs-table-reader-plugin = "2.0.*"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"

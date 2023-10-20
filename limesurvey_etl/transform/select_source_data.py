@@ -1,22 +1,22 @@
 import pandas as pd
 from sqlalchemy.engine import Engine
 
-from limesurvey_etl.config.transform_config.select_subset_of_data import (
-    SelectSubsetOfDataConfig,
+from limesurvey_etl.config.transform_config.select_source_data import (
+    SelectSourceDataConfig,
 )
 from limesurvey_etl.connectors.staging_db_connect import StagingDBConnect
 from limesurvey_etl.settings.staging_db_settings import StagingDBSettings
 from limesurvey_etl.transform.base import BaseTransform
 
 
-class SelectSubsetOfDataTransform(BaseTransform[SelectSubsetOfDataConfig]):
+class SelectSourceDataTransform(BaseTransform[SelectSourceDataConfig]):
     """
     Performs the initial selection of data to be transformed. Needs to be part of every pipeline.
     """
 
     def __init__(
         self,
-        config: SelectSubsetOfDataConfig,
+        config: SelectSourceDataConfig,
         staging_schema_name: str,
         staging_table_name: str,
     ):

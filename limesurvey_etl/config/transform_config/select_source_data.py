@@ -5,6 +5,16 @@ from pydantic import BaseModel, Field, PrivateAttr, validator
 
 
 class Join(BaseModel):
+    """
+    Represents a join operation.
+
+    Attributes:
+        type (str): Type of join operation.
+        left_table (str): Name of the join's left table.
+        right_table (str): Name of the join's right table.
+        left_on (Optional[str]): Column name for joining on the left table.
+        right_on (Optional[str]): Column name for joining on the right table."""
+
     type: str
     left_table: str = Field(..., description="Name of the join's left table.")
     right_table: str = Field(..., description="Name of the join's right table.")
@@ -21,21 +31,31 @@ class Join(BaseModel):
 
 
 class SourceTable(BaseModel):
-    # TODO: change type of columns to str
+    """
+    Represents a source table.
+
+    Attributes:
+        table_name (str): Name of the source table.
+        columns (list[str]): List of column names in the source table.
+
+    """
+
     table_name: str
-    columns: list[tuple[str, Optional[str]]]
-
-    @validator("columns")
-    @classmethod
-    def transform_columns(cls, columns):
-        return [
-            " AS ".join(column) if column[1] is not None else column[0]
-            for column in columns
-        ]
+    columns: list[str]
 
 
-class SelectSubsetOfDataConfig(BaseModel):
-    transform_type: Literal["select_subset_of_data"]
+class SelectSourceDataConfig(BaseModel):
+    """
+    Configuration for selecting a subset of data from source tables.
+
+    Attributes:
+        source_schema (str): Name of the source schema.
+        source_tables (list[SourceTable]): List of source tables with their columns to be selected.
+        join (Join, optional): Join configuration based on the Join class.
+        filter (str, optional): Optional SQL filter clause.
+
+    """
+
     source_schema: str
     source_tables: list[SourceTable] = Field(
         ...,

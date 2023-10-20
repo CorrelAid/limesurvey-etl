@@ -4,6 +4,14 @@ from pydantic import BaseModel, Field, root_validator
 
 
 class Operator(BaseModel):
+    """
+    Represents an operator used in computations.
+
+    Attributes:
+        name (Union[Literal["sum"], Literal["product"], Literal["difference"], Literal["concat"]]):
+            Operation used to compute new column.
+        separator (str, optional): Separator used to separate strings."""
+
     name: Union[
         Literal["sum"], Literal["product"], Literal["difference"], Literal["concat"]
     ] = Field(..., description="Operation used to compute new column.")
@@ -18,11 +26,33 @@ class Operator(BaseModel):
 
 
 class ConcatOperator(Operator):
+    """
+    Represents a concatenation operator.
+
+    Attributes:
+        operator (Literal["concat"]): Type of operator, should be "concat".
+        separator (str, optional): Separator used to separate strings.
+
+    """
+
     operator: Literal["concat"]
     separator: str = Field(None, description="Separator used to separate strings")
 
 
 class AddComputedColumnConfig(BaseModel):
+    """
+    Configuration for adding a computed column.
+
+    Attributes:
+        transform_type (Literal["add_computed_column"]): Type of transformation, should be "add_computed_column".
+        column_name (str): Name of the new column.
+        input_columns (Union[list[str], str]): Columns that should be used to compute the new column.
+        operator (Operator): Operation used to compute the new column.
+        drop_input_columns (Union[Literal["all"], list[str]], optional): Input columns to be dropped from
+            data frame after computation.
+
+    """
+
     transform_type: Literal["add_computed_column"]
     column_name: str = Field(..., description="Name of the new column.")
     input_columns: Union[list[str], str] = Field(

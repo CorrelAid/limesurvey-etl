@@ -37,7 +37,7 @@ class LimesurveyExtract(BaseExtract[LimesurveyExtractConfig]):
 
         # create schema to store raw data in if it does not exist
         logging.info("Creating staging schema in staging DB if not exists.")
-        staging_schema = self.config.staging_schema or "raw"
+        staging_schema = self.config.staging_schema
         with staging_db_engine.connect() as conn:
             if not conn.dialect.has_schema(conn, staging_schema):
                 conn.execute(CreateSchema(staging_schema))

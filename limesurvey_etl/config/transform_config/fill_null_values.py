@@ -4,6 +4,19 @@ from pydantic import BaseModel, Field, root_validator
 
 
 class FillNullValuesConfig(BaseModel):
+    """
+    Configuration for filling null values in a column.
+
+    Attributes:
+        transform_type (Literal["fill_null_values"]): Type of transformation, should be "fill_null_values".
+        column_name (str): Name of the column in which Null values should be replaced.
+        value (Union[str, int, float, bool], optional): Value to replace Null values with.
+        method (Union[Literal["backfill"], Literal["ffill"]], optional):
+            Method to use for filling Null values in Column.
+            'ffill' -> propagate last valid observation forward to next valid.
+            'backfill' -> use next valid observation to fill gap.
+    """
+
     transform_type: Literal["fill_null_values"]
     column_name: str = Field(
         ..., description="Name of the column in which Null values should be raplaced."

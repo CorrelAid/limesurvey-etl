@@ -9,8 +9,6 @@ extract:
 transformation_pipelines:
   - table_name: question_groups
     staging_schema: staging
-    primary_keys:
-      - question_group_id
     columns:
       - name: question_group_id
         type: INTEGER
@@ -21,15 +19,16 @@ transformation_pipelines:
       - name: description
         type: VARCHAR(255)
         nullable: True
+    source_data:
+      source_tables:
+        - table_name: lime_group_l10ns
+          columns:
+            - gid AS question_group_id
+            - group_name AS question_group_name
+            - description
+      source_schema: raw
+
     transform_steps:
-      - transform_type: select_subset_of_data
-        source_tables:
-          - table_name: lime_group_l10ns
-            columns:
-              - [gid, question_group_id]
-              - [group_name, question_group_name]
-              - [description, null]
-        source_schema: raw
       - transform_type: rename_columns
         colname_to_colname:
           gid: question_group_id
@@ -37,8 +36,6 @@ transformation_pipelines:
 
   - table_name: question_items
     staging_schema: staging
-    primary_keys:
-      - question_item_id
     columns:
       - name: question_item_id
         type: INTEGER
@@ -57,17 +54,17 @@ transformation_pipelines:
       - name: type_minor
         type: VARCHAR(255)
         nullable: True
+    source_data:
+      source_tables:
+        - table_name: lime_questions
+          columns:
+            - qid AS question_item_id
+            - title AS question_item_title
+            - gid AS question_group_id
+            - type AS type_major
+            - type AS type_minor
+      source_schema: raw
     transform_steps:
-      - transform_type: select_subset_of_data
-        source_tables:
-          - table_name: lime_questions
-            columns:
-              - [qid, question_item_id]
-              - [title, question_item_title]
-              - [gid, question_group_id]
-              - [type, type_major]
-              - [type, type_minor]
-        source_schema: raw
       - transform_type: join_with_csv_mapping
         mapping_path: /opt/airflow/include/mappings/Mapping_LS-QuestionTypesMajor.csv
         mapping_delimiter: ;
@@ -82,8 +79,6 @@ transformation_pipelines:
 
   - table_name: subquestions
     staging_schema: staging
-    primary_keys:
-      - subquestion_id
     columns:
       - name: subquestion_id
         type: INTEGER
@@ -97,25 +92,25 @@ transformation_pipelines:
         type: VARCHAR(50)
       - name: question_item_title
         type: VARCHAR(50)
+    source_data:
+      source_tables:
+        - table_name: lime_questions
+          columns:
+            - qid AS subquestion_id
+            - title AS subquestion_item_title
+        - table_name: lime_questions
+          columns:
+            - qid AS question_item_id
+            - title AS question_item_title
+      source_schema: raw
+      join:
+        type: JOIN
+        left_table: lime_questions
+        right_table: lime_questions
+        left_on: parent_qid
+        right_on: qid
+      filter: "WHERE left_table.parent_qid != 0"
     transform_steps:
-      - transform_type: select_subset_of_data
-        source_tables:
-          - table_name: lime_questions
-            columns:
-              - [qid, subquestion_id]
-              - [title, subquestion_item_title]
-          - table_name: lime_questions
-            columns:
-              - [qid, question_item_id]
-              - [title, question_item_title]
-        source_schema: raw
-        join:
-          type: JOIN
-          left_table: lime_questions
-          right_table: lime_questions
-          left_on: parent_qid
-          right_on: qid
-        filter: "WHERE left_table.parent_qid != 0"
       - transform_type: add_computed_column
         column_name: subquestion_item_title
         input_columns:
@@ -127,25 +122,20 @@ transformation_pipelines:
 
   - table_name: respondents
     staging_schema: staging
-    primary_keys:
-      - respondent_id
     columns:
       - name: respondent_id
         type: INTEGER
         primary_key: True
         nullable: False
-    transform_steps:
-      - transform_type: select_subset_of_data
-        source_schema: raw
-        source_tables:
-          - table_name: lime_survey_977429
-            columns:
-              - [id, respondent_id]
+    source_data:
+      source_schema: raw
+      source_tables:
+        - table_name: lime_survey_977429
+          columns:
+            - id AS respondent_id
 
   - table_name: diversity_items
     staging_schema: staging
-    primary_keys:
-      - diversity_item_id
     columns:
       - name: diversity_item_id
         type: VARCHAR(255)
@@ -162,9 +152,6 @@ transformation_pipelines:
 
   - table_name: question_items_dict
     staging_schema: staging
-    primary_keys:
-      - question_item_id
-      - lang
     columns:
       - name: question_item_id
         type: INTEGER
@@ -187,24 +174,24 @@ transformation_pipelines:
       - name: label_minor
         type: VARCHAR(255)
         nullable: True
+    source_data:
+      source_schema: raw
+      source_tables:
+        - table_name: lime_questions
+          columns:
+            - qid AS question_item_id
+            - title AS question_item_title
+        - table_name: lime_question_l10ns
+          columns:
+            - language AS lang
+      join:
+        type: "LEFT JOIN"
+        left_table: lime_questions
+        right_table: lime_question_l10ns
+        left_on: qid
+        right_on: qid
+      filter: "WHERE left_table.parent_qid = 0"
     transform_steps:
-      - transform_type: select_subset_of_data
-        source_schema: raw
-        source_tables:
-          - table_name: lime_questions
-            columns:
-              - [qid, question_item_id]
-              - [title, question_item_title]
-          - table_name: lime_question_l10ns
-            columns:
-              - [language, lang]
-        join:
-          type: "LEFT JOIN"
-          left_table: lime_questions
-          right_table: lime_question_l10ns
-          left_on: qid
-          right_on: qid
-        filter: "WHERE left_table.parent_qid = 0"
       - transform_type: join_with_csv_mapping
         mapping_path: "/opt/airflow/include/mappings/mapping_question_items.csv"
         mapping_delimiter: ","
@@ -217,9 +204,6 @@ transformation_pipelines:
 
   - table_name: subquestions_dict
     staging_schema: staging
-    primary_keys:
-      - subquestion_id
-      - lang
     columns:
       - name: subquestion_id
         type: INTEGER
@@ -245,16 +229,16 @@ transformation_pipelines:
       - name: label_minor
         type: VARCHAR(255)
         nullable: True
+    source_data:
+      source_schema: staging
+      source_tables:
+        - table_name: subquestions
+          columns:
+            - subquestion_id
+            - question_item_id
+            - subquestion_item_title
+            - question_item_title
     transform_steps:
-      - transform_type: select_subset_of_data
-        source_schema: staging
-        source_tables:
-          - table_name: subquestions
-            columns:
-              - [subquestion_id, null]
-              - [question_item_id, null]
-              - [subquestion_item_title, null]
-              - [question_item_title, null]
       - transform_type: join_with_csv_mapping
         mapping_path: "/opt/airflow/include/mappings/mapping_subquestions.csv"
         mapping_delimiter: ","
@@ -269,10 +253,6 @@ transformation_pipelines:
 
   - table_name: question_answers_dict
     staging_schema: staging
-    primary_keys:
-      - question_item_id
-      - lang
-      - answer_id
     columns:
       - name: question_item_id
         type: INTEGER
@@ -293,14 +273,14 @@ transformation_pipelines:
       - name: answer_text
         type: VARCHAR(10000)
         nullable: True
+    source_data:
+      source_schema: staging
+      source_tables:
+        - table_name: question_items
+          columns:
+            - question_item_id
+            - question_item_title
     transform_steps:
-      - transform_type: select_subset_of_data
-        source_schema: staging
-        source_tables:
-          - table_name: question_items
-            columns:
-              - [question_item_id, null]
-              - [question_item_title, null]
       - transform_type: join_with_csv_mapping
         mapping_path: /opt/airflow/include/mappings/mapping_question_answers.csv
         mapping_delimiter: ","
@@ -319,9 +299,6 @@ transformation_pipelines:
 
   - table_name: diversity_items_dict
     staging_schema: staging
-    primary_keys:
-      - diversity_item_id
-      - lang
     columns:
       - name: diversity_item_id
         type: VARCHAR(255)
@@ -331,13 +308,13 @@ transformation_pipelines:
       - name: label_log
         type: VARCHAR(10000)
         nullable: True
+    source_data:
+      source_schema: staging
+      source_tables:
+        - table_name: diversity_items
+          columns:
+            - diversity_item_id
     transform_steps:
-      - transform_type: select_subset_of_data
-        source_schema: staging
-        source_tables:
-          - table_name: diversity_items
-            columns:
-              - [diversity_item_id, null]
       - transform_type: join_with_csv_mapping
         mapping_path: /opt/airflow/include/mappings/mapping_diversity_items.csv
         mapping_delimiter: ","

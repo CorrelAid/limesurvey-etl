@@ -32,8 +32,8 @@ from limesurvey_etl.transform.join_with_csv_mapping import (  # noqa
     JoinWithCSVMappingTransform,
 )
 from limesurvey_etl.transform.rename_columns import RenameColumnsTransform  # noqa
-from limesurvey_etl.transform.select_subset_of_data import (  # noqa
-    SelectSubsetOfDataTransform,
+from limesurvey_etl.transform.select_source_data import (  # noqa
+    SelectSourceDataTransform,
 )
 from limesurvey_etl.transformation_pipeline import TransformationPipeline
 
@@ -74,7 +74,6 @@ class Transformer(Enum):
     FilterDataTransform = "filter_data"
     JoinWithCSVMappingTransform = "join_with_csv_mapping"
     RenameColumnsTransform = "rename_columns"
-    SelectSubsetOfDataTransform = "select_subset_of_data"
     AddComputedColumnTransform = "add_computed_column"
 
 
@@ -174,28 +173,33 @@ class Pipeline:
                 staging_schema_name = transformation_pipeline.config.staging_schema
                 staging_table_name = transformation_pipeline.config.table_name
 
-                self.create_table_if_not_exists(
-                    engine=staging_db_engine,
-                    table_name=staging_table_name,
-                    columns=transformation_pipeline.config.columns,
-                    schema=staging_schema_name,
-                )
+                if transformation_pipeline.config.columns is not None:
+                    print(f"Creating table {staging_table_name}")
+                    self.create_table_if_not_exists(
+                        engine=staging_db_engine,
+                        table_name=staging_table_name,
+                        columns=transformation_pipeline.config.columns,
+                        schema=staging_schema_name,
+                    )
 
                 # run transformation steps
                 transformation_steps = transformation_pipeline.config.transform_steps
-                if transformation_steps is None:
+                if (
+                    transformation_steps is None
+                    or transformation_pipeline.config.source_data is None
+                ):
                     continue
 
-                transformer_config = transformation_steps[0]
-                transformer = str_to_class(
-                    Transformer(transformer_config.transform_type).name
-                )(transformer_config, staging_schema_name, staging_table_name)
+                transformer_data_config = transformation_pipeline.config.source_data
+                transformer = SelectSourceDataTransform(
+                    transformer_data_config, staging_schema_name, staging_table_name
+                )
 
                 df = transformer.transform()
-                if len(transformation_steps) > 1:
+                if len(transformation_steps) > 0:
                     for (
                         transformer_config
-                    ) in transformation_pipeline.config.transform_steps[1:]:
+                    ) in transformation_pipeline.config.transform_steps:
                         transformer = str_to_class(
                             Transformer(transformer_config.transform_type).name
                         )(transformer_config)
