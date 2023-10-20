@@ -22,7 +22,6 @@
                 - gid AS question_group_id
                 - type AS type_major
                 - type AS type_minor
-          source_schema: raw
         transform_steps:
           - transform_type: join_with_csv_mapping
             mapping_path: /opt/airflow/include/mappings/Mapping_LS-QuestionTypesMajor.csv
