@@ -49,14 +49,17 @@ class SelectSourceDataConfig(BaseModel):
     Configuration for selecting a subset of data from source tables.
 
     Attributes:
-        source_schema (str): Name of the source schema.
+        source_schema (str): Name of the database schema the source data is stored in. Defaults to 'raw'
         source_tables (list[SourceTable]): List of source tables with their columns to be selected.
         join (Join, optional): Join configuration based on the Join class.
         filter (str, optional): Optional SQL filter clause.
 
     """
 
-    source_schema: str
+    source_schema: str = Field(
+        "raw",
+        description="Name of the database schema the source data is stored in. Defaults to 'raw'",
+    )
     source_tables: list[SourceTable] = Field(
         ...,
         description="List of tuples containing the source table name and a list of the columns to be selected",
