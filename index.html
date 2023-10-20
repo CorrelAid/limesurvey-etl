@@ -346,9 +346,56 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#partner-organization" class="md-nav__link">
-    Partner organization
+  <a href="#project-organization" class="md-nav__link">
+    Project Organization
   </a>
+  
+    <nav class="md-nav" aria-label="Project Organization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#access-data-in-limesurvey-playground-server" class="md-nav__link">
+    Access Data in Limesurvey Playground Server
+  </a>
+  
+    <nav class="md-nav" aria-label="Access Data in Limesurvey Playground Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connect-with-your-db-tool-of-choice-eg-beekeeper-studio" class="md-nav__link">
+    Connect with your DB-Tool of Choice (e.g. Beekeeper Studio)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-cleaned-data-in-coolify-postgres-database" class="md-nav__link">
+    Access Cleaned Data in Coolify Postgres Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-empty-coolify-mariadb-database" class="md-nav__link">
+    Access Empty Coolify MariaDB Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-coolify-playground-postgres-for-development" class="md-nav__link">
+    Access Coolify Playground Postgres for Development
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -494,7 +541,85 @@
 <p>The goal is that the resulting code is not specific to CFE data, but can be used by CFE and other NPOs working with Limesurvey in a “plug-and-play” way.</p>
 <p>(from the <a href="https://citizensforeurope.notion.site/Calls-for-Applications-Data4Good-Projects-A-survey-research-ecosystem-for-diversity-and-visibility-ed7b72486a8d4bff8b74eaa851b3f029#873799b87fff4abe86b932e9a261972f">Calls for
 Applications</a>)</p>
-<h2 id="partner-organization">Partner organization</h2>
+<h2 id="project-organization">Project Organization</h2>
+<p>TO BE DISCUSSED:</p>
+<hr />
+<div class="highlight"><pre><span></span><code>├── LICENSE
+├── README.md           &lt;- The top-level README for developers using this project.
+│
+├── docs               &lt;- Markdown files used my [mkdocs](https://www.mkdocs.org/) to generate documentation. 
+│
+├── requirements.txt   &lt;- The requirements file used in the docker-compose.yml
+│
+├── limesurvey_etl     &lt;- Source code for use in this project.
+│   ├── config         &lt;- Contains the pydantic models for configuring ETL jobs
+│   │   └── extract_config
+│   │   └── transform_config
+│   │   └── load_config
+│   │
+│   ├── connectors         &lt;- Contains the code used to connect to external systems
+│   ├── extract            &lt;- Contains the code used to extract data 
+│   │
+│   ├── transform          &lt;- Contains the code used to transform data
+│   │
+│   ├── load               &lt;- Contains the code used to load data to target systems
+│   │
+│   ├── etl_pipeline.py               &lt;- Contains code used to define an ETL pipeline
+│   └── transformation_pipline.py &lt;- Contains code defining a transformation pipeline
+│
+└── poetry.
+</code></pre></div>
+<h3 id="access-data-in-limesurvey-playground-server">Access Data in Limesurvey Playground Server</h3>
+<p><a href="https://yopass.se/#/s/f3683c87-c3ee-42f6-affa-f0a94ac596c1">Yopass Link</a></p>
+<p>To access the data from the self-hosted Limesurvey Server and its MariaDB, you need to:</p>
+<ol>
+<li>connect to the virtual machine/server that Limesurvey is running on. This you do using SSH.</li>
+<li>then you can connect to the SQL database where the data is stored</li>
+</ol>
+<p>Interesting tables to take a look at first are probably:</p>
+<ul>
+<li>'lime_questions'</li>
+<li>'lime_question_attributes'</li>
+<li>'lime_survey_916481'</li>
+<li>'lime_survey_916481_timings'</li>
+<li>'lime_labels'</li>
+<li>'lime_answers'</li>
+</ul>
+<h4 id="connect-with-your-db-tool-of-choice-eg-beekeeper-studio">Connect with your DB-Tool of Choice (e.g. Beekeeper Studio)</h4>
+<p>Enter the information provided in the Yopass Textfile and save the connection.</p>
+<h3 id="access-cleaned-data-in-coolify-postgres-database">Access Cleaned Data in Coolify Postgres Database</h3>
+<p><a href="https://yopass.se/#/s/810842d9-b75b-4448-81d9-26bfd9e02d24">Yopass Link</a></p>
+<p>This project team will try to create the pipeline that leads to a “cleaned data” structure in a Postgres. This means
+that data is already Q&amp;A'ed, cleaned and restructured. For reference to the end state, you can connect to the Coolify Postgres DB which contains the current state of CFE's cleaned data.</p>
+<p>Follow the instructions above, but instead use the credentials for the COOLIFY_PG database.</p>
+<p>Copy the content from the decrypted secret link. It should look something like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a># logins for Coolify Postgres DB
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>COOLIFY_PG_NAME=&#39;your-postgres-default-db-name&#39;
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>COOLIFY_PG_HOST=&#39;your-postgres-url&#39;
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>COOLIFY_PG_PORT=&#39;9001&#39;
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>COOLIFY_PG_USER=&#39;your-postgres-user-name&#39;
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>COOLIFY_PG_PASSWORD=&#39;your-postgres-pw&#39;
+</code></pre></div>
+<h3 id="access-empty-coolify-mariadb-database">Access Empty Coolify MariaDB Database</h3>
+<p><a href="https://yopass.se/#/s/c5d632ea-a00a-4f9d-aa74-432a70c4f8f9">Yopass Link</a></p>
+<p>Follow the instructions above, but instead use the credentials for the COOLIFY_PG database.
+Copy the content from the decrypted secret link. It should look something like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a># logins for Coolify Postgres DB
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>COOLIFY_MARIA_NAME=&#39;your-maria-default-db-name&#39;
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>COOLIFY_MARIA_HOST=&#39;your-maria-url&#39;
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>COOLIFY_MARIA_PORT=&#39;9000&#39;
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>COOLIFY_MARIA_USER=&#39;your-maria-user-name&#39;
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>COOLIFY_MARIA_PASSWORD=&#39;your-maria-user-pw&#39;
+</code></pre></div>
+<h3 id="access-coolify-playground-postgres-for-development">Access Coolify Playground Postgres for Development</h3>
+<p>let Lisa know if this is needed</p>
+<h1 id="limitations">Limitations</h1>
+<ul>
+<li>This project is still work-in-progress. Please report any bugs you may encounter.</li>
+<li>We couldn't collect any user feedback so far and the project structure solely relies on our own assumptions re. how to offer an ETLaaS (ETL as a Service) platform for Limesurvey data.</li>
+<li>Adding proper unit and integration tests is an open todo. There might be uncaught bugs in this application.</li>
+</ul>
+<h1 id="partner-organization">Partner organization</h1>
 <p>This project was conducted in collaboration with the <a href="https://citizensforeurope.org/advocating_for_inclusion_page/">Vielfalt entscheidet</a> project of Citizens For Europe gUG.</p>
 
 
