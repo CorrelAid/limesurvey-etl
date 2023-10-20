@@ -12,9 +12,6 @@ The goal of this  project track is to design a pipeline to
 
 The goal is that the resulting code is not specific to CFE data, but can be used by CFE and other NPOs working with Limesurvey in a “plug-and-play” way.
 
-(from the [Calls for
-Applications](https://citizensforeurope.notion.site/Calls-for-Applications-Data4Good-Projects-A-survey-research-ecosystem-for-diversity-and-visibility-ed7b72486a8d4bff8b74eaa851b3f029#873799b87fff4abe86b932e9a261972f))
-
 # Setup
 
 ## Project Organization
@@ -89,8 +86,6 @@ To get them, proceed as follows:
 4.  Follow the specific instructions for your data below.
 
 ### Access Data in Limesurvey Playground Server
-
-[Yopass Link](https://yopass.se/#/s/f3683c87-c3ee-42f6-affa-f0a94ac596c1)
 
 To access the data from the self-hosted Limesurvey Server and its MariaDB, you need to:
 
@@ -178,7 +173,6 @@ If you have never worked with SSH before, ask Frie or the project lead about it.
 
 
 ### Access Cleaned Data in Coolify Postgres Database
-[Yopass Link](https://yopass.se/#/s/810842d9-b75b-4448-81d9-26bfd9e02d24)
 
 This project team will try to create the pipeline that leads to a “cleaned data” structure in a Postgres. This means
 that data is already Q&A'ed, cleaned and restructured. For reference to the end state, you can connect to the Coolify Postgres DB which contains the current state of CFE's cleaned data.
@@ -197,7 +191,6 @@ COOLIFY_PG_PASSWORD='your-postgres-pw'
 ```
 
 ### Access Empty Coolify MariaDB Database
-[Yopass Link](https://yopass.se/#/s/c5d632ea-a00a-4f9d-aa74-432a70c4f8f9)
 
 Follow the instructions above, but instead use the credentials for the COOLIFY_PG database.
 Copy the content from the decrypted secret link. It should look something like this:
