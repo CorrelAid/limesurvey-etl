@@ -93,6 +93,7 @@ The `columns`, `data`, and `transform_steps` fields require additional configura
         name: concat
         separator: "_"
 ```
+## Full list of transform steps
 
 The `transform_steps` field is a list of transformations that should be applied to the data. There are a number of different transform steps available as documented below.
 
