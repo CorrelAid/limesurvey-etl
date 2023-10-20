@@ -71,7 +71,7 @@ class TransformationPipelineConfig(BaseModel):
         transform_steps (Sequence[Union[AddColumnsConfig,FillNullValuesConfig,FilterDataConfig,JoinWithCSVMappingConfig,RenameColumnsConfig,ReplaceValuesConfig,AddComputedColumnConfig]]): Sequence of transform step configs.
             If None, only an empty table is created.
         staging_schema (str): Name of the schema to store data in the staging area.
-        columns (list[Column]): List of columns for the table.
+        columns (list[Column]): List of column definitions relevant in case the staging table does not yet exists in the database.
             See Column class for relevant items for the config dicts.
             If None (default), table is created directly from pandas df.
         source_data (SelectSourceDataConfig): Source data from the extracted data the transformations should be applied to.

@@ -13,24 +13,6 @@
     transformation_pipelines:
       - table_name: question_items
         staging_schema: staging
-        columns:
-          - name: question_item_id
-            type: INTEGER
-            primary_key: True
-            nullable: False
-          - name: question_item_title
-            type: VARCHAR(255)
-            nullable: True
-          - name: question_group_id
-            type: INTEGER
-            nullable: False
-            foreign_key: "staging.question_groups.question_group_id"
-          - name: type_major
-            type: VARCHAR(255)
-            nullable: True
-          - name: type_minor
-            type: VARCHAR(255)
-            nullable: True
         source_data:
           source_tables:
             - table_name: lime_questions
