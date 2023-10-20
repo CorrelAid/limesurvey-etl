@@ -947,7 +947,7 @@ If None, only an empty table is created.</p>
           </td>
           <td>
             <div class="doc-md-description">
-              <p>List of columns for the table.
+              <p>List of column definitions relevant in case the staging table does not yet exists in the database.
 See Column class for relevant items for the config dicts.
 If None (default), table is created directly from pandas df.</p>
             </div>
@@ -1476,7 +1476,7 @@ Else, columns will be null.</p>
 
 </div><h5 id="example_1">Example</h5>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">transform_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">add_columns</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">      </span><span class="nt">column_names</span><span class="p">:</span><span class="w"> </span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">      </span><span class="nt">column_names</span><span class="p">:</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">added_column_1</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">added_column_2</span>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">      </span><span class="nt">default_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
