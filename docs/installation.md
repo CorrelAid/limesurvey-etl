@@ -24,34 +24,43 @@ Create a `.env` file and set the Airflow UID by running the following command fr
 echo -e "AIRFLOW_UID=$(id -u)" > .env
 ```
 
-Open the `.env` file you just created in your IDE or text editor and append the following environment variables to it.
+Open the `.env` file you just created in your IDE or text editor and append the following four blocks of environment variables to it:
+
+- **Airflow related variables**: You can choose arbitrary values here. These are required for logging into the Airflow UI and the Airflow DB (advanced users), which contains Airflow related metadata.
+- **Limesurvey DB related variables**: These variables are required for the platform to connect with the Limesurvey database. You must provide the variables for establishing an SSH connection as well as for the actual Limesurvey database.
+- **Staging database related variables**: The staging database is where the raw and intermediary data are stored. You can provide values for a MariaDB (set `STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"`) or a PostgresDB (set `STAGING_DB_SQLALCHEMY_DRIVER="postgresql"`). Other databases are currently not supported.
+- **Reporting database related variables**:  The reporting database is where the final (i.e., reporting) data is stored. You can provide values for a MariaDB (set `STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"`) or a PostgresDB (set `STAGING_DB_SQLALCHEMY_DRIVER="postgresql"`). Other databases are currently not supported. **It is possible to use the same database as staging and reporting database**.
 
 ```bash
+# Airflow related variables
 AIRFLOW_PG_USER="<USERNAME_FOR_AIRFLOW_DB>" # choose a username for the airflow db
 AIRFLOW_PG_PASSWORD="<PASSWORD_FOR_AIRFLOW_DB_USER>" # set a password for the airflow db user
 AIRFLOW_PG_DB="<AIRFLOW_DB_NAME>" # choose a name for the airflow db
 _AIRFLOW_WWW_USER_USERNAME="<USERNAME_FOR_AIRFLOW_UI_LOGIN>" # choose an admin username for logging into the Airflow UI (you can add additional users later via the "Security" tab in the Airflow UI)
 _AIRFLOW_WWW_USER_PASSWORD="<PW_FOR_AIRFLOW_UI_LOGIN>" # choose a password to login to the Airflow UI
 
-LIMESURVEY_SSH_PORT="<LIMESURVEY_SSH_PORT_IF_SSH_IS_USED>"
-LIMESURVEY_SSH_HOST="<LIMESURVEY_SSH_HOST_IF_SSH_IS_USED>"
-LIMESURVEY_SSH_USERNAME="<LIMESURVEY_SSH_USER_IF_SSH_IS_USED>"
-LIMESURVEY_SSH_PASSWORD="<LIMESURVEY_SSH_PW_IF_SSH_IS_USED>"
+# Variables required to connect with the Limesurvey Database
+LIMESURVEY_SSH_PORT="<LIMESURVEY_SSH_PORT_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE>"
+LIMESURVEY_SSH_HOST="<LIMESURVEY_SSH_HOST_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE>"
+LIMESURVEY_SSH_USERNAME="<LIMESURVEY_SSH_USER_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE>"
+LIMESURVEY_SSH_PASSWORD="<LIMESURVEY_SSH_PW_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE>"
 LIMESURVEY_DB_NAME="<NAME OF THE LIMESURVEY DB>"
 LIMESURVEY_DB_PORT="<PORT OF THE LIMESURVEY DB>"
 LIMESURVEY_DB_USERNAME="<LIMESURVEY DB SQL USER>"
 LIMESURVEY_DB_PASSWORD="LIMESURVEY DB SQL PASSWORD"
 LIMESURVEY_DB_HOST="127.0.0.1" # or actual host if SSH is not used
 
-STAGING_DB_SQLALCHEMY_DRIVER="postgresql" # or "mysql+pymysql" if Staging DB is a MYSQL DB (e.g., MariaDB)
+# Variables for connecting with the database where you want raw and intermediary data to be stored
+STAGING_DB_SQLALCHEMY_DRIVER="postgresql" # "postgresql" for a postgres DB or "mysql+pymysql" if Staging DB is a MYSQL DB (e.g., MariaDB)
 STAGING_DB_USERNAME="<SQL USER OF THE STAGING DB"
 STAGING_DB_PASSWORD="<PASSWORD OF THE STAGING DB SQL USER>"
 STAGING_DB_NAME="<NAME OF THE STAGING DB>"
 STAGING_DB_HOST="<HOST OF THE STAGING DB>" # host.docker.internal for usage with ariflow if DB is running on same machine as airflow
 STAGING_DB_PORT="<PORT OF THE STAGING DB>"
 
-
-REPORTING_DB_SQLALCHEMY_DRIVER="postgresql" # or "mysql+pymysql" if reporting DB is a MYSQL DB (e.g., MariaDB)
+# Variables for connecting with the database where you want the final (i.e., reporting) data to be stored
+# Can be the same database as the staging database
+REPORTING_DB_SQLALCHEMY_DRIVER="postgresql" # "postgresql" for a postgres DB or "mysql+pymysql" if reporting DB is a MYSQL DB (e.g., MariaDB)
 REPORTING_DB_PASSWORD="<PW OF THE REPORTING DB SQL USER>"
 REPORTING_DB_NAME="<NAME OF THE REPORTING DB>"
 REPORTING_DB_HOST="<HOST OF THE REPORTING DB>" # host.docker.internal for usage with ariflow if DB is running on same machine as airflow
