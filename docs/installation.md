@@ -28,8 +28,8 @@ Open the `.env` file you just created in your IDE or text editor and append the 
 
 - **Airflow related variables**: You can choose arbitrary values here. These are required for logging into the Airflow UI and the Airflow DB (advanced users), which contains Airflow related metadata.
 - **Limesurvey DB related variables**: These variables are required for the platform to connect with the Limesurvey database. You must provide the variables for establishing an SSH connection as well as for the actual Limesurvey database.
-- **Staging database related variables**: The staging database is where the raw and intermediary data are stored. You can provide values for a MariaDB (set `STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"`) or a PostgresDB (set `STAGING_DB_SQLALCHEMY_DRIVER="postgresql"`). Other databases are currently not supported.
-- **Reporting database related variables**:  The reporting database is where the final (i.e., reporting) data is stored. You can provide values for a MariaDB (set `STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"`) or a PostgresDB (set `STAGING_DB_SQLALCHEMY_DRIVER="postgresql"`). Other databases are currently not supported. **It is possible to use the same database as staging and reporting database**.
+- **Staging database related variables**: The staging database is where the raw and intermediary data are stored. You can provide values for a MySQL DB / MariaDB (set `STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"`) or a PostgresDB (set `STAGING_DB_SQLALCHEMY_DRIVER="postgresql"`). Other databases are currently not supported.
+- **Reporting database related variables**:  The reporting database is where the final (i.e., reporting) data is stored. You can provide values for a MySQL DB / MariaDB (set `STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"`) or a PostgresDB (set `STAGING_DB_SQLALCHEMY_DRIVER="postgresql"`). Other databases are currently not supported. **It is possible to use the same database as staging and reporting database**.
 
 ```bash
 # Airflow related variables
