@@ -2,7 +2,6 @@ import logging
 
 import pandas as pd
 from sqlalchemy.engine import Engine
-from sqlalchemy.schema import CreateSchema
 from sshtunnel import SSHTunnelForwarder
 
 from limesurvey_etl.config.extract_config.limesurvey import LimesurveyExtractConfig
@@ -22,6 +21,12 @@ class LimesurveyExtract(BaseExtract[LimesurveyExtractConfig]):
         super().__init__(config)
         self.limesurvey_settings = LimesurveySettings()
         self.staging_db_settings = StagingDBSettings()
+        self.staging_db_engine: Engine = self._get_staging_db_engine()
+
+    def _get_staging_db_engine(self) -> Engine:
+        # connect to staging DB
+        staging_db_connect = StagingDBConnect(StagingDBSettings())
+        return staging_db_connect.create_sqlalchemy_engine()
 
     def extract(self) -> None:
         """
@@ -31,16 +36,12 @@ class LimesurveyExtract(BaseExtract[LimesurveyExtractConfig]):
         :rtype: list[pd.DataFrame]
         """
 
-        # connect to staging DB
-        staging_db_connect = StagingDBConnect(self.staging_db_settings)
-        staging_db_engine: Engine = staging_db_connect.create_sqlalchemy_engine()
-
         # create schema to store raw data in if it does not exist
         logging.info("Creating staging schema in staging DB if not exists.")
         staging_schema = self.config.staging_schema
-        with staging_db_engine.connect() as conn:
-            if not conn.dialect.has_schema(conn, staging_schema):
-                conn.execute(CreateSchema(staging_schema))
+        with self.staging_db_engine.connect() as conn:
+            conn.execute(f"CREATE SCHEMA IF NOT EXISTS {staging_schema};")
+
         logging.info("Successfully created staging schema.")
 
         # extract data and store it to staging db
@@ -65,19 +66,21 @@ class LimesurveyExtract(BaseExtract[LimesurveyExtractConfig]):
             ):
                 logging.info("SSHed into limesurvey server.")
                 dfs = self._extract_data(
-                    staging_db_engine=staging_db_engine, staging_schema=staging_schema
+                    staging_db_engine=self.staging_db_engine,
+                    staging_schema=staging_schema,
                 )
         else:
             dfs = self._extract_data(
-                staging_db_engine=staging_db_engine, staging_schema=staging_schema
+                staging_db_engine=self.staging_db_engine, staging_schema=staging_schema
             )
 
         for table, df in dfs.items():
             logging.info(f"Storing extracted data from {table} to staging DB")
             df.to_sql(
                 name=table,
-                con=staging_db_engine,
+                con=self.staging_db_engine,
                 schema=staging_schema,
+                # TODO: replace might not be the best choice here
                 if_exists="replace",
                 index=False,
             )
