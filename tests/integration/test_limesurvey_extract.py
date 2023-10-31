@@ -30,17 +30,25 @@ def test_extract_data(limesurvey_extract_config: LimesurveyExtractConfig):
     engine = staging_db_connect.create_sqlalchemy_engine()
 
     with engine.connect() as conn:
-        conn.execute(f"USE {limesurvey_extract_config.staging_schema}")
+        # conn.execute(f"USE {limesurvey_extract_config.staging_schema}")
 
-        users = conn.execute("SELECT * FROM users").all()
+        users = conn.execute(
+            f"SELECT * FROM {limesurvey_extract_config.staging_schema}.users"
+        ).all()
         print("USERS ARE: ", users)
         assert len(users) == 2
 
-        surveys = conn.execute("SELECT * FROM surveys").all()
+        surveys = conn.execute(
+            f"SELECT * FROM {limesurvey_extract_config.staging_schema}.surveys"
+        ).all()
         assert len(surveys) == 2
 
-        questions = conn.execute("SELECT * FROM questions").all()
+        questions = conn.execute(
+            f"SELECT * FROM {limesurvey_extract_config.staging_schema}.questions"
+        ).all()
         assert len(questions) == 3
 
-        responses = conn.execute("SELECT * FROM responses").all()
+        responses = conn.execute(
+            f"SELECT * FROM {limesurvey_extract_config.staging_schema}.responses"
+        ).all()
         assert len(responses) == 0  # No responses in this example

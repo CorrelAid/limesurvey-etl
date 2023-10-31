@@ -19,9 +19,14 @@ class LimesurveyExtract(BaseExtract[LimesurveyExtractConfig]):
 
     def __init__(self, config: LimesurveyExtractConfig) -> None:
         super().__init__(config)
-        self.limesurvey_settings = LimesurveySettings()
-        self.staging_db_settings = StagingDBSettings()
-        self.staging_db_engine: Engine = self._get_staging_db_engine()
+        limesurvey_settings = LimesurveySettings()
+        staging_db_settings = StagingDBSettings()
+        self.staging_db_engine: Engine = StagingDBConnect(
+            staging_db_settings
+        ).create_sqlalchemy_engine()
+        self.limesurvey_engine: Engine = LimesurveyConnect(
+            limesurvey_settings
+        ).create_sqlalchemy_engine()
 
     def _get_staging_db_engine(self) -> Engine:
         # connect to staging DB
@@ -70,9 +75,7 @@ class LimesurveyExtract(BaseExtract[LimesurveyExtractConfig]):
                     staging_schema=staging_schema,
                 )
         else:
-            dfs = self._extract_data(
-                staging_db_engine=self.staging_db_engine, staging_schema=staging_schema
-            )
+            dfs = self._extract_data()
 
         for table, df in dfs.items():
             logging.info(f"Storing extracted data from {table} to staging DB")
@@ -88,18 +91,12 @@ class LimesurveyExtract(BaseExtract[LimesurveyExtractConfig]):
 
     def _extract_data(
         self,
-        staging_db_engine: Engine,
-        staging_schema: str,
     ) -> pd.DataFrame:
-        # connect to source Limesurvey MariaDB Platform
-        limesurvey_db_connect = LimesurveyConnect(self.limesurvey_settings)
-        limesurvey_engine: Engine = limesurvey_db_connect.create_sqlalchemy_engine()
-
         dfs = {}
         logging.info("Initializing data extraction")
         tables: list[str] = self.config.tables
         for table in tables:
             logging.info(f"Extracting data from table: {table}")
-            df = pd.read_sql(f"SELECT * FROM {table};", limesurvey_engine)
+            df = pd.read_sql(f"SELECT * FROM {table};", self.limesurvey_engine)
             dfs[table] = df
         return dfs

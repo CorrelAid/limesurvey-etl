@@ -46,7 +46,7 @@ class AddComputedColumnConfig(BaseModel):
     Attributes:
         transform_type (Literal["add_computed_column"]): Type of transformation, should be "add_computed_column".
         column_name (str): Name of the new column.
-        input_columns (Union[list[str], str]): Columns that should be used to compute the new column.
+        input_columns (list[str]): Columns that should be used to compute the new column.
         operator (Operator): Operation used to compute the new column.
         drop_input_columns (Union[Literal["all"], list[str]], optional): Input columns to be dropped from
             data frame after computation.
@@ -55,7 +55,7 @@ class AddComputedColumnConfig(BaseModel):
 
     transform_type: Literal["add_computed_column"]
     column_name: str = Field(..., description="Name of the new column.")
-    input_columns: Union[list[str], str] = Field(
+    input_columns: list[str] = Field(
         ..., description="Columns that should be used to compute the new column."
     )
     operator: Operator = Field(..., description="Operation used to compute new column.")

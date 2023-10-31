@@ -31,4 +31,4 @@ class FilterDataTransform(BaseTransform[FilterDataConfig]):
         elif self.config.logical_operator is not None:
             raise ValueError("Invalid logical operator")
 
-        return df.iloc[list(common_idxs)]
+        return df.iloc[list(common_idxs)].reset_index(drop=True)

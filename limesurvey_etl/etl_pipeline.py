@@ -91,6 +91,8 @@ class Pipeline:
         self.extract = extract
         self.transformation_pipelines = transformation_pipelines
         self.load = load
+        staging_db_connect = StagingDBConnect(StagingDBSettings())
+        self.staging_db_engine = staging_db_connect.create_sqlalchemy_engine()
 
     @classmethod
     def _get_extractor(cls, config: dict) -> BaseExtract:
@@ -153,15 +155,9 @@ class Pipeline:
     def run_extract(self) -> None:
         return self.extract.extract()
 
-    def run_transform(self, table_name: str = None) -> None:
-        staging_db_connect = StagingDBConnect(StagingDBSettings())
-        staging_db_engine = staging_db_connect.create_sqlalchemy_engine()
-
+    def run_transform(self, table_name: str) -> None:
         for transformation_pipeline in self.transformation_pipelines:
-            if (
-                transformation_pipeline["table_name"] == table_name
-                or table_name is None
-            ):
+            if transformation_pipeline["table_name"] == table_name:
                 # get table
                 transformation_pipeline_config = TransformationPipelineConfig(
                     **transformation_pipeline
@@ -176,7 +172,7 @@ class Pipeline:
                 if transformation_pipeline.config.columns is not None:
                     print(f"Creating table {staging_table_name}")
                     self.create_table_if_not_exists(
-                        engine=staging_db_engine,
+                        engine=self.staging_db_engine,
                         table_name=staging_table_name,
                         columns=transformation_pipeline.config.columns,
                         schema=staging_schema_name,
@@ -216,7 +212,7 @@ class Pipeline:
                 ]
                 df.to_sql(
                     name=transformation_pipeline.config.table_name,
-                    con=staging_db_engine,
+                    con=self.staging_db_engine,
                     schema=transformation_pipeline.config.staging_schema,
                     if_exists="append",
                     index=False,

@@ -7,23 +7,26 @@ from sqlalchemy.orm import sessionmaker
 from testcontainers.mysql import MySqlContainer
 
 from limesurvey_etl.config.extract_config.limesurvey import LimesurveyExtractConfig
+from limesurvey_etl.config.transform_config.select_source_data import (
+    SelectSourceDataConfig,
+)
 from limesurvey_etl.connectors.limesurvey_connect import LimesurveyConnect
 from limesurvey_etl.settings.limesurvey_settings import LimesurveySettings
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="session")
 def mariadb_limesurvey_container():
-    with MySqlContainer("mariadb:latest") as container:
+    with MySqlContainer("mariadb:10.11.5") as container:
         yield container
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="session")
 def mariadb_staging_container():
-    with MySqlContainer("mariadb:latest") as container:
+    with MySqlContainer("mariadb:10.11.5") as container:
         yield container
 
 
-@pytest.fixture(scope="module", autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 def envconfig(mariadb_limesurvey_container, mariadb_staging_container) -> None:
     config = {
         "limesurvey_db_host": mariadb_limesurvey_container.get_container_host_ip(),
@@ -50,13 +53,14 @@ def envconfig(mariadb_limesurvey_container, mariadb_staging_container) -> None:
         "reporting_db_port": "9000",
         "reporting_db_username": "foobar",
         "reporting_db_password": "secret4321",
+        "STAGING_SCHEMA_NAME": "staging",
     }
 
     os.environ.update(config)
 
 
 # Define a fixture to establish a connection to the MariaDB container
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="session")
 def limesurvey_engine(mariadb_limesurvey_container, envconfig) -> Engine:
     limesurvey_db_connect = LimesurveyConnect(LimesurveySettings())
     engine: Engine = limesurvey_db_connect.create_sqlalchemy_engine()
@@ -64,7 +68,7 @@ def limesurvey_engine(mariadb_limesurvey_container, envconfig) -> Engine:
 
 
 # Create tables with dummy data
-@pytest.fixture(scope="module", autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 def create_tables(limesurvey_engine):
     with limesurvey_engine.connect() as conn:
         conn.execute(
@@ -148,6 +152,36 @@ def limesurvey_extract_config() -> LimesurveyExtractConfig:
     )
 
 
-# @pytest.fixture(scope="function")
-# def limesurvey_settings() -> LimesurveySettings:
-#     return LimesurveySettings(lim)
+@pytest.fixture(scope="function")
+def select_source_data_config(
+    limesurvey_extract_config: LimesurveyExtractConfig, envconfig
+) -> SelectSourceDataConfig:
+    return SelectSourceDataConfig(
+        source_schema=limesurvey_extract_config.staging_schema,
+        source_tables=[
+            {"table_name": "surveys", "columns": ["title", "description"]},
+        ],
+    )
+
+
+@pytest.fixture(scope="function")
+def select_source_data_config_with_join(
+    limesurvey_extract_config: LimesurveyExtractConfig, envconfig
+) -> SelectSourceDataConfig:
+    return SelectSourceDataConfig(
+        source_schema=limesurvey_extract_config.staging_schema,
+        source_tables=[
+            {"table_name": "surveys", "columns": ["id AS survey_id", "title"]},
+            {
+                "table_name": "questions",
+                "columns": ["id AS question_id", "question_text"],
+            },
+        ],
+        join={
+            "type": "RIGHT JOIN",
+            "left_table": "surveys",
+            "right_table": "questions",
+            "left_on": "id",
+            "right_on": "survey_id",
+        },
+    )
