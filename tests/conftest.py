@@ -1,15 +1,14 @@
 import os
-import pytest
+
 import pymysql
-
-
+import pytest
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker
+from testcontainers.mysql import MySqlContainer
 
 from limesurvey_etl.config.extract_config.limesurvey import LimesurveyExtractConfig
-from limesurvey_etl.settings.limesurvey_settings import LimesurveySettings
 from limesurvey_etl.connectors.limesurvey_connect import LimesurveyConnect
-from testcontainers.mysql import MySqlContainer
+from limesurvey_etl.settings.limesurvey_settings import LimesurveySettings
 
 
 @pytest.fixture(scope="module")
@@ -116,7 +115,7 @@ def create_tables(limesurvey_engine):
 
         conn.execute(
             """
-            INSERT INTO users (name, email) VALUES 
+            INSERT INTO users (name, email) VALUES
             ('John Doe', 'john.doe@example.com'),
             ('Jane Smith', 'jane.smith@example.com')
             """
@@ -124,7 +123,7 @@ def create_tables(limesurvey_engine):
 
         conn.execute(
             """
-            INSERT INTO surveys (title, description) VALUES 
+            INSERT INTO surveys (title, description) VALUES
             ('Survey 1', 'This is the first survey'),
             ('Survey 2', 'This is the second survey')
             """
@@ -132,7 +131,7 @@ def create_tables(limesurvey_engine):
 
         conn.execute(
             """
-            INSERT INTO questions (survey_id, question_text) VALUES 
+            INSERT INTO questions (survey_id, question_text) VALUES
             (1, 'How satisfied are you with our product?'),
             (1, 'What can we do to improve our services?'),
             (2, 'Do you have any comments about our website?')

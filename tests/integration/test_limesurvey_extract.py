@@ -2,12 +2,14 @@
 
 import logging
 from unittest.mock import MagicMock
+
 import pandas as pd
 from sqlalchemy.engine import Engine
-from limesurvey_etl.extract.limesurvey import LimesurveyExtract
+
 from limesurvey_etl.config.extract_config.limesurvey import LimesurveyExtractConfig
-from limesurvey_etl.settings.staging_db_settings import StagingDBSettings
 from limesurvey_etl.connectors.staging_db_connect import StagingDBConnect
+from limesurvey_etl.extract.limesurvey import LimesurveyExtract
+from limesurvey_etl.settings.staging_db_settings import StagingDBSettings
 
 
 def test_get_staging_db_engine(limesurvey_extract_config):

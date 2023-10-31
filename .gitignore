@@ -101,3 +101,5 @@ airflow/logs/
 
 logs
 poetry.lock
+
+.gitconfig
