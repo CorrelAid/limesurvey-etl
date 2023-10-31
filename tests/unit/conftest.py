@@ -8,6 +8,10 @@ from limesurvey_etl.config.transform_config.add_computed_column import (
 )
 from limesurvey_etl.config.transform_config.fill_null_values import FillNullValuesConfig
 from limesurvey_etl.config.transform_config.filter_data import FilterDataConfig
+from limesurvey_etl.config.transform_config.join_with_csv_mapping import (
+    JoinWithCSVMappingConfig,
+)
+from limesurvey_etl.config.transform_config.rename_columns import RenameColumnsConfig
 
 
 @pytest.fixture(scope="function")
@@ -113,4 +117,23 @@ def filter_data_config() -> FilterDataConfig:
             {"column": "question_id", "value": 1, "operator": ">"},
         ],
         logical_operator="AND",
+    )
+
+
+@pytest.fixture(scope="function")
+def rename_columns_config() -> RenameColumnsConfig:
+    return RenameColumnsConfig(
+        transform_type="rename_columns", colname_to_colname={"title": "survey_name"}
+    )
+
+
+@pytest.fixture(scope="function")
+def join_with_csv_mapping_config() -> JoinWithCSVMappingConfig:
+    return JoinWithCSVMappingConfig(
+        transform_type="join_with_csv_mapping",
+        mapping_path="tests/unit/test_mappings/mapping.csv",
+        keep_columns=["survey_author"],
+        how="left",
+        left_on="title",
+        right_on="survey_name",
     )

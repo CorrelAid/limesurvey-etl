@@ -25,7 +25,6 @@ class JoinWithCSVMappingTransform(BaseTransform[JoinWithCSVMappingConfig]):
         final_columns_list = [
             col for col in final_columns_list if not col.endswith("to_be_del")
         ]
-        print("df:::", df.head())
         if self.config.keep_columns is not None:
             df = df[final_columns_list]
 
