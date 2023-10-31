@@ -19,13 +19,13 @@ class LimesurveyExtract(BaseExtract[LimesurveyExtractConfig]):
 
     def __init__(self, config: LimesurveyExtractConfig) -> None:
         super().__init__(config)
-        limesurvey_settings = LimesurveySettings()
+        self.limesurvey_settings = LimesurveySettings()
         staging_db_settings = StagingDBSettings()
         self.staging_db_engine: Engine = StagingDBConnect(
             staging_db_settings
         ).create_sqlalchemy_engine()
         self.limesurvey_engine: Engine = LimesurveyConnect(
-            limesurvey_settings
+            LimesurveySettings()
         ).create_sqlalchemy_engine()
 
     def _get_staging_db_engine(self) -> Engine:

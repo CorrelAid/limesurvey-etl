@@ -155,9 +155,12 @@ class Pipeline:
     def run_extract(self) -> None:
         return self.extract.extract()
 
-    def run_transform(self, table_name: str) -> None:
+    def run_transform(self, table_name: str = None) -> None:
         for transformation_pipeline in self.transformation_pipelines:
-            if transformation_pipeline["table_name"] == table_name:
+            if (
+                transformation_pipeline["table_name"] == table_name
+                or table_name is None
+            ):
                 # get table
                 transformation_pipeline_config = TransformationPipelineConfig(
                     **transformation_pipeline
@@ -241,8 +244,7 @@ class Pipeline:
                         }
         """
         with engine.connect() as con:
-            if not con.dialect.has_schema(con, schema):
-                con.execute(CreateSchema(schema))
+            con.execute(f"CREATE SCHEMA IF NOT EXISTS {schema};")
             if not engine.dialect.has_table(con, table_name=table_name, schema=schema):
                 logging.info(f"Creating table {schema}.{table_name}")
                 metadata = MetaData(engine, schema=schema)
