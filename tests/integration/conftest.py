@@ -1,12 +1,12 @@
 import os
+from pathlib import Path
 
-import pymysql
 import pytest
 from sqlalchemy.engine import Engine
-from sqlalchemy.orm import sessionmaker
 from testcontainers.mysql import MySqlContainer
 
 from limesurvey_etl.config.extract_config.limesurvey import LimesurveyExtractConfig
+from limesurvey_etl.config.load_config.reporting_db import ReportingDBLoadConfig
 from limesurvey_etl.config.transform_config.select_source_data import (
     SelectSourceDataConfig,
 )
@@ -48,11 +48,15 @@ def envconfig(mariadb_limesurvey_container, mariadb_staging_container) -> None:
         "staging_db_username": "root",  # mariadb_staging_container.MYSQL_USER,
         "staging_db_password": mariadb_staging_container.MYSQL_ROOT_PASSWORD,
         "staging_db_sqlalchemy_driver": "mysql+pymysql",
-        "reporting_db_host": "localhost",
-        "reporting_db_name": "staging_db",
-        "reporting_db_port": "9000",
-        "reporting_db_username": "foobar",
-        "reporting_db_password": "secret4321",
+        "reporting_db_host": mariadb_staging_container.get_container_host_ip(),
+        "reporting_db_name": mariadb_staging_container.MYSQL_DATABASE,
+        "reporting_db_port": str(
+            mariadb_staging_container.get_exposed_port(
+                mariadb_limesurvey_container.port_to_expose
+            )
+        ),
+        "reporting_db_username": "root",
+        "reporting_db_password": mariadb_staging_container.MYSQL_ROOT_PASSWORD,
         "STAGING_SCHEMA_NAME": "staging",
     }
 
@@ -185,3 +189,18 @@ def select_source_data_config_with_join(
             "right_on": "survey_id",
         },
     )
+
+
+@pytest.fixture(scope="function")
+def reporting_db_load_config() -> ReportingDBLoadConfig:
+    return ReportingDBLoadConfig(
+        load_type="reporting_db_load",
+        tables=["surveys", "questions"],
+        staging_schema="staging",
+        target_schema="reporting",
+    )
+
+
+@pytest.fixture(scope="function")
+def pipeline_config_file(envconfig) -> Path:
+    return Path("tests/integration/test_configs/pipeline_config.yaml")

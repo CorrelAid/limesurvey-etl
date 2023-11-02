@@ -95,11 +95,7 @@ class ReportingDBLoad(BaseLoad[ReportingDBLoadConfig]):
         # create schema to store data in if it does not exist
         reporting_schema = self.config.target_schema or "limesurvey_dwh"
         with reporting_db_engine.connect() as conn:
-            if not conn.dialect.has_schema(conn, reporting_schema):
-                logging.info("Creating schema in reporting DB.")
-                conn.execute(CreateSchema(reporting_schema))
-                logging.info("Schema successfully created.")
-
+            conn.execute(f"CREATE SCHEMA IF NOT EXISTS {reporting_schema}")
         # load data from staging DB to reporting DB
         staging_db_meta = MetaData(
             bind=staging_db_engine, schema=self.config.staging_schema

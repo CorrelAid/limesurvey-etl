@@ -1,0 +1,61 @@
+extract:
+  extract_type: limesurvey_extract
+  tables:
+    - surveys
+    - questions
+  use_ssh: False
+
+transformation_pipelines:
+  - table_name: surveys_staging
+    staging_schema: staging
+    columns:
+      - name: survey_id
+        type: INTEGER
+        primary_key: True
+        nullable: False
+      - name: title
+        type: VARCHAR(255)
+        nullable: False
+      - name: description
+        type: VARCHAR(255)
+        nullable: True
+    source_data:
+      source_tables:
+        - table_name: surveys
+          columns:
+            - id AS survey_id
+            - title
+            - description
+      source_schema: raw
+
+  - table_name: questions_staging
+    staging_schema: staging
+    columns:
+      - name: id
+        type: INTEGER
+        primary_key: True
+        nullable: False
+      - name: survey_id
+        type: INTEGER
+        foreign_key: "staging.surveys_staging.survey_id"
+        nullable: False
+      - name: question_text
+        type: VARCHAR(5000)
+        primary_key: False
+        nullable: True
+    source_data:
+      source_tables:
+        - table_name: questions
+          columns:
+            - id AS question_id
+            - id
+            - question_text
+      source_schema: raw
+
+load:
+  load_type: reporting_db_load
+  staging_schema: staging
+  target_schema: reporting
+  tables:
+    - surveys_staging
+    - questions_staging
