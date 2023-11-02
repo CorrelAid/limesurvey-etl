@@ -24,6 +24,10 @@ class AddComputedColumnTransform(BaseTransform[AddComputedColumnConfig]):
             df[new_column_name] = (
                 df[input_columns].astype(str).apply(separator.join, axis=1)
             )
+        elif operator == "split":
+            delimiter = self.config.operator.delimiter or "_"
+            expand = self.config.operator.expand or False
+            df[new_column_name] = df[input_columns].str.split(delimiter, expand=expand)
 
         drop_input_columns = self.config.drop_input_columns
         if drop_input_columns == "all":

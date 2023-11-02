@@ -20,9 +20,11 @@ class FilterDataTransform(BaseTransform[FilterDataConfig]):
                 value = bool(value)
             condition = condition_config.operator(column, value)
             conditions.append(condition)
-
         common_idxs = set(conditions[0][conditions[0]].index)
-        if self.config.logical_operator.upper() == "AND":
+
+        if self.config.logical_operator is None:
+            pass
+        elif self.config.logical_operator.upper() == "AND":
             for condition in conditions[1:]:
                 common_idxs = common_idxs & set(conditions[1][conditions[1]].index)
         elif self.config.logical_operator.upper() == "OR":

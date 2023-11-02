@@ -27,6 +27,7 @@ class FilterCondition(BaseModel):
             "<": lambda x, y: x < y,
             ">=": lambda x, y: x >= y,
             "<=": lambda x, y: x <= y,
+            "contains": lambda x, y: x.str.contains(y),
         }
         if not o in operator_mapping.keys():
             raise ValueError(

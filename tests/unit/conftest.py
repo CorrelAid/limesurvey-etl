@@ -11,6 +11,7 @@ from limesurvey_etl.config.transform_config.filter_data import FilterDataConfig
 from limesurvey_etl.config.transform_config.join_with_csv_mapping import (
     JoinWithCSVMappingConfig,
 )
+from limesurvey_etl.config.transform_config.melt_data import MeltDataConfig
 from limesurvey_etl.config.transform_config.rename_columns import RenameColumnsConfig
 
 
@@ -71,6 +72,17 @@ def add_computed_column_config() -> AddComputedColumnConfig:
 
 
 @pytest.fixture(scope="function")
+def add_computed_column_config_split() -> AddComputedColumnConfig:
+    return AddComputedColumnConfig(
+        transform_type="add_computed_column",
+        column_name=["survey_name", "survey_id_split"],
+        operator={"name": "split", "delimiter": " ", "expand": True},
+        input_columns="title",
+        drop_input_columns="all",
+    )
+
+
+@pytest.fixture(scope="function")
 def fill_null_values_config() -> FillNullValuesConfig:
     return FillNullValuesConfig(
         transform_type="fill_null_values",
@@ -121,6 +133,16 @@ def filter_data_config() -> FilterDataConfig:
 
 
 @pytest.fixture(scope="function")
+def filter_data_config_contains() -> FilterDataConfig:
+    return FilterDataConfig(
+        transform_type="filter_data",
+        conditions=[
+            {"column": "question_text", "value": "improve", "operator": "contains"}
+        ],
+    )
+
+
+@pytest.fixture(scope="function")
 def rename_columns_config() -> RenameColumnsConfig:
     return RenameColumnsConfig(
         transform_type="rename_columns", colname_to_colname={"title": "survey_name"}
@@ -136,4 +158,15 @@ def join_with_csv_mapping_config() -> JoinWithCSVMappingConfig:
         how="left",
         left_on="title",
         right_on="survey_name",
+    )
+
+
+@pytest.fixture(scope="function")
+def melt_data_config() -> MeltDataConfig:
+    return MeltDataConfig(
+        transform_type="melt_data",
+        id_vars=["survey_id"],
+        value_name="code",
+        value_vars=["title"],
+        var_name="name",
     )

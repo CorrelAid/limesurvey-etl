@@ -84,4 +84,4 @@ def test_add_column_transform_duplicate_column(
 ) -> None:
     transform = AddColumnsTransform(add_columns_config_duplicate_column)
     with pytest.raises(ValueError):
-        print(transform.transform(surveys_questions_data))
+        transform.transform(surveys_questions_data)

@@ -35,3 +35,20 @@ def test_add_computed_column(
             ]
         )
     )
+
+
+def test_add_computed_columns_split(
+    add_computed_column_config_split: AddComputedColumnConfig,
+    surveys_questions_data: pd.DataFrame,
+) -> None:
+    transform = AddComputedColumnTransform(add_computed_column_config_split)
+    df = transform.transform(surveys_questions_data)
+    assert df[["survey_name", "survey_id_split"]].equals(
+        pd.DataFrame(
+            [
+                {"survey_name": "Survey", "survey_id_split": "1"},
+                {"survey_name": "Survey", "survey_id_split": "1"},
+                {"survey_name": "Survey", "survey_id_split": "2"},
+            ]
+        )
+    )

@@ -173,7 +173,7 @@ class Pipeline:
                 staging_table_name = transformation_pipeline.config.table_name
 
                 if transformation_pipeline.config.columns is not None:
-                    print(f"Creating table {staging_table_name}")
+                    logging.info(f"Creating table {staging_table_name}")
                     self.create_table_if_not_exists(
                         engine=self.staging_db_engine,
                         table_name=staging_table_name,

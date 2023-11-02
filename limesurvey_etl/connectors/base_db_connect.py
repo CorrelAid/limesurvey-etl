@@ -25,7 +25,6 @@ class BaseDBConnect(Generic[S]):
         :return: A SQLAlchemy engine.
         :rtype: sqlalchemy.engine.Engine
         """
-        print(self.__dir__())
         try:
             logging.info("Connecting to DB")
             url = (

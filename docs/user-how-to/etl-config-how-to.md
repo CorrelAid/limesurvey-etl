@@ -98,6 +98,7 @@ The `columns`, `data`, and `transform_steps` fields require additional configura
 The `transform_steps` field is a list of transformations that should be applied to the data. There are a number of different transform steps available as documented below.
 
 - `add_columns`
+- `melt_data`
 - `add_computed_column`
 - `fill_null_values`
 - `filter_data`
@@ -111,20 +112,28 @@ Note: transformations are applied in order.
 
 ##### Example
 ```yaml
-    - transform_type: add_columns
-      column_names:
-        - added_column_1
-        - added_column_2
-      default_value: 1000
+- transform_type: add_columns
+  column_names:
+    - added_column_1
+    - added_column_2
+  default_value: 1000
+```
+
+::: limesurvey_etl.config.transform_config.melt_data.MeltDataConfig
+
+##### Example
+```yaml
+- trransform_type: melt_data
+  id_vars:
+    - id
+  value_vars:
+    - type
 ```
 
 ::: limesurvey_etl.config.transform_config.add_computed_column.AddComputedColumnConfig
 
 The `add_computed_columns` configuration requires to define a concat operation in the `operator` field as follows:
 ::: limesurvey_etl.config.transform_config.add_computed_column.Operator
-
-If the operation should concatenate strings, the `ConcatOperator` has to be defined as follows:
-::: limesurvey_etl.config.transform_config.add_computed_column.ConcatOperator
 
 ##### Example
 ```yaml
