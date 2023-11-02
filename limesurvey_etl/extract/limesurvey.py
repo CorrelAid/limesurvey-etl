@@ -70,10 +70,7 @@ class LimesurveyExtract(BaseExtract[LimesurveyExtractConfig]):
                 ),
             ):
                 logging.info("SSHed into limesurvey server.")
-                dfs = self._extract_data(
-                    staging_db_engine=self.staging_db_engine,
-                    staging_schema=staging_schema,
-                )
+                dfs = self._extract_data()
         else:
             dfs = self._extract_data()
 
