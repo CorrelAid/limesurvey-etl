@@ -3,9 +3,20 @@ extract:
   tables:
     - surveys
     - questions
+    - empty_table
   use_ssh: False
 
 transformation_pipelines:
+  - table_name: empty_table
+    staging_schema: staging
+    columns:
+      - name: id
+        type: INTEGER
+        primary_key: True
+      - name: name
+        type: VARCHAR(255)
+        nullable: False
+
   - table_name: surveys_staging
     staging_schema: staging
     columns:
@@ -59,3 +70,4 @@ load:
   tables:
     - surveys_staging
     - questions_staging
+    - empty_table

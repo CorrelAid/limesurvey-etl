@@ -15,6 +15,7 @@ def test_pipeline_run_all(
     with reporting_db_engine.connect() as conn:
         surveys = conn.execute("SELECT * FROM reporting.surveys_staging").all()
         questions = conn.execute("SELECT * FROM reporting.questions_staging").all()
+        empty_table = conn.execute("SELECT * FROM reporting.empty_table").all()
 
     assert surveys == [
         (1, "Survey 1", "This is the first survey"),
@@ -25,3 +26,5 @@ def test_pipeline_run_all(
         (2, 1, "What can we do to improve our services?"),
         (3, 2, "Do you have any comments about our website?"),
     ]
+
+    assert len(empty_table) == 0

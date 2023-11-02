@@ -185,37 +185,42 @@ class Pipeline:
                 transformation_steps = transformation_pipeline.config.transform_steps
 
                 transformer_data_config = transformation_pipeline.config.source_data
-                transformer = SelectSourceDataTransform(
-                    transformer_data_config, staging_schema_name, staging_table_name
-                )
 
-                df = transformer.transform()
-                if transformation_steps is not None and len(transformation_steps) > 0:
-                    for (
-                        transformer_config
-                    ) in transformation_pipeline.config.transform_steps:
-                        transformer = str_to_class(
-                            Transformer(transformer_config.transform_type).name
-                        )(transformer_config)
-                        df = transformer.transform(df)
+                if transformer_data_config is not None:
+                    transformer = SelectSourceDataTransform(
+                        transformer_data_config, staging_schema_name, staging_table_name
+                    )
 
-                # store table in staging area
-                df = df.drop_duplicates()
-                sql_driver_to_method_mapper = {
-                    "postgresql": postgres_upsert,
-                    "mysql+pymysql": insert_on_duplicate,
-                }
-                method = sql_driver_to_method_mapper[
-                    StagingDBSettings().staging_db_sqlalchemy_driver
-                ]
-                df.to_sql(
-                    name=transformation_pipeline.config.table_name,
-                    con=self.staging_db_engine,
-                    schema=transformation_pipeline.config.staging_schema,
-                    if_exists="append",
-                    index=False,
-                    method=method,
-                )
+                    df = transformer.transform()
+                    if (
+                        transformation_steps is not None
+                        and len(transformation_steps) > 0
+                    ):
+                        for (
+                            transformer_config
+                        ) in transformation_pipeline.config.transform_steps:
+                            transformer = str_to_class(
+                                Transformer(transformer_config.transform_type).name
+                            )(transformer_config)
+                            df = transformer.transform(df)
+
+                    # store table in staging area
+                    df = df.drop_duplicates()
+                    sql_driver_to_method_mapper = {
+                        "postgresql": postgres_upsert,
+                        "mysql+pymysql": insert_on_duplicate,
+                    }
+                    method = sql_driver_to_method_mapper[
+                        StagingDBSettings().staging_db_sqlalchemy_driver
+                    ]
+                    df.to_sql(
+                        name=transformation_pipeline.config.table_name,
+                        con=self.staging_db_engine,
+                        schema=transformation_pipeline.config.staging_schema,
+                        if_exists="append",
+                        index=False,
+                        method=method,
+                    )
 
     def run_load(self) -> None:
         self.load.load()
