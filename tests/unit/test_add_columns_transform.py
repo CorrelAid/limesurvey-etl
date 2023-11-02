@@ -11,7 +11,6 @@ def test_add_columns_transform(
 ) -> None:
     transform = AddColumnsTransform(add_columns_config)
     df = transform.transform(surveys_questions_data)
-    print(df)
     assert df.equals(
         pd.DataFrame(
             [

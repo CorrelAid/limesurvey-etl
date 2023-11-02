@@ -1,52 +1,46 @@
-question_item_id,lang,label_major,label_minor,type_major,type_minor
-q0100,de,"To begin with, we would like to know if and how well you are familiar with the various organizational parts of CorrelAid and to what extent you are involved with CorrelAid.",,Text Display,X
-q0101,de,How well do you know the following structures and roles within CorrelAid as an organisation? (Responsibilities and tasks),"Please indicate your assessment on a scale from 1 (""no knowledge"") to 5 (""very good knowledge"").",Matrix,F
-q0102,de,"Do you (co-)lead an area at CorrelAid (e.g. a CorrelAidX chapter, a project team, one of the PR or education initiatives) and/or are you part of the Board of Directors or Ethics Committee and/or are you a CorrelAid employee?",Please select one of the following answers.,Single Choice,Y
-q0103,de,"On average, how many hours per week have you invested in (co-)leading an area at CorrelAid / being a Member of the Board of Directors or Ethics Committee /as a CorrelaAid employee in the last 6 months?",Please select one of the following answers.,Single Choice,L
-q0104,de,How many Data4Good projects at CorrelAid have you been actively engaged in over the past 12 months?,Please select one of the following answers.,Single Choice,L
-q0200,de,"Next, we would like to hear from you about what motivates you to get involved with CorrelAid and which factors potentially prevent you from getting (more) involved.",,Text Display,X
-q0201,de,Why are you engaged with CorrelAid?,,Matrix,F
-q0202,de,Have you used CorrelAid as a career springboard in the past?,,Single Choice,Y
-q0203,de,"What is stopping you from getting more involved with CorrelAid, or involved at all?",,Matrix,F
-q0300,de,"In the following, we will ask you questions about your (potential) experiences of discrimination and how you deal with them. The results will be presented in aggregated form and anonymized, so that it is not possible to assign the answers to individual persons. All information provided is voluntary and your answers will be treated as strictly confidential and will not be passed on to third parties.",,Text Display,X
-q0301,de,How often have you experienced the following situations in your engagement with CorrelAid?,"Please indicate your assessment on a scale from 1 (""never"") to 5 (""very often"").",Matrix,F
-q0302,de,How well do you know the CorrelAid Code of Conduct?,Please select one of the following answers.,Single Choice,L
-q0303,de,Have you been discriminated against in your engagement with CorrelAid in the past two years?,,Single Choice,Y
-q0304,de,In contact with whom did the discrimination occur?,Please indicate all answers that apply.,Multiple Choice,M
-q0305,de,Which characteristic(s) do you think were particularly crucial in the discrimination? ,Please indicate all answers that apply.,Multiple Choice,M
-q0306,de,How did you deal with the discrimination you experienced?,Please indicate all answers that apply.,Multiple Choice,M
-q0307,de,Are you aware of the reporting tools CorrelAid offers in case of discrimination?,Please indicate all answers that apply.,Multiple Choice,M
-q0308,de,What would you need to adequately deal with discriminatory situations?,Please do not fill in any names or e-mail addresses) in the empty field. By doing so you protect your anonymity - and (potentially) the anonymity of third parties.,Open,T
-q0400,de,"In this section we would like to ask you questions about yourself: e.g. your profession, gender identity, income, and educational background.
-The results are again presented anonymously, so that it is not possible to assign the answers to you personally. All information is voluntary, your answers will be kept strictly confidential and will not be passed on to third parties.",,Text Display,X
-q0401,de,What is your current gender identity?,Please indicate all answers that apply.,Multiple Choice,M
-q0402,de,How old are you?,Please select one of the following answers.,Single Choice,L
-q0403,de,Which life situation applies to you?,Please indicate all answers that apply.,Multiple Choice,M
-q0404,de,"In addition to other background characteristics, we are also interested in the social class to which you would assign yourself and your parents [i]. We would like to take the potential influence of social origin into account in our evaluations.
-
-Please imagine a ladder with 10 steps to show where people stand in Germany.
-At the top are the people with the most money, the highest education and the best jobs or job prospects. At the bottom are those with the least money, the lowest education and the worst jobs or job prospects.
-The higher you are on the ladder, the closer you are to the people at the top; the lower you are, the closer you are to the people at the bottom.",,Text Display,X
-q0405,de,Where would you place yourself on the ladder?,,Numeric,L
-q0406,de,Where would you place your parents on the ladder? (1st parent),,Numeric,L
-q0407,de,Where would you place your parents on the ladder? (2nd parent),,Numeric,L
-q0408,de,Which religious community or worldview do you feel you belong to?,Please indicate all answers that apply.,Multiple Choice,M
-q0409,de,Do you have a so-called migration background (Migrationshintergrund)[i]?,Please select one of the following answers.,Single Choice,Y
-q0410,de,Do you have German citizenship?,Please select one of the following answers.,Single Choice,L
-q0411,de,Do you have EU citizenship?,Please select one of the following answers.,Single Choice,Y
-q0412,de,Please indicate the countries of origin/reference in connection with your migration background.,,Matrix,1
-q0413,de,How often are you perceived in this way in Germany?,Please select one of the following answers.,Single Choice,L
-q0414,de,"With regard to which attribute do you think you are perceived as ""foreign"" or ""not white""?",Please indicate all answers that apply.,Multiple Choice,M
-q0415,de,Which of the following (self-)designations most closely applies to you?,Please indicate all answers that apply.,Multiple Choice,M
-q0416,de,Do you have a disability or impairment in regard to which you experience barriers and are limited in your participation in society?,Please select one of the following answers.,Single Choice,Y
-q0417,de,What kind of disability or impairment do you have?,Please indicate all answers that apply.,Multiple Choice,M
-q0418,de,To what extent are you restricted in your social participation by obstacles/barriers?,Please select one of the following answers.,Single Choice,L
-q0419,de,Do you have an officially-determined disability?,Please select one of the following answers.,Single Choice,L
-q0420,de,Do you have a severe disability (Schwerbehinderung)?,Please select one of the following answers.,Single Choice,L
-q0421,de,Which of the following terms best describes your sexual orientation/identity?,Please indicate all answers that apply.,Multiple Choice,M
-q0500,de,"Finally, we'd like to ask you a question about your networks.",,Text Display,X
-q0501,de,Do you have networks in …,Please indicate all answers that apply.,Multiple Choice,M
-q0601,de,"If you identify as a Black Person or Person of Color (BPoC), we (Citizens For Europe/Vielfalt entscheidet - Diversity in Leadership) would like to invite you to a meet & greet. We would also like to use this opportunity to provide you a safer space to share your experience at CorrelAid with other BPoC in the near future. For this purpose please send your email address to befragung@citizensforeurope.org",,Text Display,X
-q0602,de,Do you have any remarks or comments on the survey that you would like to share with us?,,Open,T
-q0603,de,"Thank you very much for taking the time to participate in the survey!
-This concludes the survey for you, and you can now close your internet browser or this page.",,Text Display,X
+,question_item_id,lang,label_major,label_minor,type_major,type_minor
+0,q0100,de,ppahmghaycphmszfibpbirxcmjdokkyqnqybocpywgs,,Text Display,X
+1,q0101,de,bvpzgputpocehewxmtqnfjtlebyebnqcworziefingtwkhtuvkmklvwfdvqpgabvyxval,"Please indicate your assessment on a scale from 1 (""no knowledge"") to 5 (""very good knowledge"").",Matrix,F
+2,q0102,de,bmwezjmdliwzryhbsadsrlcqujtyyhiwieqqjlyohwbhwkqvwgcddntywwcfiofrzlqbzxcgji,Please select one of the following answers.,Single Choice,Y
+3,q0103,de,akhswwzoivtgxzmywlmqaqiikqsejqbzspuidmksqzhfjaqjrdenqlqhxinmksuziouasndlzkoznzzmrtdsxtsqnvwrig,Please select one of the following answers.,Single Choice,L
+4,q0104,de,zjrzikqycfpgfsryeuvibbjdzbubqekojxdgiotymvaosaxgqmsnplpi,Please select one of the following answers.,Single Choice,L
+5,q0200,de,klqmimuflstqvbxyzaurhmtorzlgpzwqoopkrrgwuooropvwcpgrqwwilohqdjnqcgysnvxeeolslagogaj,,Text Display,X
+6,q0201,de,znjhjqmphtgavaktwhimfnqjapscivxoqzpeofdcudiredshcmcnpvlmkrofktyemvbmhffijhqezominxhjuehtrcp,,Matrix,F
+7,q0202,de,tmjeqppuzuykkpwkrsfkicoitaksnxjzydyhytrrpqherpm,,Single Choice,Y
+8,q0203,de,bmvkuhbggjqqxhxabcrtycuoewbxckmeiqshkcmcmkdimlymhalsjchnbrgoedouefejfnbwhsviaewkzmbcstqpcofuxrjmjjwb,,Matrix,F
+9,q0300,de,vjnegfjanmdjwhkthddxogavibnqldtxcxauhbjzribvnrwme,,Text Display,X
+10,q0301,de,zdbnfuugqgas,"Please indicate your assessment on a scale from 1 (""never"") to 5 (""very often"").",Matrix,F
+11,q0302,de,pdugepzhunlhhaxtqgdsamlaqfscwrjy,Please select one of the following answers.,Single Choice,L
+12,q0303,de,ihchykbryfafftivwteumrcqjrnxozsvbriepttfplkgfyvvpanqryntdzhxkvgostrjj,,Single Choice,Y
+13,q0304,de,jdknjsnhcuzphramhxewz,Please indicate all answers that apply.,Multiple Choice,M
+14,q0305,de,jcoawpxgwzeyqttlxghuxelscgdumqlqgqbjxxfgqpmqytwualrsjqnyeakx,Please indicate all answers that apply.,Multiple Choice,M
+15,q0306,de,xkpukgszkglnejqgpqujbbnmesdqdwrnrhecpjkoyruquhwesvesupgxjtmmufgbrmi,Please indicate all answers that apply.,Multiple Choice,M
+16,q0307,de,dvjcayjkshqbkrbgjxjnauwygjmbczbfelymlvlymq,Please indicate all answers that apply.,Multiple Choice,M
+17,q0308,de,lxxunbgwjbmfqxujjihshzsyuayl,Please do not fill in any names or e-mail addresses) in the empty field. By doing so you protect your anonymity - and (potentially) the anonymity of third parties.,Open,T
+18,q0400,de,threxgaojcqbmrcxktdadimgjitpupko,,Text Display,X
+19,q0401,de,waheljhjilrxpikgresszisdantrxtwghmzdyoalyidx,Please indicate all answers that apply.,Multiple Choice,M
+20,q0402,de,aduxlazgrnsdzigkocijkpsqnvu,Please select one of the following answers.,Single Choice,L
+21,q0403,de,pomhpejtvqhotkvykerokfwcxuowda,Please indicate all answers that apply.,Multiple Choice,M
+22,q0404,de,mvwphlylhkwnj,,Text Display,X
+23,q0405,de,lbmlwwnzvbyrdnhvysedzrneovcblpzztypnomxasxyavrjkbgezkejfvssfwjuyojhathnvh,,Numeric,L
+24,q0406,de,cbcvkaladumygdlk,,Numeric,L
+25,q0407,de,rjbaagcvqufqnwosfwwthgoaghsbnnttqzpfvzqpowyqdsgenikvosj,,Numeric,L
+26,q0408,de,clmeprkgpkxwnxsyywbbrbunchsxaxivzqvdzbggmamgvhxtjfwhklfphwiwerqsluhdooctdt,Please indicate all answers that apply.,Multiple Choice,M
+27,q0409,de,gsqtkbuzwrbahephvsrpuharzriqpdzqzpkvbcvlwkdltdifabergpzvugebgbpscltqahm,Please select one of the following answers.,Single Choice,Y
+28,q0410,de,caebhvjdbojnieipyoksckttbbodhxxhnyodvuglltpvdvcetpiaw,Please select one of the following answers.,Single Choice,L
+29,q0411,de,oopynlbwslvqtomxabtpfmfvhmtphykrvo,Please select one of the following answers.,Single Choice,Y
+30,q0412,de,lomlxqvzevynllbakbpatnloqbbrzrfkxhymuwriuyttmwnlifqgnpcffuluzpkxuqngevwanaxxeyqrksesvsww,,Matrix,1
+31,q0413,de,yyyafnttqq,Please select one of the following answers.,Single Choice,L
+32,q0414,de,euzlvtxvnsjpbfihi,Please indicate all answers that apply.,Multiple Choice,M
+33,q0415,de,soqumoaaejjtgojcopeppuakziyswz,Please indicate all answers that apply.,Multiple Choice,M
+34,q0416,de,ibyxegsfateqlhhixczeypburtukatwboriqqwkytvrtajbexckgwepojxdxcahlcrcxm,Please select one of the following answers.,Single Choice,Y
+35,q0417,de,amofsucnxmoxcjeoluyelkjmrzeciujocjcvqexdebeygtyjdtjopuppjtvqtthjvtliimdcanbstaqzfcymyygmpzrcgvagrazf,Please indicate all answers that apply.,Multiple Choice,M
+36,q0418,de,jujanrtklikpyytytapricorqhfezbq,Please select one of the following answers.,Single Choice,L
+37,q0419,de,cpozyctzpuaneyvzboznuodhhhtskcaoklfjhybtxfvesdezzfsfgdpajgwmt,Please select one of the following answers.,Single Choice,L
+38,q0420,de,tkbpbbtcdrlalabgikynamkhtgpskgstnjtqjljvmrruqwnyapxrbka,Please select one of the following answers.,Single Choice,L
+39,q0421,de,jnffhrryepxfodpaqbrgxtfwazophoqurl,Please indicate all answers that apply.,Multiple Choice,M
+40,q0500,de,lxezzkjfredivfwtjouejhetfvrduanzmpyzykfwlca,,Text Display,X
+41,q0501,de,sivyzahxzcysmwpyqkgobjagrslftbyc,Please indicate all answers that apply.,Multiple Choice,M
+42,q0601,de,gzslwyoajaersbbouwfavauabbhcjblrdzdupxbaymsstdlvrmjfvqsbkqljlksdjxwkelsveoqlhalqw,,Text Display,X
+43,q0602,de,fliptznhbkcxlyoxacaituxidjddjlxvjixyttepwivhaolxgfaoyrhsnhjkoyuccouvjtqqwnedxhsenmow,,Open,T
+44,q0603,de,kopuuzawjowcklbitcuogfabosqsasdqxnljydlrudetlgqdcjceeoryvgttqfkoqqvc,,Text Display,X

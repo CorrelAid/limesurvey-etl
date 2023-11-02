@@ -10,7 +10,6 @@ def test_filter_data(
 ) -> None:
     transform = FilterDataTransform(filter_data_config)
     df = transform.transform(surveys_questions_data)
-    print(df)
     assert df.equals(
         pd.DataFrame(
             [

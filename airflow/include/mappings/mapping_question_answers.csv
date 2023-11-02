@@ -1,316 +1,316 @@
-question_item_id,lang,answer_id,label
-q0101,de,0,1 = No knowledge
-q0101,de,1,2 = Low
-q0101,de,2,3 = Partly
-q0101,de,3,4 = Good
-q0101,de,4,5 = Very good knowledge
-q0102,de,0,No
-q0102,de,1,Yes
-q0103,de,1,0 - 2 hours per week
-q0103,de,2,2 - 4 hours per week
-q0103,de,3,4  - 6 hours per week
-q0103,de,4,More than 6 hours
-q0104,de,0,0
-q0104,de,1,1
-q0104,de,2,2
-q0104,de,3,3
-q0104,de,4,More than 3
-q0201,de,0,1 = This is not relevant to me
-q0201,de,1,2 = This is also relevant to me
-q0201,de,2,3 = This is the main focus for me
-q0201,de,996,0 = Not specified
-q0202,de,0,No
-q0202,de,1,Yes
-q0203,de,0,1 = Not true
-q0203,de,1,2 = Rather not true
-q0203,de,2,3 = Partly true
-q0203,de,3,4 = Rather true
-q0203,de,4,5 = True
-q0301,de,0,1 =  Never
-q0301,de,1,2 = Rarely
-q0301,de,2,3 = Occasionally
-q0301,de,3,4 = Often
-q0301,de,4,5 = Very often
-q0302,de,0,1 = No knowledge
-q0302,de,1,2 = Low
-q0302,de,2,3 = Partly
-q0302,de,3,4 = Good
-q0302,de,4,5 = Very good knowledge
-q0303,de,0,No
-q0303,de,1,Yes
-q0304,de,1,Yes
-q0305,de,1,Yes
-q0306,de,1,Yes
-q0307,de,1,Yes
-q0401,de,1,Yes
-q0402,de,1,16 to 17 years old
-q0402,de,2,18 to 24 years old
-q0402,de,3,25 to 30 years old
-q0402,de,4,31 to 35 years old
-q0402,de,5,36 to 40 years old
-q0402,de,6,41 years and older
-q0403,de,1,Yes
-q0405,de,1,1
-q0405,de,2,2
-q0405,de,3,3
-q0405,de,4,4
-q0405,de,5,5
-q0405,de,6,6
-q0405,de,7,7
-q0405,de,8,8
-q0405,de,9,9
-q0405,de,10,10
-q0406,de,1,1
-q0406,de,2,2
-q0406,de,3,3
-q0406,de,4,4
-q0406,de,5,5
-q0406,de,6,6
-q0406,de,7,7
-q0406,de,8,8
-q0406,de,9,9
-q0406,de,10,10
-q0407,de,1,1
-q0407,de,2,2
-q0407,de,3,3
-q0407,de,4,4
-q0407,de,5,5
-q0407,de,6,6
-q0407,de,7,7
-q0407,de,8,8
-q0407,de,9,9
-q0407,de,10,10
-q0408,de,1,Yes
-q0409,de,0,No
-q0409,de,1,Yes
-q0410,de,0,No
-q0410,de,1,"Yes, through the status as “Aussiedler*in” oder “Spätaussiedler*in” (or as a descendant or spouse of a “(Spät-)Aussiedler*in”)."
-q0411,de,0,No
-q0411,de,1,Yes
-q0412,de,2,Afghanistan [AFG]
-q0412,de,3,Albania [ALB]
-q0412,de,4,Algeria [DZA]
-q0412,de,5,Andorra [AND]
-q0412,de,6,Angola [AGO]
-q0412,de,7,Antarctica [ATA]
-q0412,de,8,Antigua and Barbuda [ATG]
-q0412,de,9,Argentina [ARG]
-q0412,de,10,Armenia [ARM]
-q0412,de,11,Australia [AUS]
-q0412,de,12,Austria [AUT]
-q0412,de,13,Azerbaijan [AZE]
-q0412,de,14,Bahamas [BHS]
-q0412,de,15,Bahrain [BHR]
-q0412,de,16,Bangladesh [BGD]
-q0412,de,17,Barbados [BRB]
-q0412,de,18,Belarus [BLR]
-q0412,de,19,Belgium [BEL]
-q0412,de,20,Belize [BLZ]
-q0412,de,21,Benin [BEN]
-q0412,de,22,Bhutan [BTN]
-q0412,de,23,Bolivia [BOL]
-q0412,de,24,Bosnia and Herzegovina [BIH]
-q0412,de,25,Botswana [BWA]
-q0412,de,26,Brazil [BRA]
-q0412,de,27,Brunei [BRN]
-q0412,de,28,Bulgaria [BGR]
-q0412,de,29,Burkina Faso [BFA]
-q0412,de,30,Burundi [BDI]
-q0412,de,31,Cambodia [KHM]
-q0412,de,32,Cameroon [CMR]
-q0412,de,33,Canada [CAN]
-q0412,de,34,Cape Verde [CPV]
-q0412,de,35,Central African Republic [CAF]
-q0412,de,36,Chad [TCD]
-q0412,de,37,Chile [CHL]
-q0412,de,38,China [CHN]
-q0412,de,39,Colombia [COL]
-q0412,de,40,Comoros [COM]
-q0412,de,41,Congo (Democratic Republic of) [COD]
-q0412,de,42,Congo (Republic of) [COG]
-q0412,de,43,Cook Islands [COK]
-q0412,de,44,Costa Rica [CRI]
-q0412,de,45,Côte d'Ivoire [CIV]
-q0412,de,46,Croatia [HRV]
-q0412,de,47,Cuba [CUB]
-q0412,de,48,Cyprus [CYP]
-q0412,de,49,Czech Republic [CZE]
-q0412,de,50,Denmark [DNK]
-q0412,de,51,Djibouti [DJI]
-q0412,de,52,Dominica [DMA]
-q0412,de,53,Dominican Republic [DOM]
-q0412,de,54,Ecuador [ECU]
-q0412,de,55,Egypt [EGY]
-q0412,de,56,El Salvador [SLV]
-q0412,de,57,Equatorial Guinea [GNQ]
-q0412,de,58,Eritrea [ERI]
-q0412,de,59,Estonia [EST]
-q0412,de,60,Eswatini (Swaziland) [SWZ]
-q0412,de,61,Ethiopia [ETH]
-q0412,de,62,Falkland Islands [FLK]
-q0412,de,63,Federated States of Micronesia [FSM]
-q0412,de,64,Fiji [FJI]
-q0412,de,65,Finland [FIN]
-q0412,de,66,France [FRA]
-q0412,de,67,French Guiana [GUF]
-q0412,de,68,Gabon [GAB]
-q0412,de,69,Gambia [GMB]
-q0412,de,70,Georgia [GEO]
-q0412,de,71,Germany [DEU]
-q0412,de,72,Ghana [GHA]
-q0412,de,73,Greece [GRC]
-q0412,de,74,Grenada [GRD]
-q0412,de,75,Guatemala [GTM]
-q0412,de,76,Guinea [GIN]
-q0412,de,77,Guinea-Bissau [GNB]
-q0412,de,78,Guyana [GUY]
-q0412,de,79,Haiti [HTI]
-q0412,de,80,Honduras [HND]
-q0412,de,81,Hungary [HUN]
-q0412,de,82,Iceland [ISL]
-q0412,de,83,India [IND]
-q0412,de,84,Indonesia [IDN]
-q0412,de,85,Iran [IRN]
-q0412,de,86,Iraq [IRQ]
-q0412,de,87,Ireland [IRL]
-q0412,de,88,Israel [ISR]
-q0412,de,89,Italy [ITA]
-q0412,de,90,Jamaica [JAM]
-q0412,de,91,Japan [JPN]
-q0412,de,92,Jordan [JOR]
-q0412,de,93,Kazakhstan [KAZ]
-q0412,de,94,Kenya [KEN]
-q0412,de,95,Kiribati [KIR]
-q0412,de,96,Kosovo []
-q0412,de,97,Kuwait [KWT]
-q0412,de,98,Kyrgyzstan [KGZ]
-q0412,de,99,Laos [LAO]
-q0412,de,100,Latvia [LVA]
-q0412,de,101,Lebanon [LBN]
-q0412,de,102,Lesotho [LSO]
-q0412,de,103,Liberia [LBR]
-q0412,de,104,Libya [LBY]
-q0412,de,105,Liechtenstein [LIE]
-q0412,de,106,Lithuania [LTU]
-q0412,de,107,Luxembourg [LUX]
-q0412,de,108,Madagascar [MDG]
-q0412,de,109,Malawi [MWI]
-q0412,de,110,Malaysia [MYS]
-q0412,de,111,Maldives [MDV]
-q0412,de,112,Mali [MLI]
-q0412,de,113,Malta [MLT]
-q0412,de,114,Marshall Islands [MHL]
-q0412,de,115,Mauritania [MRT]
-q0412,de,116,Mauritius [MUS]
-q0412,de,117,Mexico [MEX]
-q0412,de,118,Moldova [MDA]
-q0412,de,119,Monaco [MCO]
-q0412,de,120,Mongolia [MNG]
-q0412,de,121,Montenegro [MNE]
-q0412,de,122,Morocco [MAR]
-q0412,de,123,Mozambique [MOZ]
-q0412,de,124,Myanmar [MMR]
-q0412,de,125,Namibia [NAM]
-q0412,de,126,Nauru [NRU]
-q0412,de,127,Nepal [NPL]
-q0412,de,128,Netherlands [NLD]
-q0412,de,129,New Zealand [NZL]
-q0412,de,130,Nicaragua [NIC]
-q0412,de,131,Niger [NER]
-q0412,de,132,Nigeria [NGA]
-q0412,de,133,North Korea [PRK]
-q0412,de,134,Northern Cyprus []
-q0412,de,135,Northern Macedonia [MKD]
-q0412,de,136,Norway [NOR]
-q0412,de,137,Oman [OMN]
-q0412,de,138,Pakistan [PAK]
-q0412,de,139,Palau [PLW]
-q0412,de,140,Palestine [PSE]
-q0412,de,141,Panama [PAN]
-q0412,de,142,Papua New Guinea [PNG]
-q0412,de,143,Paraguay [PRY]
-q0412,de,144,Peru [PER]
-q0412,de,145,Philippines [PHL]
-q0412,de,146,Poland [POL]
-q0412,de,147,Portugal [PRT]
-q0412,de,148,Qatar [QAT]
-q0412,de,149,Romania [ROU]
-q0412,de,150,Russia [RUS]
-q0412,de,151,Rwanda [RWA]
-q0412,de,152,Saint Kitts and Nevis [KNA]
-q0412,de,153,Saint Lucia [LCA]
-q0412,de,154,Saint Vincent and the Grenadines [VCT]
-q0412,de,155,Samoa [WSM]
-q0412,de,156,San Marino [SMR]
-q0412,de,157,São Tomé and Príncipe [STP]
-q0412,de,158,Saudi Arabia [SAU]
-q0412,de,159,Senegal [SEN]
-q0412,de,160,Serbia [SRB]
-q0412,de,161,Seychelles [SYC]
-q0412,de,162,Sierra Leone [SLE]
-q0412,de,163,Singapore [SGP]
-q0412,de,164,Slovakia [SVK]
-q0412,de,165,Slovenia [SVN]
-q0412,de,166,Solomon Islands [SLB]
-q0412,de,167,Somalia [SOM]
-q0412,de,168,South Africa [ZAF]
-q0412,de,169,South Korea [KOR]
-q0412,de,170,South Sudan [SSD]
-q0412,de,171,Spain [ESP]
-q0412,de,172,Sri Lanka [LKA]
-q0412,de,173,Sudan [SDN]
-q0412,de,174,Suriname [SUR]
-q0412,de,175,Svalbard [SJM]
-q0412,de,176,Sweden [SWE]
-q0412,de,177,Switzerland [CHE]
-q0412,de,178,Syria [SYR]
-q0412,de,179,Taiwan [TWN]
-q0412,de,180,Tajikistan [TJK]
-q0412,de,181,Tanzania [TZA]
-q0412,de,182,Thailand [THA]
-q0412,de,183,Timor-Leste [TLS]
-q0412,de,184,Togo [TGO]
-q0412,de,185,Tonga [TON]
-q0412,de,186,Trinidad and Tobago [TTO]
-q0412,de,187,Tunisia [TUN]
-q0412,de,188,Turkey [TUR]
-q0412,de,189,Turkmenistan [TKM]
-q0412,de,190,Tuvalu [TUV]
-q0412,de,191,Uganda [UGA]
-q0412,de,192,Ukraine [UKR]
-q0412,de,193,United Arab Emirates [ARE]
-q0412,de,194,United Kingdom [GBR]
-q0412,de,195,United States of America [USA]
-q0412,de,196,Uruguay [URY]
-q0412,de,197,Uzbekistan [UZB]
-q0412,de,198,Vanuatu [VUT]
-q0412,de,199,Vatican City [VAT]
-q0412,de,200,Venezuela [VEN]
-q0412,de,201,Vietnam [VNM]
-q0412,de,202,Western Sahara [ESH]
-q0412,de,203,Yemen [YEM]
-q0412,de,204,Zambia [ZMB]
-q0412,de,205,Zimbabwe [ZWE]
-q0412,de,998,I don't know.
-q0413,de,0,1 = Never
-q0413,de,1,2 = Rarely
-q0413,de,2,3 = Occasionally
-q0413,de,3,4 = Often
-q0413,de,4,5 = Very often
-q0414,de,1,Yes
-q0415,de,1,Yes
-q0416,de,0,No
-q0416,de,1,Yes
-q0417,de,1,Yes
-q0418,de,1,1 = A bit
-q0418,de,2,2 = Rarely
-q0418,de,3,3 = Regularly
-q0418,de,4,4 = Often
-q0418,de,5,5 = Very often
-q0419,de,0,No
-q0419,de,1,Yes
-q0420,de,0,No
-q0420,de,1,Yes
-q0420,de,996,I do not want to describe my disability in further detail
-q0421,de,1,Yes
-q0501,de,1,Yes
+,question_item_id,lang,answer_id,label
+0,q0101,de,0,vgzczvrezpwrtlfbztxinoivabyhhgxjgjpmjfesysniacoqatdvcvlykflavkfvseyldgfrmpadgxnhfg
+1,q0101,de,1,axtddzqynirsfujbgtnryaxdlpmddjjbtphdarjzqbteqri
+2,q0101,de,2,giykqmuaxxttmdtijyghtsalhyyieaamjbhxsebdrllwfqauijjbmuzljpmgunb
+3,q0101,de,3,bbjlwqcecfodaugmdcoprmtouwjtasaiscfrdivhwxvzvxoo
+4,q0101,de,4,mqcqhleqonlajggaymqosltwfnpbhvzloubxwwfmtjtovahwp
+5,q0102,de,0,omhnanklybjmlijmvoaybltzkcbrpjxozafkcocab
+6,q0102,de,1,dadiwwgphfijgkbyazenktdrmnnovliwlxufviwlgmvigfyxnonkyibdzktxfdchvhqcgjdnbzkfulv
+7,q0103,de,1,sqfuxqkaexqraotqikaaxazojzlxledjgohopgemexifbtptmkkzgkprrbgaiczksuwvewhkwd
+8,q0103,de,2,zsuucxzggam
+9,q0103,de,3,svzueqhcztbbrraagnhkwluvfeyvthgqontkszzfkjeqplhnkthwawi
+10,q0103,de,4,sdfxobyobt
+11,q0104,de,0,yynntyyzgzrmxevvyotajjybmodbilzmmvyhdqcttqyupgroojbiowybwxtyna
+12,q0104,de,1,alvsrprdbkwxwxzdsjcrpttuerqporuqsyxttwdgsujkjwwrbtnfeeuwuaelynyqjjbnztldfjvpbkawv
+13,q0104,de,2,gzhaiijxzrhzeydejswcqaqzwmiqntioxxxryhdpnjwenvmncofpsrqwqsmnq
+14,q0104,de,3,ryuyfbjcexysygumbflfekgixllclnofpvprjorwsjybb
+15,q0104,de,4,nzjtohwvodfghvhkxemwqccyqgugnrctwepzmkcbwlfhmafixockzjbxynlegtinsxogwlcwrtsqtcwyxh
+16,q0201,de,0,ycupnzflohutpqqgzfugtuynomsairdhlzqezklfjjrqycoscrgfpqynalanwjjzoqoqvqewusdgfgnddhhjlxgdcxsigbtjxro
+17,q0201,de,1,bmsowskgxclefwlqtygvlomtfm
+18,q0201,de,2,wegupwsypmgdadmmjgdauztfmxuurxlzgtumfiqedsbtoenlzbbumrjtmhejpuilwyrcjoieynkzzovlzifegwrund
+19,q0201,de,996,rwdqyjzypjtjrcmbzykqyfeabdymssqaxiqte
+20,q0202,de,0,buyxncupjueiknoqxxihdbpjuurbthpnvsfdibxrrofcutbompayrpbnsdsnkwogbcfnhqucwladooeyeqmgdznb
+21,q0202,de,1,bfaubulcvuftzvbaxgpwvsxwctuybpjtaivaqvspwmjhgghhfinigdunrlquapdibwewqevml
+22,q0203,de,0,bagiklmjtvrmguqvncxufxxfmqlllaufruvkp
+23,q0203,de,1,ikiqfhhxebtopizgmmywycdsxihyaxeztnctzxzvzefqduoffyuuulpcbbdmbbibhp
+24,q0203,de,2,uibmflceajftwxchrmopzayxvofvguisdgrbcctmdafbxvqcyhtqgjboxtydyuqqheoddwphpvmkiilfszqifetheatugwucc
+25,q0203,de,3,qbmvbgrvnyceysvmumpeytcdprkbosynmvgiikxchqhljfsellknmaqyitcwluqzczbcmcaelavhoaixoqzoajoia
+26,q0203,de,4,xsfnbajciglpfbirpiylsmbaaipiffsfgspfoflppapjaxogedkpioyyl
+27,q0301,de,0,uwhcsznizbmthoghcygsmxuyjdbk
+28,q0301,de,1,rbxmxngtmakxwcgvlwxczyqyfifgwjxkkgmilpnogcqtuakrkiuzdukll
+29,q0301,de,2,anzqguovvew
+30,q0301,de,3,adqxxjgsbquuasippqqqcoyucaaavnoyhieyveiribrtdpdzr
+31,q0301,de,4,kblzlrqrpshjfdypsjpyrctcoxkxltrpogqxwhqrzijmcvixvqjjrqsqsgaxbgpgjqqyaqozqkwwvjmxxqbbrhswdsoitfgg
+32,q0302,de,0,kgtutigsksecynfznfoxwlwb
+33,q0302,de,1,nxxdvhtwbptsncrykfduuajepskhdxnbntnpymcnnummsggtfdacvyr
+34,q0302,de,2,xgusjaxorqaqfdhlfrgymbshxop
+35,q0302,de,3,ayfgeukfzorlwgpnzpaklwpxhyfjhxmqpoymwatnvxhjeyeabrqlnkyniwhcsmkbdd
+36,q0302,de,4,juwkrbfsiwbisjgobztygvxnglfswgfhetdytwedtdsqtldhpqqjssptcxtcthcekzjbrtwjkaoofhjhdgbswajzntvqnn
+37,q0303,de,0,ihqqawvstvzgmxylwiilziqqceasvrecixbnftfatrzjeodkdnntjbftgrewzmocskpxvjw
+38,q0303,de,1,rxdmydslpxykxkufjvddiwntrvvftnihrqoztiosnpjgafnucqynyuifprbgmyauxlwilhkzepmorsonzi
+39,q0304,de,1,bbylfeionkvzxawsutieqrahxmzgfhbfkatrezzekptuwdltemebbowsgdocumlmsintawa
+40,q0305,de,1,kubqnswnqzcwggectuwjuiiyzfdqpuuutvdrlqeferigopksngtivgbfdcsritkfoxaaizuvclpfmhtyx
+41,q0306,de,1,cdaworjdwgrqovlvzbzlkwihuztdrpoouytqlzzgbpoewxtaszwxfmqlszqbhsocvwbdtgzctvypxwadzo
+42,q0307,de,1,nskdqhpfwuqbgefxdhrwkediyqlwnmxzv
+43,q0401,de,1,stnfdgrwncfppsbjdgqlncgzjznqvmczofxpvfysihrrlxlbjgaclcuryqchhqytuy
+44,q0402,de,1,yqektybwndcyynedpkhyxustvodogzuxjndyxgohjzgawkjpi
+45,q0402,de,2,qoekqqkwwvjknaywaizkbktyafqrjdrygoscrkqqubvhyvgomepwaq
+46,q0402,de,3,cxztvdhpdmgsgiheslaucalykquyadygtcxcxpmpwnvkvxilrsyjyftjtynlctcbpivttyiv
+47,q0402,de,4,gqfhlhjkkazngmjhmdfskrvafttxgiunrlvuufinxqpepyoqevblstvurpovpjucxxqrceyuzytrtjzdahr
+48,q0402,de,5,ptzwwwihupisokxebupzhogrmyjsdi
+49,q0402,de,6,eopqxdovbjueaxlatnbuprfrxmxtejjcdyyjiytmxsoaqumbxpfkrgaxxcdnjnfywtwj
+50,q0403,de,1,zenwkzzfqekmbwnfbffhrernxksfjfhdxcwrtnvgxzw
+51,q0405,de,1,fzzjbxittsjhunlgtbjepqobihoqgdhjcxfiszcbemrsekzecvefobclilscenddmeemmwqkrizrychsapwibzpby
+52,q0405,de,2,wxanjscexqosablhuvuj
+53,q0405,de,3,qqweoxlqnxgxlbgxcgynlkjxfuwcgfppqrckiujztaigluykwplqpuiriqhsbpzvqyyjmyxnjpysljkgxq
+54,q0405,de,4,fgmpvnictadmxbemzch
+55,q0405,de,5,daiuvklfpzudwbtopyeebjzilqiyslkvasfrqepyslsapvwookxcwvfhgvmcrnbfgeyftbmrinruznlslviewjbfgtxtyy
+56,q0405,de,6,uxmnpuxupdhcpklhbwblcqo
+57,q0405,de,7,vqqigbyaokzzuwecwxvixkobtqctznnibwqxihpnpvswkaqrdrvbfbixjlqslycxejdwdpsgaedaidvenzjcafbcppqlwfdt
+58,q0405,de,8,pbtanjhrxcsyqlqukrenrrtrxwfgmnvxhqhpveoxofhpxdybuavalbihepslvztjigxrxfehynhrpfzakagvk
+59,q0405,de,9,udiwddhvzzdzbmmeofmagdirxyf
+60,q0405,de,10,dyfoduhdlcmlgqfuygyzaqhogdkoyjpfiujscnyuqqwtpbwbgxznkhguotpeyrkixoqgijthmrloa
+61,q0406,de,1,okqarrckoregznluvizbczbdjbmesuricaf
+62,q0406,de,2,bnisxwpxvpvedrrtkugbfsnaqlohvpppgihkrzdeleniazhdudxlpnpoqtiutbvwgqxmlsikuh
+63,q0406,de,3,ivuwiopkxuvsmbqsyoetcoimhyexlpblzlrizgzsewpdrnzhorfrsjrfchpxqsxqejorfctfpnglfcbyxrxoaitdkbepaf
+64,q0406,de,4,sljvsanhrvurujldridbajwusebkin
+65,q0406,de,5,bcakywktlldtmkobrsagkpaxgyqvclsiqxwrmzgpypbhvzkyamkmdzzmqavdqv
+66,q0406,de,6,dsylfikyjhdxmpyiaukjokygtvcyxrvlkdczttyvcsmxttnqqgztisnaiodsxfdsfbxjrwvihosrubeaqgtx
+67,q0406,de,7,vmgaownmeksugawmycgmuspmjozjeltkwjbgwcnvjszbvywfqvnxymvcoqadi
+68,q0406,de,8,najnhjaxmurnvtbdtdyzozupkizdcwrxvvzggptccrxszzzkiavqqf
+69,q0406,de,9,swnbwyuzxlhvbwjmivmjbkealqhtzjcybqghqnpfrkruyrfvcchocsdhfveqohxwdcmqwxwwnmoduwrkolenngsobziuwa
+70,q0406,de,10,obkqcqpqvjjmejjazfkxnetivvclncvkltfryzvtrvey
+71,q0407,de,1,xbsiximitlrmgxqtkigotrcbarysortolabebzrpdfkkuwbngkfebjdmndyrddcfp
+72,q0407,de,2,ddkdzghobcsihxfpuaungurdgelpxkjjdwwicoqpgqpxuphdaowuqyone
+73,q0407,de,3,dsuthnxcqnkhvewydgpwlqoverfbsfioolmcywrexjfuedyuyf
+74,q0407,de,4,svwjvictktdob
+75,q0407,de,5,nhpozzxhrlkvdvvzjymzfgmeudfvijlairsihzf
+76,q0407,de,6,tmeqkgavezpbaqtjtfikvzzumvvslzuxgsyhzusotzdxfrxnx
+77,q0407,de,7,gjoeunxoxexcqwrhiygxdqkuvmpgnfzmfrenfxjnwlhekr
+78,q0407,de,8,tpyljolozghnvlimbf
+79,q0407,de,9,ayumkkipzwuxokpohmdkxtfhqqjfcrruckypnucuwfemdocmyxuppdpudwrv
+80,q0407,de,10,majhjbndilqaqlpdgmhhzepxyznkvflvnupavhfzzgtvkrcxndsbanbxbddxbjzebotftfqpivcdhupljxxsysntxe
+81,q0408,de,1,gdzuvlaznxqdtukwantrkwnqwiteqehdvcdjmozkawztfwgbvuqplganbzbwogbgaboodmyro
+82,q0409,de,0,jirrrrydlptczgzmpmiyunpsmqbpmuxnfjsxbhmucrr
+83,q0409,de,1,unqteiqdmspvjyyuufxm
+84,q0410,de,0,kwzhtrfcerikqcmbokeqyciidfyeehklbbpevaoanveliuq
+85,q0410,de,1,heapdpbzcnxvohm
+86,q0411,de,0,eykrbbbifdrkbnaqyafxfhviowxggsocwrnembirlawkfqlmzytkjachodvxsmorbvessajxdqahdbnvdjqnw
+87,q0411,de,1,fodtxiczcvcctdetcmlylfqpasueonxt
+88,q0412,de,2,vahrjyyrdgvkxbacgyaksfziniakxvwwpeoajxsmmsjjhivwabybm
+89,q0412,de,3,qqgbpupvsloieatqwmowtziludosozbdkrkcpknfolwuzfadjweexugthhoscvngf
+90,q0412,de,4,sgragjjlfgaaibbnghoswxwwqbksrmpvjwvxcmrshnbjgekebcqoumh
+91,q0412,de,5,iugiwqufxyeavjqjnuzytldfmny
+92,q0412,de,6,cqedxiubtxdkxdzkhhtvwlukyvphsg
+93,q0412,de,7,tcnnmuhdtuoaiobbncpjvdbyysyja
+94,q0412,de,8,rjepfulovydmblcykkuzwuolmvvcfamgsnixawygrxucklboc
+95,q0412,de,9,aqqifjnsiyliemouyjofdpdrwsovqpdjxnipmcmbruikzlxibqfiidmmoidborczmasyckwvgknmvp
+96,q0412,de,10,hddooycfkvgbwnkbuwomoezwaucf
+97,q0412,de,11,dozbdjawsqqstfrddfutqfjzluzmrxogccjfomrmqwexixxostzpdmrsbykyfdwrgvvndejwyyeztyvinxlvoagvnnzzhimfvfgn
+98,q0412,de,12,taxroxcihfolzwpbtzcyeudswbkioqfa
+99,q0412,de,13,slmwjlygrggkjtjzpfforafbtffmuzsvsmtnrxfujnfgjtcmajxgxcjyxxwvmmnnqaibcoysbqpxmptwjytjadp
+100,q0412,de,14,vczrinxiuhrstgsndtz
+101,q0412,de,15,ngimcipikcbejrvthowbgnrhqwvapcimqxfkrvhgmnbmyqeskpylhnmhv
+102,q0412,de,16,dwwnaxilhaguzdqsrtxqszyinevayaurrfojkagicggcyfghd
+103,q0412,de,17,rnibhqsyhhfnoahhokbbtgkdbqqlkviwulperycebhxafkqxkcp
+104,q0412,de,18,rjnmbqnrtruslbesnitobkhwzycjyvkxnyglrmkulkynezeqpaiglebkmhpitrbgfmrtvisqjocymzsoat
+105,q0412,de,19,nhhyhpuwhnvwofjedwcvuhqnsugvwwhgerbuxazhqsbpsmcmgksilccervlehiqdoqirtpsqsygjidgrxyrfwpnygjqczmhp
+106,q0412,de,20,fcjecjfzhlekcpdqukdwwobofmkaivjacayvqdugdrfp
+107,q0412,de,21,dogjnvriamhnvqminqjidwpzuwllecfizxzxjvvlwktzjnagirgofiaouydskear
+108,q0412,de,22,rkwhmhcbkkwsqpqconn
+109,q0412,de,23,yxglfygzvhkmnqnukhitbhmzhhupgwmvyfkhtrtkmgxmijhiigehpjufyclevy
+110,q0412,de,24,dzhbkkrgpveda
+111,q0412,de,25,yfobkaoylufrhhtazvwdyslpbkiczosmmurgefxhhysjth
+112,q0412,de,26,qitiehlxcztypwoznfjltrdavkcgydpyvywei
+113,q0412,de,27,gsgiyemwegzbloqtfugzklcsbgqhlhcebtikbedjnrbu
+114,q0412,de,28,bcwuwwapctgjytnbzknulauqdmmwddxnf
+115,q0412,de,29,bdveyfqmyhxdspufgojuysitphyciomksoxzxrdhluhlajiojjxibmnvjg
+116,q0412,de,30,khjkzdlyfnyczdzydxwdcuge
+117,q0412,de,31,ljgbakqifmedqyncwkbztsuccoezdpwrqgxesegoyzyofclnoebnwcrsvdtci
+118,q0412,de,32,ffrehaoizukhzklxaeueqlvkfsyjwrerazwrcanphdcfvxcjvxbncgpfcdvqrmfeskqd
+119,q0412,de,33,bxnqctkdjyqvfobydyrcthetomiurecmutppgn
+120,q0412,de,34,dkbqflcyhdngzckkcrbnsmdirlysiqqoucimsaigbknbonqtxbtpmdyetlbkzosrgmsqoknsk
+121,q0412,de,35,jgoftmrxrhprlwpbrguygltrlgasxxhevxggmtpfqekwhel
+122,q0412,de,36,psntppyijjbaxhawqnhgpochkcxoquucipqudninia
+123,q0412,de,37,eheskcectxqpyawgttrwxshqnneyq
+124,q0412,de,38,rzaisnurgmniahoehswcqqpjykufp
+125,q0412,de,39,rqtlmvcbsyijntnkijefqseyiquk
+126,q0412,de,40,pqtmxzyupduditmqewwksipcsxoxcfcotbmheobfdquilbyaaloovznkpcanwhbknkj
+127,q0412,de,41,qinlvovoefybzznmxwxzvonpjywyxloohvsozzawawfi
+128,q0412,de,42,svjbiyzqmjiqzgpfqmaxbztgpbyijcvtynqszibckxqsyifw
+129,q0412,de,43,ygkeyzhdufzpxkeolayuvvcaodvgpjrycxxtgmm
+130,q0412,de,44,kpjpnhjvtgek
+131,q0412,de,45,ojrpmrecqrlbnutjfjvntodnquhjpkgpnzwesdkvjbnkrvtdynooihqaepnd
+132,q0412,de,46,qgeeujuzzxgbjjl
+133,q0412,de,47,nxmztvpygflhlnesremtzyhvwjjgxtcbkkdalmipmmnanvcqvhphxvuvmadpugqjpmxvgulutedwrotffzcnrsalsi
+134,q0412,de,48,pcpqgvseopggeecfwwbedwjzheydxezouor
+135,q0412,de,49,ixvlyzsidkcxeyphuoxrowujpcbyoehqzkarcsggvbvnyrxcmyzpniuxfsfboniyltpoujidpvqltnhccibybrcgiqrrtbj
+136,q0412,de,50,ahmnaeygyxgirxsowmrleytavpqrsnjgjaslpyaqsulafceqowktgumouwgtvzmtaclszeggyxtul
+137,q0412,de,51,asoyyttgdoditwibbompetgdeqzrvwxpalxtlupjnhchoubakjnjtpn
+138,q0412,de,52,wvcgeupyajezbgdmxkktgkvzhx
+139,q0412,de,53,kgnpytjjpcxzenzphehdcupalugnvurvqiqqcckyvdwudwmrzavffhmmgkmfpc
+140,q0412,de,54,shbccejaagxjfwxnlmnikdoptjmvtxzrbjfbmbihxsxqutksfxfsvxunztv
+141,q0412,de,55,mtuhnowgitedsympaggncerwkpdtkm
+142,q0412,de,56,drcohuvrdlsxpcawxtfvpunxtecmdaxapinsobyidiuifgjrclvmjyrsebtxdaifwzjzuujunbx
+143,q0412,de,57,wsnpefovpvkxpydzddnltgfresxg
+144,q0412,de,58,axaejemoutmnwbwepmtapwhiotocaqzgnbnfkhsdvimgoqjxuckbvqtbauzenhfwrhruptnyhbihnyrxswxzb
+145,q0412,de,59,kxpouwjmmnheqybmjlovntsppknrmicmhwjzqfhvqksddhkoretnqyyppidmnzzigbgvnycfhafsetsnpxdmxqzenvdkusv
+146,q0412,de,60,yragrflhurwvcrskmegcdypwkffcdcedynvmdirjehrwcnjfl
+147,q0412,de,61,thmzpmiqshqkihkhcblmkd
+148,q0412,de,62,qpbpxgbriaqtszlrddghsvytgiugckegfhbsxetquqwpnrcfkxxgbhyghbzjdkemogngsiopwsdtc
+149,q0412,de,63,viihqpsdcq
+150,q0412,de,64,daikzzthuqlywfclevtddshnkceg
+151,q0412,de,65,warcvvfxganvswtuaxxgomzuuwiyonrfammppiwdbblznnefyjsosgropboqkbdyiififfxjwkagjmtssxkvbbldthdxbg
+152,q0412,de,66,jtjueaieqinplhsvcvbwhwbanel
+153,q0412,de,67,odznrdkrmfnulmmoiizotwxvwxfikubywhpbdsujehcfaaptsxgnkoofilqnulznxtdjcco
+154,q0412,de,68,gocglqrvxypnskfptoahylwehnzlimpmsaq
+155,q0412,de,69,txudodoxgaqycazzeoqxugnohukfhwatycmfejixgpwqqtpxclci
+156,q0412,de,70,jkfmrftuyqcklkjhierjmofuwlzvaaufmgyukvdtzdgckajcuslo
+157,q0412,de,71,ulrmcvyinyrsbrqslcahuewdoxofyhi
+158,q0412,de,72,pbulzuhbnksddjfinaeizljhcmlzxvm
+159,q0412,de,73,bukafbexawriwtxnlgnmyvgrhqluurnnxktfssrfisoegymjgpknxlyrfmqoucgdtlgtiulvrssxqfdspwsvvyi
+160,q0412,de,74,zxfzwdzauucjphdzqniqoywxjbtzcmunmagldsauzvbepavqmgfbvsbncrmgyjzqzhogkhnooqxrtipawnso
+161,q0412,de,75,brxxqkmzyfecudimqebehsjnoiwqmcvpafxbayuqhqtbkozqinefoewiffdprhigppnqptixvcapl
+162,q0412,de,76,ybfenjtefjyznrinxaoqnyzkvsuegtmyusyaqkistdrspkwizfnhou
+163,q0412,de,77,xyibhkvxslmwrmhruvwpjipoartywexajxqnxqzgmwoafoblnmjl
+164,q0412,de,78,jnwonpctignhkzheawcvyqrl
+165,q0412,de,79,sslqgdlnuaxrakqcjrijfvoovmwtmyqhvzjxyrslzenpkutvvxmrcuywnsisshghtxyja
+166,q0412,de,80,opezdubjvaxgcdgrlkxmmagqkyiakmwpaettotxljjwwsrhegzwahshatgocw
+167,q0412,de,81,henhvqoecuuljs
+168,q0412,de,82,mpuopgmnjrewjncahlkrcwhkgebfuictlkuapuxaczmaykiohcxpfepixedhq
+169,q0412,de,83,jpezetgiubirlfmoxieledxyegoowxjgxcocxbojkarubepprdpdhepgvvyguosalzjpg
+170,q0412,de,84,lnmxbxalyk
+171,q0412,de,85,xgfydscghbmtxpmrpfomymwbhkosztssccrfdtqccoalhjceauuivyycyizfjuisoirvxbafjrmki
+172,q0412,de,86,owwfooiwgglfjvxxbktjwubbt
+173,q0412,de,87,ejynlyxfknkivpuxnadpldwjelfvoragkclpfuywmktxexejbpnqkesuqcmsvtuglzenm
+174,q0412,de,88,dsbkljdbpfwibtmgpwpcuvjolzclcetnxtfbjzxqhbqwbdegufay
+175,q0412,de,89,dcbktdjnlfrylplttfnvtjtiziebrmgzmdqwjusvfcrcgmjmeqvypmayheffkfzsfnnqscozjgogihijxbibac
+176,q0412,de,90,kggmtyzikvyhvhungqkjeijfmpaygmsg
+177,q0412,de,91,fuanhhxrfmomzxzstqdvelajdhsqyhzhprmkqsqighncnighnjx
+178,q0412,de,92,liiiwjhdcvnrtzwzyvewezmpzugqkawyypkulbfv
+179,q0412,de,93,pkrzdyfueuuhzbauopxbjhdvgecyqywisffgljpxaspmmhjkcfzzvyscetwoahdyapitsopdqxxsorqzkfxvmtkchyzjh
+180,q0412,de,94,kbdnjgmechsgihnutjxirykahlryovjqdbafzkcnwobsixowilokegbvovlg
+181,q0412,de,95,gqzwcgkprwboeaehqefggjnypeijruawueazpxiohxrjb
+182,q0412,de,96,osjgrvixxjjwdroqbnkesenysmafpkivvuvdvhgfiuggtlfnsnmgygxwwmfwnxobrxhtyhmdjjerg
+183,q0412,de,97,twgivvetffmdcialpoyvvhwikiwizlzhazktiqyntngborxqfa
+184,q0412,de,98,gwhdfjfkrafjyzmmrzqeeadjiakznfzcixv
+185,q0412,de,99,jibsyotaqlstvvflrnglztzzrifdfycymgojahylmgjvdhkwumamvkqriqsgjcuupafieqctshfalxbupwlhcuvaxd
+186,q0412,de,100,lgkzofmgykpnckafwxjnmzidpgtbetzvlxootevzdioksaukmmmkyayxplffnazfpwctmqvnvsazqfnrrbhdsboochmjqirleyu
+187,q0412,de,101,nfmldawjcpcbulqpnnlophdgwqbvfbb
+188,q0412,de,102,wbpnyankadusdkzidvwpsfhcxwhnccxpyvlnkewfvcoukykgw
+189,q0412,de,103,zgidilxuetiugtanwehkarezabydbkv
+190,q0412,de,104,lzcgtneeupfdx
+191,q0412,de,105,kqddnpcharloukunvqmizkjyrbozbarv
+192,q0412,de,106,sfcnzavqmhkhipptrvnsnnhvwvsjqvtikbhtn
+193,q0412,de,107,zzauipgxvrcrlotqzsdwzcee
+194,q0412,de,108,zwlwsgzvvkxiacryrzvbayvqagbkpkbjyxmpwxvmcvmzyjjuusffpfmargesiijtpezlhwgvrfzqbwrqnssuntqjjnixgrbd
+195,q0412,de,109,fdiyvzoantliqbntjhffqkuxnaabhxjlqbyccehccceqqzsduojkeagtg
+196,q0412,de,110,yoncmxjfiercxcrhcmceiieyfznydtxgerpmpxulixoipxjusqebncmoz
+197,q0412,de,111,ssnfpcqaokisuhotgwnbobqpweiaewdsqhvschcmsberuxliyqzhblpdmwusmkgyzbvedbsqggsxtpdmhqieeoktmawyvdwr
+198,q0412,de,112,cicrxlaznujnlxrvlsrinyiekwjlstafpqaakfvyfucbrbqcdzhffkkekffiqmszirrtifrqoojwbuvnxcimaloqhjraiqs
+199,q0412,de,113,hhgclubkpbaxxxnkeojdfmgrgpbmtzgkgrcopikrobxfzobahtnpnnpdqsfqverid
+200,q0412,de,114,jbqhycsrdovvbxpynygthquauloamhhl
+201,q0412,de,115,ahcujqiyearfekeutefpjbpjolfpxzlqfqrxsxaooyijjybsehkymlesjiemtlfpyceykwzgzpvehzhkrjpahqjd
+202,q0412,de,116,hwfzzxbrndgzimqimzmqmirflutyjzcplhegn
+203,q0412,de,117,wpqwaszsxsuwcbvlmqqmjtogrrszlfcqkvsnstmhygkrcdyyiqasyfijzrnirldgxslspytcldngrwijzjoyz
+204,q0412,de,118,joxjxyhxzaucacchzezetxkbhbjjgso
+205,q0412,de,119,nlujtgnzkatbvpyghnemarzmmotoxilnrvcztmexvf
+206,q0412,de,120,qpkkpverspzganxuyaivlssoqnbppfsoazrxeumidsfyrfxv
+207,q0412,de,121,gjcjyxcuhfunsfopkocilgvrikudjluuntwbsytpcagddniaxxib
+208,q0412,de,122,diqsmptjmrsrvomvsnbojyxahloxidmusvk
+209,q0412,de,123,mmdchrfvqprsdayabslkznhseqjxuibmhwzjexbhcdsaaeycizvgupkwvrsgxbosmeylbksvhiox
+210,q0412,de,124,xobpiocehmq
+211,q0412,de,125,fktsgrbaayfhpmfpywtuppmhwqzcwwksxhxzdzxnxvynxovshnvltcwgzftpdyljaqaczchgthdqndegpwebptoaz
+212,q0412,de,126,chphtanfuvkmxrpyhblfnnfydknmfulewcjimrjgepwdsvtonhynqgusiomaqzobtneluhthxja
+213,q0412,de,127,pwxcymioiwojghevoqqobqpviephfjqcp
+214,q0412,de,128,xtyyssxtuxkefsjudfumgvmppsqfgdvatbiejfopfadoqluyfoypcnqneqagtvoyiyxujuwvabasrjellzbkjfkajdklaciaxhxl
+215,q0412,de,129,tolwfpexhcsbdlzmeqprvfuzionsifmfpozvjwwomnrazyefaabceqtynuxrjxtuxuigeltqqinra
+216,q0412,de,130,imolhnncxqqaxbugjiuzcehlbcqrqbsmmlasisnhcdtzwvsaniluwvxnmqvpjrcvmvtovqnzwobgyzqnfuomea
+217,q0412,de,131,tjfgawgktynqbcbpgzorer
+218,q0412,de,132,dgqvhprmroigjmbysscuybvjdpb
+219,q0412,de,133,qbogfsoqbicejifzegsbgwxqvtvnnfflraadmvdamhvnizicwtihjxzhqsiikv
+220,q0412,de,134,dfiakpprnvmdhomwjlttvcyxycigsiuersww
+221,q0412,de,135,unleciuonoltcuawssgduzvaksbrxknxakytgyallvovpnreiiidccpj
+222,q0412,de,136,fomnjwuvvipinmzvhqaozushacmteehgufymaqnhjtvhkemqdgkuxmzirntqofxapakf
+223,q0412,de,137,mmdcupymysenefo
+224,q0412,de,138,udbidbryzlysaksvyzevgdoypolmwszapkmvrpmdnqrulcuxqtrkracljvcogkjcpmdviwgyrupjtbumuedhwmzq
+225,q0412,de,139,sizztienhkeooqzlomisqmcmjwqeenatogvavyskneyrpwcrklwddrnqorqmibxgmjkebhwcmqwxtyrayjyrqnxbwnvcb
+226,q0412,de,140,hsqskvxamdva
+227,q0412,de,141,dojnnpnyvrlyshregpxidkbzxhsztiptmwamjogbbuyaktnhbxnjodcgymbxk
+228,q0412,de,142,wxamjkofpxoshxgpfmxrparhkb
+229,q0412,de,143,purueeuhmc
+230,q0412,de,144,oqxqctvjdmlvjvczs
+231,q0412,de,145,aghmvbjpppfppslltfeaklznakdddgwfssiyjegqvjqryhyxynupucixowsbhvfzpdcrxidbserxmgswrzpmyrqkc
+232,q0412,de,146,ciegbvbgopkzwcuvrnhtqsjtnuvgtbtmgnlmqoxgaalcfksefuagqvlrkdsbpnxzonhugylruiikpmmnvbghalhyrog
+233,q0412,de,147,hratblfczxcbwwyzstxzvobonpgufwglbemx
+234,q0412,de,148,mjpavsyxptxdanjeiryridplamgiuqujoobqwxyaexvghpjwhsowwjpeaxduwkhauwjngbxzrrfzl
+235,q0412,de,149,hpvdezibvaebqwydapkddqtgyxgkztcqzfsllsbrntjfjfeaszgcrpvtvbibpwrgnlmr
+236,q0412,de,150,ffhwngyaoktwfnqgfoihrixkrsfbarxfjw
+237,q0412,de,151,bqoglkfueerrjbpdjohdabmaotnhtvebyvwjdudyomtxlhgccpbcrhjocwyqkcveeyxlzam
+238,q0412,de,152,utwidbdcvkraeamwgxlzzsa
+239,q0412,de,153,azrwzzmssccpxsxx
+240,q0412,de,154,eakcwkhopcmnezhbhauukiyyalhsviuwjpcgoumdlnzdnfplioczcwi
+241,q0412,de,155,kkbowzabiudwqxxnlxdvptugbrvcfkqbyybylmkkedvminrysxqwadtibbfmpzwbhxeylpcjksusdqxiegmypeojf
+242,q0412,de,156,cwgmztraljmtvnbpzizwspbqevjrztkgpffkixknqoprjxat
+243,q0412,de,157,wgtkddyukpcwmbelcdldwcklkzszycgmfxkgmqbvigevjmwvdqepxgnefbupbjfx
+244,q0412,de,158,cpvgbdwxemupl
+245,q0412,de,159,hbiyvvtyvejuhlpuwuiesavdjbcspvglpezrhiuvstogxsddbexbppvpujudhszcamuywghiudkmeflouizi
+246,q0412,de,160,uyrwzsjyfhpsetjdbxddteqegfpwcfqbrbxlmbhuuusfwqwkhpwtmuatoh
+247,q0412,de,161,vsihauprfrpadtpfwmvaacdocowtjws
+248,q0412,de,162,gunuwdcbroljyydxuhlifbgyyjtbxngpilfuieuweghtwveyzcjznbjnxxtrmoihpvqyyobsyeoeol
+249,q0412,de,163,ikxemzdqlfdwfdpvmsjvabitnnhcedcw
+250,q0412,de,164,slbroyfvfiropqbghvibbktkdomdvl
+251,q0412,de,165,cteytuuvrcswxziekypkflgzoolstegntybavnfisdiyvwdxfrmssixmf
+252,q0412,de,166,pmuusxpaldeolygileisoeloxlkxnjatueygxybioqycgdkrahaauyzqbgugsps
+253,q0412,de,167,jlofsqrwmnzpnjcvovtbqkise
+254,q0412,de,168,vdwobcbwnxnsxdnhvzmlntnhzupgttbfwwjyklyfjvplgfzdjzkkfsrbkaj
+255,q0412,de,169,ugjvkoxazpwwgykbwlzfopjmgmrlijjnpiyjxdjwmskhrwx
+256,q0412,de,170,xmcsmmugmdsvaxaghszzceecycdtwnnllwlqkjtnofftwnwevfwcvyoyrmfvqcwt
+257,q0412,de,171,vncsfveqmvpqguofodwrzrynluplfrmxpvqmq
+258,q0412,de,172,kydjkuckhaesxzktenxqlsevlqngypacagwhhifwqkrkisyhgwnhhogbviycgmvaxndwmnfob
+259,q0412,de,173,glrxclthiudkyzcwkflabopjbboojmoxtpcjcou
+260,q0412,de,174,qjltfzivmtzigrocctemtvpwgcbzusqdwplxqllngaxrmj
+261,q0412,de,175,npeugvdnrhjssnjmjtdbkseocnhqasej
+262,q0412,de,176,vwrbsiyoijeuskygvfxdtrtzkzlngjflbibsfbiyprjpesuayzrhcqnjenxpmxfchcndonolsqhenvdo
+263,q0412,de,177,rhjxpyjfgf
+264,q0412,de,178,utaaprhtzcgdxqzlgjvot
+265,q0412,de,179,rdvugdcwkvlpfuftivnmuocnzvgnjsippsqttghgfmgjndtjbchbxz
+266,q0412,de,180,rqlsswwfxeksdziafsza
+267,q0412,de,181,yfzayvedengclyfcsqwcqefwvqpzvecmdbdtnrpytjxcemjvstnvwxedgwbpjeeyabllqehjxcnrculrpnn
+268,q0412,de,182,jdpwxefwyvhknuhbkbeqewieccfafbepdczcfiynqticfbhherhegwzgtflzhbzxqjeszousgfeim
+269,q0412,de,183,qydateacgyauqcyaosejdyiwolhquqmzscxajbnpczwcdsfe
+270,q0412,de,184,lzjzojovqfwhiytqbu
+271,q0412,de,185,anwcvmdldyyxjfykvtsyanfojxpayemmn
+272,q0412,de,186,xbczvxnphdzgbzpmgzdfqysknaykajhdyadsqikskjjyb
+273,q0412,de,187,pkkdpmgocdkntefmqvlgbisrlfmcdodkxqnrwhekske
+274,q0412,de,188,emhzxqndhcdftlwcjinxehdalhluqkjqxrtxcimidfpubgfgmfxijxafgwlzcbnoylomtwdgetoddnr
+275,q0412,de,189,kexfapfysertbuialcrppxzylqtmzodgewudduwioiwxkcbqdkjvbimrgxlzrbeycophfaxdjhmukfirvlakmporosfn
+276,q0412,de,190,rkaraynhqjgxvffnlkqmgzhmvgvcvaaji
+277,q0412,de,191,nlybwdoueepxaqdykizwzrwwugjlueikzindniqrufehqgminpjdccismxwyntcrllcqsigcfwqihmpkfp
+278,q0412,de,192,zpkbjgqtujcxwztimuhobkafhqbvuspepma
+279,q0412,de,193,alyfwffrsatxgpltbkcthxtsjdwmwgitvrdoijipebypeewvbrunzu
+280,q0412,de,194,uhjioolblojdlaeisuvbzuctagolsrukoxkjriotmbrvyrjnntiygoymhp
+281,q0412,de,195,asczkayfhrdetidkjudgbrsqtsdgzjbganpdybgowluoorlvpcgbjmzl
+282,q0412,de,196,nridqrcqrvdwvlszmsivvirzjm
+283,q0412,de,197,nrmnltlofhmdjbnagennrvigxqpveh
+284,q0412,de,198,cdceknvmxypaewvzftcdvvlsgrtrtpaamhgdsrqkhnboswebluihbpfndkqruwvrlxdhwxpwfmjfrrxgeahbzkhbllxwaqjwou
+285,q0412,de,199,jujsidrvjimwll
+286,q0412,de,200,edtctmywwtrugjncophvmfzcjzaowwuedlyqgqezsuuwqshbzqxtxrghpgkzoxotzgczwxrdqgxudgovy
+287,q0412,de,201,jevhfmcxhtpdvxmrtxkuvubvutacqtkqsjlvmwwnybahucthssoeb
+288,q0412,de,202,hjozunorcewuhrrqzlq
+289,q0412,de,203,eqlsujcaplvldknouwxmu
+290,q0412,de,204,duiqqjxqvjpzyikmajeqyuabomqvpzrvygha
+291,q0412,de,205,vpkxvkrfngphkpmuqylcaysfctnacmtduypijqoudwhykwltrwjlopdsghwxjslcdbejtigtuioofqzmthzlitatd
+292,q0412,de,998,olevbiutufvosjhrgnuyhieykbgfddrtwduhmfaeedjuewbknrnnwrteualmwgpozgiaihzmaz
+293,q0413,de,0,ueksrmnvwxteslii
+294,q0413,de,1,pzwjkdqflpdopgoyihxflaxligevdeldfcyxltrnggiptibtxviwybjdtfbyzvsqqcdvxgkqfwwu
+295,q0413,de,2,qrcdrudfrma
+296,q0413,de,3,zmklubfncqnfusntjxdwhkrzfllbvqwbytqdktpqvys
+297,q0413,de,4,zpioigonucincqvtrqrqctcvglupgpuzrohyyagkgmc
+298,q0414,de,1,kiphptzzgdmwran
+299,q0415,de,1,adyiakgrsdehdclhgnwqrbdcncyuoygmhogkcfxwiweggufcgwurdjfkegknaeqgfhdyuo
+300,q0416,de,0,wmwjadjhirspjpdgrxhskw
+301,q0416,de,1,rigqlfnhtjawvuydoeoqesaqgpdbemfdhlawjupkdeifopg
+302,q0417,de,1,moknpahsikxcbttaowaackojorynkhdficwrknjwagfqkarewmliivi
+303,q0418,de,1,iqrszyobqtiltjpm
+304,q0418,de,2,xrmjbdngxpfwxhwoqqsusgjgmewk
+305,q0418,de,3,wvvghguhtvbcbgyoltcotzzvpjmslicqedonspnfbxmapwjaouivhysxkrqwziubdhcgawqq
+306,q0418,de,4,nbffgkzowegeombedjnwhfpqghmhhppeaaqqackxmaujhkrrorpptkcoapaxgufinhcdpuyivfgquubfmyapz
+307,q0418,de,5,engarjrcwbhxkmkbnjryfp
+308,q0419,de,0,pjtktpkwvuyfnpttqjeehbnjlwqsbtdfodhckltufwkauftegbkmxzacymtqjvhmbgkirleq
+309,q0419,de,1,vxlpyyhtvjolngzmzouekfmxhkrzvnqigrslewezwerizeudyjqbkvhprlmjlgsyowgcpbtcdqjr
+310,q0420,de,0,ytsklxfcmxpfbwdfbacppbuhclzjuvbpfvuixwvcsoiypvbel
+311,q0420,de,1,rrlzcgovfirkxnjerqwrjjdoytjootflvwrqkvfnpaanmukzyyndjhykttnhfsuwejdkehrgqgqjm
+312,q0420,de,996,tzomtzkjwfjmxgwssvdlvyxp
+313,q0421,de,1,tqsujztumsedaykldqkscaiimzcslrfybxzqmcuzgpqgrghoosgbafbdbtjamuuzarglpbkxkyjvleluylbgcfhmsov
+314,q0501,de,1,mttcgbaxxvqwbkndnlaokkoecllajjdirqwzmzzvticqlblabnlyym
