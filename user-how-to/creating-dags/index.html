@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.7">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.35e1ed30.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4b4a2bd9.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
@@ -494,7 +494,7 @@
 <h1 id="creation-and-configuration-of-new-etl-pipelines-in-airflow">Creation and configuration of new ETL pipelines in Airflow</h1>
 <h2 id="step-1-creating-an-etl-configuration">Step 1: Creating an ETL configuration</h2>
 <ul>
-<li>add a new <code>.yaml</code> file inside <code>airflow/dags/configs</code></li>
+<li>add a new <code>.yaml</code> file and give it a descriptive name (e.g., <code>my_etl_pipeline.yaml</code>). If you want to run the pipeline with Airflow, you must place the <code>.yaml</code> file inside <code>airflow/dags/configs</code></li>
 <li>
 <p>add your desired ETL-steps (i.e., extract, transform, load) to the configuration file (see the <a href="../etl-config-how-to/">ETL Configs How To</a> for a detailed description of all available configuration options), for example:</p>
 <p><div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">extract</span><span class="p">:</span>
@@ -516,22 +516,23 @@
 <a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type AS type_minor</span>
 <a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="nt">transform_steps</span><span class="p">:</span>
 <a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">transform_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">join_with_csv_mapping</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">        </span><span class="nt">mapping_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/airflow/include/mappings/Mapping_LS-QuestionTypesMajor.csv</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">        </span><span class="nt">mapping_delimiter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">;</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">        </span><span class="nt">keep_columns</span><span class="p">:</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Fragetyp</span><span class="nv"> </span><span class="s">Major</span><span class="nv"> </span><span class="s">(CFE)&quot;</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">        </span><span class="nt">left_on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type_major</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">        </span><span class="nt">right_on</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Fragetyp-ID</span><span class="nv"> </span><span class="s">(LS)&quot;</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">        </span><span class="nt">how</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">left</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">transform_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rename_columns</span>
-<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">        </span><span class="nt">colname_to_colname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Fragetyp</span><span class="nv"> </span><span class="s">Major</span><span class="nv"> </span><span class="s">(CFE)&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type_major</span>
-<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
-<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="nt">load</span><span class="p">:</span>
-<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">  </span><span class="nt">load_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reporting_db_load</span>
-<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">  </span><span class="nt">staging_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">staging</span>
-<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w">  </span><span class="nt">target_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reporting</span>
-<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="w">  </span><span class="nt">tables</span><span class="p">:</span>
-<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">question_items</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">        </span><span class="c1"># if using with airflow, place any mappings inside airflow/include/mappings/ and use the /opt/ prefix when specifying the path!</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">        </span><span class="nt">mapping_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/airflow/include/mappings/Mapping_LS-QuestionTypesMajor.csv</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">        </span><span class="nt">mapping_delimiter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">;</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">        </span><span class="nt">keep_columns</span><span class="p">:</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Fragetyp</span><span class="nv"> </span><span class="s">Major</span><span class="nv"> </span><span class="s">(CFE)&quot;</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">        </span><span class="nt">left_on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type_major</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">        </span><span class="nt">right_on</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Fragetyp-ID</span><span class="nv"> </span><span class="s">(LS)&quot;</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">        </span><span class="nt">how</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">left</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">transform_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rename_columns</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">        </span><span class="nt">colname_to_colname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Fragetyp</span><span class="nv"> </span><span class="s">Major</span><span class="nv"> </span><span class="s">(CFE)&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type_major</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="nt">load</span><span class="p">:</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">  </span><span class="nt">load_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reporting_db_load</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w">  </span><span class="nt">staging_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">staging</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="w">  </span><span class="nt">target_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reporting</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="w">  </span><span class="nt">tables</span><span class="p">:</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">question_items</span>
 </code></pre></div>
 In this example, the table <code>lime_questions</code> is extracted from Limesurvey and stored in the <code>raw</code> schema of the staging database based on the <code>.env</code> file (if you do not have an <code>.env</code> file yet, follow the procedure desscribed <a href="../../installation/#setting-necessary-environment-variables">here</a>).</p>
 <p>Next, a transformation pipeline is defined that transforms data based on <code>raw.lime_questions</code> (i.e., the extracted table) and stores it in a table <code>question_items</code> in the <code>staging</code> schema of the staging database. <strong>Note: if the table you want to store the data in does not yet exists and you want to take control over the column types (e.g., setting primary keys and column types), you can define that using the <code>columns</code> parameter. See the <a href="../etl-config-how-to/#step-2-define-the-transform-steps">ETL Configs How To</a> for details on how to configure it.</strong> The transformation pipeline consists of two transformation steps: first, the data is joined with a mapping <code>.csv</code>-file stored in the <code>airflow/include/mappings</code> directory (note: to be available, mapping files must be placed inside the <code>airflow/include</code> directory and the <code>/opt/</code> prefix is always required when specifying the path in the configuration file). Second, the column "Fragetyp Major (CFE)" is renamed to "type_major".</p>
@@ -543,7 +544,7 @@ In this example, the table <code>lime_questions</code> is extracted from Limesur
 <li><strong>detailed documentation on the types of extractors, transformers, and loaders as well as their parameters can be found <a href="../etl-config-how-to/">here</a></strong></li>
 </ul>
 <h2 id="step-2-creating-a-dag">Step 2: Creating a DAG</h2>
-<p>A DAG (Directed Acyclic Graph) is a pipeline that is executed by Airflow. To run your ETL job in Airflow, you must add a DAG-file.</p>
+<p>If you want to run your pipeline with Airflow, the next step is to create a DAG file. A DAG (Directed Acyclic Graph) is a pipeline that is executed by Airflow. To run your ETL job in Airflow, you must add a DAG-file.</p>
 <ul>
 <li>Add a file named <code>&lt;YOUR_PIPELINE_NAME&gt;_dag.py</code> to the <code>airflow/dags</code> directory</li>
 <li>Copy the following code and replace the placeholders with your values (Note: in a future version, this procedure will be simplified by allowing to create DAGs from configuration files):

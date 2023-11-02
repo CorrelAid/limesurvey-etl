@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.7">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.35e1ed30.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.4b4a2bd9.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.356b1318.min.css">
@@ -364,27 +364,29 @@
     Prerequisites
   </a>
   
-    <nav class="md-nav" aria-label="Prerequisites">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#additional-prerequisites-for-local-development" class="md-nav__link">
-    Additional prerequisites for local development:
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-airflow-to-orchestrate-etl-jobs" class="md-nav__link">
-    Running Airflow to orchestrate ETL jobs
+  <a href="#running-etl-pipelines" class="md-nav__link">
+    Running ETL pipelines
   </a>
   
-    <nav class="md-nav" aria-label="Running Airflow to orchestrate ETL jobs">
+    <nav class="md-nav" aria-label="Running ETL pipelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-running-an-etl-pipeline-locally" class="md-nav__link">
+    1. Running an ETL pipeline locally
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-orchestrating-etl-pipelines-with-airflow" class="md-nav__link">
+    2. Orchestrating ETL pipelines with Airflow
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Orchestrating ETL pipelines with Airflow">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -408,15 +410,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#clean-up" class="md-nav__link">
+    Clean up
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#clean-up" class="md-nav__link">
-    Clean up
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -533,75 +540,119 @@
 <p>The following documentation describes the installation process that will get you up and running to implement your own ETL jobs.</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <p>Install <a href="https://docs.docker.com/get-docker/">Docker</a> and <a href="https://docs.docker.com/compose/install/">Docker Compose</a>.</p>
-<h4 id="additional-prerequisites-for-local-development">Additional prerequisites for local development:</h4>
 <p>If you want to contribute to this project or run an ETL pipeline locally without Airflow, you need to install the required dependencies.</p>
 <ul>
 <li><a href="https://www.python.org/"><code>Python</code></a>&gt;=3.10.0</li>
 <li><a href="https://python-poetry.org/"><code>poetry</code></a>&gt;=1.6.1</li>
 </ul>
 <p>Once you installed the dependencies, <code>cd</code> into the project's root directory in your terminal and run <code>poetry install --with dev</code> to install the required python dependencies into a virtual environment. To activate the virtual environment, run <code>poetry shell</code>.</p>
-<h2 id="running-airflow-to-orchestrate-etl-jobs">Running Airflow to orchestrate ETL jobs</h2>
-<p>This project uses <a href="https://airflow.apache.org/">Airflow</a> to orchestrate ETL pipelines.</p>
-<h3 id="setting-necessary-environment-variables">Setting necessary environment variables</h3>
+<h2 id="running-etl-pipelines">Running ETL pipelines</h2>
+<p>You can run your ETL pipelines either locally with Python or using Airflow. </p>
+<h3 id="1-running-an-etl-pipeline-locally">1. Running an ETL pipeline locally</h3>
+<p>To run an ETL pipeline locally, you must set a number of environment variables.</p>
+<p>Create a <code>.env</code> file and store it at the project repository's root directory. Open the <code>.env</code> file you just created in your IDE or text editor and append the following three blocks of environment variables to it:</p>
+<ul>
+<li><strong>Limesurvey DB related variables</strong>: These variables are required for the platform to connect with the Limesurvey database. You must provide the variables for establishing an SSH connection as well as for the actual Limesurvey database.</li>
+<li><strong>Staging database related variables</strong>: The staging database is where the raw and intermediary data are stored. You can provide values for a MySQL DB / MariaDB (set <code>STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"</code>) or a PostgresDB (set <code>STAGING_DB_SQLALCHEMY_DRIVER="postgresql"</code>). Other databases are currently not supported.</li>
+<li><strong>Reporting database related variables</strong>:  The reporting database is where the final (i.e., reporting) data is stored. You can provide values for a MySQL DB / MariaDB (set <code>STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"</code>) or a PostgresDB (set <code>STAGING_DB_SQLALCHEMY_DRIVER="postgresql"</code>). Other databases are currently not supported. <strong>It is possible to use the same database as staging and reporting database</strong>.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Variables required to connect with the Limesurvey Database</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nv">LIMESURVEY_USE_SSH</span><span class="o">=</span>True<span class="w"> </span><span class="c1"># set to False if ssh is not used</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nv">LIMESURVEY_SSH_PORT</span><span class="o">=</span><span class="s2">&quot;&lt;LIMESURVEY_SSH_PORT_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE&gt;&quot;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nv">LIMESURVEY_SSH_HOST</span><span class="o">=</span><span class="s2">&quot;&lt;LIMESURVEY_SSH_HOST_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE&gt;&quot;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nv">LIMESURVEY_SSH_USERNAME</span><span class="o">=</span><span class="s2">&quot;&lt;LIMESURVEY_SSH_USER_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE&gt;&quot;</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nv">LIMESURVEY_SSH_PASSWORD</span><span class="o">=</span><span class="s2">&quot;&lt;LIMESURVEY_SSH_PW_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE&gt;&quot;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nv">LIMESURVEY_DB_NAME</span><span class="o">=</span><span class="s2">&quot;&lt;NAME OF THE LIMESURVEY DB&gt;&quot;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nv">LIMESURVEY_DB_PORT</span><span class="o">=</span><span class="s2">&quot;&lt;PORT OF THE LIMESURVEY DB&gt;&quot;</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="nv">LIMESURVEY_DB_USERNAME</span><span class="o">=</span><span class="s2">&quot;&lt;LIMESURVEY DB SQL USER&gt;&quot;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nv">LIMESURVEY_DB_PASSWORD</span><span class="o">=</span><span class="s2">&quot;LIMESURVEY DB SQL PASSWORD&quot;</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nv">LIMESURVEY_DB_HOST</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="w"> </span><span class="c1"># always 127.0.0.1 if SSH is used, or actual host if SSH is not used</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1"># Variables for connecting with the database where you want raw and intermediary data to be stored</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="nv">STAGING_DB_SQLALCHEMY_DRIVER</span><span class="o">=</span><span class="s2">&quot;postgresql&quot;</span><span class="w"> </span><span class="c1"># &quot;postgresql&quot; for a postgres DB or &quot;mysql+pymysql&quot; if Staging DB is a MYSQL DB (e.g., MariaDB)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="nv">STAGING_DB_USERNAME</span><span class="o">=</span><span class="s2">&quot;&lt;SQL USER OF THE STAGING DB&quot;</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="nv">STAGING_DB_PASSWORD</span><span class="o">=</span><span class="s2">&quot;&lt;PASSWORD OF THE STAGING DB SQL USER&gt;&quot;</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="nv">STAGING_DB_NAME</span><span class="o">=</span><span class="s2">&quot;&lt;NAME OF THE STAGING DB&gt;&quot;</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="nv">STAGING_DB_HOST</span><span class="o">=</span><span class="s2">&quot;&lt;HOST OF THE STAGING DB&gt;&quot;</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="nv">STAGING_DB_PORT</span><span class="o">=</span><span class="s2">&quot;&lt;PORT OF THE STAGING DB&gt;&quot;</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="c1"># Variables for connecting with the database where you want the final (i.e., reporting) data to be stored</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="c1"># Can be the same database as the staging database</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="nv">REPORTING_DB_SQLALCHEMY_DRIVER</span><span class="o">=</span><span class="s2">&quot;postgresql&quot;</span><span class="w"> </span><span class="c1"># &quot;postgresql&quot; for a postgres DB or &quot;mysql+pymysql&quot; if reporting DB is a MYSQL DB (e.g., MariaDB)</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="nv">REPORTING_DB_PASSWORD</span><span class="o">=</span><span class="s2">&quot;&lt;PW OF THE REPORTING DB SQL USER&gt;&quot;</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="nv">REPORTING_DB_NAME</span><span class="o">=</span><span class="s2">&quot;&lt;NAME OF THE REPORTING DB&gt;&quot;</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="nv">REPORTING_DB_HOST</span><span class="o">=</span><span class="s2">&quot;&lt;HOST OF THE REPORTING DB&gt;&quot;</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="nv">REPORTING_DB_PORT</span><span class="o">=</span><span class="s2">&quot;&lt;PORT OF THE REPORTING DB&gt;&quot;</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="nv">REPORTING_DB_USERNAME</span><span class="o">=</span><span class="s2">&quot;&lt;SQL USER OF THE REPORTING DB&gt;&quot;</span>
+</code></pre></div>
+<p>Next, you can start adding an ETL pipeline configuration as described in the <a href="../user-how-to/creating-dags/">User Guide</a> section.</p>
+<p>Once you created a pipeline configuration, you can run it from your terminal by entering the following command:</p>
+<p><code>poetry run python -m limesurvey_etl --config_file &lt;PATH/TO/YOUR/config.yaml --steps all</code></p>
+<ul>
+<li>The <code>--config_file</code> flag specifies the path to the configuration <code>.yaml</code>-file to be used for the pipeline</li>
+<li>The <code>--steps</code> flag specifies which step(s) of the ETL pipeline should be executed. Choices:<ul>
+<li><code>extract</code>: Only the extract step is executed.</li>
+<li><code>transform</code>: Only the transform step is executed.</li>
+<li><code>load</code>: Only the load step is executed.</li>
+<li><code>all</code>: All steps (i.e., extract, transform, and load) are executed.</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-orchestrating-etl-pipelines-with-airflow">2. Orchestrating ETL pipelines with Airflow</h3>
+<p>This project supports <a href="https://airflow.apache.org/">Airflow</a> to orchestrate ETL pipelines.</p>
+<h4 id="setting-necessary-environment-variables">Setting necessary environment variables</h4>
 <p>In order to run Airflow and allow the ETL pipelines to communicate with the source and target databases, you must set a number of environment variables.</p>
 <p>Create a <code>.env</code> file and set the Airflow UID by running the following command from the project's root directory:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;AIRFLOW_UID=</span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>.env
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;AIRFLOW_UID=</span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>.env
 </code></pre></div>
 <p>Open the <code>.env</code> file you just created in your IDE or text editor and append the following four blocks of environment variables to it:</p>
 <ul>
 <li><strong>Airflow related variables</strong>: You can choose arbitrary values here. These are required for logging into the Airflow UI and the Airflow DB (advanced users), which contains Airflow related metadata.</li>
 <li><strong>Limesurvey DB related variables</strong>: These variables are required for the platform to connect with the Limesurvey database. You must provide the variables for establishing an SSH connection as well as for the actual Limesurvey database.</li>
-<li><strong>Staging database related variables</strong>: The staging database is where the raw and intermediary data are stored. You can provide values for a MySQL DB / MariaDB (set <code>STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"</code>) or a PostgresDB (set <code>STAGING_DB_SQLALCHEMY_DRIVER="postgresql"</code>). Other databases are currently not supported.</li>
-<li><strong>Reporting database related variables</strong>:  The reporting database is where the final (i.e., reporting) data is stored. You can provide values for a MySQL DB / MariaDB (set <code>STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"</code>) or a PostgresDB (set <code>STAGING_DB_SQLALCHEMY_DRIVER="postgresql"</code>). Other databases are currently not supported. <strong>It is possible to use the same database as staging and reporting database</strong>.</li>
+<li><strong>Staging database related variables</strong>: The staging database is where the raw and intermediary data are stored. You can provide values for a MySQL DB / MariaDB (set <code>STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"</code>) or a PostgresDB (set <code>STAGING_DB_SQLALCHEMY_DRIVER="postgresql"</code>). Other databases are currently not supported. <strong>Note:</strong> If the database is running on the same machine as airflow, then set <code>STAGING_DB_HOST=host.docker.internal</code>!</li>
+<li><strong>Reporting database related variables</strong>:  The reporting database is where the final (i.e., reporting) data is stored. You can provide values for a MySQL DB / MariaDB (set <code>STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"</code>) or a PostgresDB (set <code>STAGING_DB_SQLALCHEMY_DRIVER="postgresql"</code>). Other databases are currently not supported. <strong>Note:</strong> If the database is running on the same machine as airflow, then set <code>REPORTING_DB_HOST=host.docker.internal</code>! <strong>It is possible to use the same database as staging and reporting database</strong>. </li>
 </ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Airflow related variables</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nv">AIRFLOW_PG_USER</span><span class="o">=</span><span class="s2">&quot;&lt;USERNAME_FOR_AIRFLOW_DB&gt;&quot;</span><span class="w"> </span><span class="c1"># choose a username for the airflow db</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nv">AIRFLOW_PG_PASSWORD</span><span class="o">=</span><span class="s2">&quot;&lt;PASSWORD_FOR_AIRFLOW_DB_USER&gt;&quot;</span><span class="w"> </span><span class="c1"># set a password for the airflow db user</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nv">AIRFLOW_PG_DB</span><span class="o">=</span><span class="s2">&quot;&lt;AIRFLOW_DB_NAME&gt;&quot;</span><span class="w"> </span><span class="c1"># choose a name for the airflow db</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nv">_AIRFLOW_WWW_USER_USERNAME</span><span class="o">=</span><span class="s2">&quot;&lt;USERNAME_FOR_AIRFLOW_UI_LOGIN&gt;&quot;</span><span class="w"> </span><span class="c1"># choose an admin username for logging into the Airflow UI (you can add additional users later via the &quot;Security&quot; tab in the Airflow UI)</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nv">_AIRFLOW_WWW_USER_PASSWORD</span><span class="o">=</span><span class="s2">&quot;&lt;PW_FOR_AIRFLOW_UI_LOGIN&gt;&quot;</span><span class="w"> </span><span class="c1"># choose a password to login to the Airflow UI</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># Variables required to connect with the Limesurvey Database</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="nv">LIMESURVEY_SSH_PORT</span><span class="o">=</span><span class="s2">&quot;&lt;LIMESURVEY_SSH_PORT_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE&gt;&quot;</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="nv">LIMESURVEY_SSH_HOST</span><span class="o">=</span><span class="s2">&quot;&lt;LIMESURVEY_SSH_HOST_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE&gt;&quot;</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nv">LIMESURVEY_SSH_USERNAME</span><span class="o">=</span><span class="s2">&quot;&lt;LIMESURVEY_SSH_USER_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE&gt;&quot;</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="nv">LIMESURVEY_SSH_PASSWORD</span><span class="o">=</span><span class="s2">&quot;&lt;LIMESURVEY_SSH_PW_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE&gt;&quot;</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="nv">LIMESURVEY_DB_NAME</span><span class="o">=</span><span class="s2">&quot;&lt;NAME OF THE LIMESURVEY DB&gt;&quot;</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="nv">LIMESURVEY_DB_PORT</span><span class="o">=</span><span class="s2">&quot;&lt;PORT OF THE LIMESURVEY DB&gt;&quot;</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="nv">LIMESURVEY_DB_USERNAME</span><span class="o">=</span><span class="s2">&quot;&lt;LIMESURVEY DB SQL USER&gt;&quot;</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="nv">LIMESURVEY_DB_PASSWORD</span><span class="o">=</span><span class="s2">&quot;LIMESURVEY DB SQL PASSWORD&quot;</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="nv">LIMESURVEY_DB_HOST</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="w"> </span><span class="c1"># or actual host if SSH is not used</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="c1"># Variables for connecting with the database where you want raw and intermediary data to be stored</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="nv">STAGING_DB_SQLALCHEMY_DRIVER</span><span class="o">=</span><span class="s2">&quot;postgresql&quot;</span><span class="w"> </span><span class="c1"># &quot;postgresql&quot; for a postgres DB or &quot;mysql+pymysql&quot; if Staging DB is a MYSQL DB (e.g., MariaDB)</span>
-<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="nv">STAGING_DB_USERNAME</span><span class="o">=</span><span class="s2">&quot;&lt;SQL USER OF THE STAGING DB&quot;</span>
-<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="nv">STAGING_DB_PASSWORD</span><span class="o">=</span><span class="s2">&quot;&lt;PASSWORD OF THE STAGING DB SQL USER&gt;&quot;</span>
-<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="nv">STAGING_DB_NAME</span><span class="o">=</span><span class="s2">&quot;&lt;NAME OF THE STAGING DB&gt;&quot;</span>
-<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="nv">STAGING_DB_HOST</span><span class="o">=</span><span class="s2">&quot;&lt;HOST OF THE STAGING DB&gt;&quot;</span><span class="w"> </span><span class="c1"># host.docker.internal for usage with ariflow if DB is running on same machine as airflow</span>
-<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="nv">STAGING_DB_PORT</span><span class="o">=</span><span class="s2">&quot;&lt;PORT OF THE STAGING DB&gt;&quot;</span>
-<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>
-<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="c1"># Variables for connecting with the database where you want the final (i.e., reporting) data to be stored</span>
-<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="c1"># Can be the same database as the staging database</span>
-<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="nv">REPORTING_DB_SQLALCHEMY_DRIVER</span><span class="o">=</span><span class="s2">&quot;postgresql&quot;</span><span class="w"> </span><span class="c1"># &quot;postgresql&quot; for a postgres DB or &quot;mysql+pymysql&quot; if reporting DB is a MYSQL DB (e.g., MariaDB)</span>
-<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="nv">REPORTING_DB_PASSWORD</span><span class="o">=</span><span class="s2">&quot;&lt;PW OF THE REPORTING DB SQL USER&gt;&quot;</span>
-<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="nv">REPORTING_DB_NAME</span><span class="o">=</span><span class="s2">&quot;&lt;NAME OF THE REPORTING DB&gt;&quot;</span>
-<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="nv">REPORTING_DB_HOST</span><span class="o">=</span><span class="s2">&quot;&lt;HOST OF THE REPORTING DB&gt;&quot;</span><span class="w"> </span><span class="c1"># host.docker.internal for usage with ariflow if DB is running on same machine as airflow</span>
-<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="nv">REPORTING_DB_PORT</span><span class="o">=</span><span class="s2">&quot;&lt;PORT OF THE REPORTING DB&gt;&quot;</span>
-<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="nv">REPORTING_DB_USERNAME</span><span class="o">=</span><span class="s2">&quot;&lt;SQL USER OF THE REPORTING DB&gt;&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Variables required to connect with the Limesurvey Database</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nv">LIMESURVEY_SSH_PORT</span><span class="o">=</span><span class="s2">&quot;&lt;LIMESURVEY_SSH_PORT_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE&gt;&quot;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nv">LIMESURVEY_SSH_HOST</span><span class="o">=</span><span class="s2">&quot;&lt;LIMESURVEY_SSH_HOST_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE&gt;&quot;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nv">LIMESURVEY_SSH_USERNAME</span><span class="o">=</span><span class="s2">&quot;&lt;LIMESURVEY_SSH_USER_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE&gt;&quot;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nv">LIMESURVEY_SSH_PASSWORD</span><span class="o">=</span><span class="s2">&quot;&lt;LIMESURVEY_SSH_PW_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE&gt;&quot;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nv">LIMESURVEY_DB_NAME</span><span class="o">=</span><span class="s2">&quot;&lt;NAME OF THE LIMESURVEY DB&gt;&quot;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="nv">LIMESURVEY_DB_PORT</span><span class="o">=</span><span class="s2">&quot;&lt;PORT OF THE LIMESURVEY DB&gt;&quot;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nv">LIMESURVEY_DB_USERNAME</span><span class="o">=</span><span class="s2">&quot;&lt;LIMESURVEY DB SQL USER&gt;&quot;</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nv">LIMESURVEY_DB_PASSWORD</span><span class="o">=</span><span class="s2">&quot;LIMESURVEY DB SQL PASSWORD&quot;</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="nv">LIMESURVEY_DB_HOST</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="w"> </span><span class="c1"># or actual host if SSH is not used</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="c1"># Variables for connecting with the database where you want raw and intermediary data to be stored</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="nv">STAGING_DB_SQLALCHEMY_DRIVER</span><span class="o">=</span><span class="s2">&quot;postgresql&quot;</span><span class="w"> </span><span class="c1"># &quot;postgresql&quot; for a postgres DB or &quot;mysql+pymysql&quot; if Staging DB is a MYSQL DB (e.g., MariaDB)</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="nv">STAGING_DB_USERNAME</span><span class="o">=</span><span class="s2">&quot;&lt;SQL USER OF THE STAGING DB&quot;</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="nv">STAGING_DB_PASSWORD</span><span class="o">=</span><span class="s2">&quot;&lt;PASSWORD OF THE STAGING DB SQL USER&gt;&quot;</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="nv">STAGING_DB_NAME</span><span class="o">=</span><span class="s2">&quot;&lt;NAME OF THE STAGING DB&gt;&quot;</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="nv">STAGING_DB_HOST</span><span class="o">=</span><span class="s2">&quot;&lt;HOST OF THE STAGING DB&gt;&quot;</span><span class="w"> </span><span class="c1"># host.docker.internal for usage with ariflow if DB is running on same machine as airflow</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="nv">STAGING_DB_PORT</span><span class="o">=</span><span class="s2">&quot;&lt;PORT OF THE STAGING DB&gt;&quot;</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="c1"># Variables for connecting with the database where you want the final (i.e., reporting) data to be stored</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="c1"># Can be the same database as the staging database</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="nv">REPORTING_DB_SQLALCHEMY_DRIVER</span><span class="o">=</span><span class="s2">&quot;postgresql&quot;</span><span class="w"> </span><span class="c1"># &quot;postgresql&quot; for a postgres DB or &quot;mysql+pymysql&quot; if reporting DB is a MYSQL DB (e.g., MariaDB)</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="nv">REPORTING_DB_PASSWORD</span><span class="o">=</span><span class="s2">&quot;&lt;PW OF THE REPORTING DB SQL USER&gt;&quot;</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="nv">REPORTING_DB_NAME</span><span class="o">=</span><span class="s2">&quot;&lt;NAME OF THE REPORTING DB&gt;&quot;</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="nv">REPORTING_DB_HOST</span><span class="o">=</span><span class="s2">&quot;&lt;HOST OF THE REPORTING DB&gt;&quot;</span><span class="w"> </span><span class="c1"># host.docker.internal for usage with ariflow if DB is running on same machine as airflow</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="nv">REPORTING_DB_PORT</span><span class="o">=</span><span class="s2">&quot;&lt;PORT OF THE REPORTING DB&gt;&quot;</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="nv">REPORTING_DB_USERNAME</span><span class="o">=</span><span class="s2">&quot;&lt;SQL USER OF THE REPORTING DB&gt;&quot;</span>
 </code></pre></div>
-<h3 id="setup-airflow">Setup Airflow</h3>
+<h4 id="setup-airflow">Setup Airflow</h4>
 <p>To start Airflow, make sure the Docker daemon is running (e.g., by starting docker desktop or starting the docker service) and run
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up
 </code></pre></div>
 This may take a while. Once the setup is complete, you should repeatedly see a message similar to the following in your terminal:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>limesurvey-etl-airflow-webserver-1  | 127.0.0.1 - - [19/Oct/2023:14:16:17 +0000] &quot;GET /health HTTP/1.1&quot; 200 141 &quot;-&quot; &quot;curl/7.74.0&quot;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>limesurvey-etl-airflow-webserver-1  | 127.0.0.1 - - [19/Oct/2023:14:16:17 +0000] &quot;GET /health HTTP/1.1&quot; 200 141 &quot;-&quot; &quot;curl/7.74.0&quot;
 </code></pre></div></p>
 <p>The Airflow Webserver is now running and the Airflow UI can be accessed through a regular browser by entering the following URL: <code>localhost:8080</code>. Use the credentials defined in your <code>.env</code> file (<code>_AIRFLOW_WWW_USER_USERNAME</code> and <code>_AIRFLOW_WWW_USER_PASSWORD</code>) to login. You can add additional users via the "Security" tab at the top of the Airflow UI after successful login. Airflow DAGs will run depending on their schedules as long as Airflow is running. Press <code>control+c</code> or <code>strg+c</code> to stop the process, depending on your operating system.</p>
-<h3 id="adding-etl-pipelines">Adding ETL pipelines</h3>
+<h4 id="adding-etl-pipelines">Adding ETL pipelines</h4>
 <p>Once Airflow is up and running, you can start adding your ETL pipelines as described in the <a href="../user-how-to/creating-dags/">User Guide</a>.</p>
-<h2 id="clean-up">Clean up</h2>
+<h4 id="clean-up">Clean up</h4>
 <p>To clean up the environment, run
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker compose down --volumes --rmi all
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker compose down --volumes --rmi all
 </code></pre></div>
 Note: This will not delete any Limesurvey data or data generated during an ETL pipeline run from your target databases, but only remove the Airflow environment.# Partner organization</p>
 <p>This project was conducted in collaboration with the <a href="https://citizensforeurope.org/advocating_for_inclusion_page/">Vielfalt entscheidet</a> project of Citizens For Europe gUG.</p>
