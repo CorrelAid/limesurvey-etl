@@ -26,12 +26,9 @@ parser.add_argument(
     choices=["extract", "transform", "load", "all"],
 )
 
-if __name__ == "__main__":
-    args = parser.parse_args()
 
-    pipeline = Pipeline.get_pipeline(Path(args.config_file))
-
-    pipeline_step = args.step
+def cli(pipeline_step: str, config_file: Path) -> None:
+    pipeline = Pipeline.get_pipeline(config_file)
 
     try:
         if pipeline_step == "extract":
@@ -56,3 +53,10 @@ if __name__ == "__main__":
     except Exception as e:
         logging.critical("An uncaught exception occured!", exc_info=e)
         raise
+
+
+if __name__ == "__main__":
+    args = parser.parse_args()
+    pipeline_step = args.step
+    config_file = Path(args.config_file)
+    cli(pipeline_step=pipeline_step, config_file=config_file)
