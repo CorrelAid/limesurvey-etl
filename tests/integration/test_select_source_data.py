@@ -13,11 +13,9 @@ def test_select_source_data(select_source_data_config: SelectSourceDataConfig) -
     staging_schema = os.getenv("STAGING_SCHEMA_NAME")
     transform = SelectSourceDataTransform(
         config=select_source_data_config,
-        staging_schema_name=os.getenv("STAGING_SCHEMA_NAME"),
+        staging_schema_name=staging_schema,
         staging_table_name="",
     )
-
-    print(os.getenv("STAGING_SCHEMA_NAME"))
 
     df = transform.transform()
 

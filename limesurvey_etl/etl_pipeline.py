@@ -183,11 +183,6 @@ class Pipeline:
 
                 # run transformation steps
                 transformation_steps = transformation_pipeline.config.transform_steps
-                if (
-                    transformation_steps is None
-                    or transformation_pipeline.config.source_data is None
-                ):
-                    continue
 
                 transformer_data_config = transformation_pipeline.config.source_data
                 transformer = SelectSourceDataTransform(
@@ -195,7 +190,7 @@ class Pipeline:
                 )
 
                 df = transformer.transform()
-                if len(transformation_steps) > 0:
+                if transformation_steps is not None and len(transformation_steps) > 0:
                     for (
                         transformer_config
                     ) in transformation_pipeline.config.transform_steps:

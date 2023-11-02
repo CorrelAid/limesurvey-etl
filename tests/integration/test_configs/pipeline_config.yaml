@@ -31,7 +31,7 @@ transformation_pipelines:
   - table_name: questions_staging
     staging_schema: staging
     columns:
-      - name: id
+      - name: question_id
         type: INTEGER
         primary_key: True
         nullable: False
@@ -48,7 +48,7 @@ transformation_pipelines:
         - table_name: questions
           columns:
             - id AS question_id
-            - id
+            - survey_id
             - question_text
       source_schema: raw
 

@@ -35,7 +35,6 @@ def test_extract_data(limesurvey_extract_config: LimesurveyExtractConfig):
         users = conn.execute(
             f"SELECT * FROM {limesurvey_extract_config.staging_schema}.users"
         ).all()
-        print("USERS ARE: ", users)
         assert len(users) == 2
 
         surveys = conn.execute(

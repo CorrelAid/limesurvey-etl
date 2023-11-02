@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from typing import Any, Generator
 
 import pytest
 from sqlalchemy.engine import Engine
@@ -11,7 +12,11 @@ from limesurvey_etl.config.transform_config.select_source_data import (
     SelectSourceDataConfig,
 )
 from limesurvey_etl.connectors.limesurvey_connect import LimesurveyConnect
+from limesurvey_etl.connectors.reporting_db_connect import ReportingDBConnect
+from limesurvey_etl.connectors.staging_db_connect import StagingDBConnect
 from limesurvey_etl.settings.limesurvey_settings import LimesurveySettings
+from limesurvey_etl.settings.reporting_db_settings import ReportingDBSettings
+from limesurvey_etl.settings.staging_db_settings import StagingDBSettings
 
 
 @pytest.fixture(scope="session")
@@ -71,9 +76,38 @@ def limesurvey_engine(mariadb_limesurvey_container, envconfig) -> Engine:
     yield engine
 
 
-# Create tables with dummy data
+@pytest.fixture(scope="session")
+def staging_db_engine(mariadb_staging_container, envconfig) -> Engine:
+    staging_db_connect = StagingDBConnect(StagingDBSettings())
+    engine: Engine = staging_db_connect.create_sqlalchemy_engine()
+    return engine
+
+
+# Create staging table with dummy data
 @pytest.fixture(scope="session", autouse=True)
-def create_tables(limesurvey_engine):
+def create_tables_staging(staging_db_engine) -> None:
+    with staging_db_engine.connect() as conn:
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS staging_test (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255) NOT NULL
+            )
+            """
+        )
+
+        conn.execute(
+            """
+            INSERT INTO staging_test (name) VALUES
+            ('Francesca'),
+            ('Paolo')
+            """
+        )
+
+
+# Create limesurvey tables with dummy data
+@pytest.fixture(scope="session", autouse=True)
+def create_tables_limesurvey(limesurvey_engine):
     with limesurvey_engine.connect() as conn:
         conn.execute(
             """
@@ -192,11 +226,20 @@ def select_source_data_config_with_join(
 
 
 @pytest.fixture(scope="function")
-def reporting_db_load_config() -> ReportingDBLoadConfig:
+def reporting_db_engine() -> Engine:
+    reporting_db_connect = ReportingDBConnect(ReportingDBSettings())
+    reporting_db_engine: Engine = reporting_db_connect.create_sqlalchemy_engine()
+    return reporting_db_engine
+
+
+@pytest.fixture(scope="function")
+def reporting_db_load_config(
+    mariadb_staging_container: Generator[MySqlContainer, Any, None],
+) -> ReportingDBLoadConfig:
     return ReportingDBLoadConfig(
         load_type="reporting_db_load",
-        tables=["surveys", "questions"],
-        staging_schema="staging",
+        tables=["staging_test"],
+        staging_schema=mariadb_staging_container.MYSQL_DATABASE,
         target_schema="reporting",
     )
 
