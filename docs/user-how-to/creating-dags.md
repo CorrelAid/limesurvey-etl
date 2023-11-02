@@ -1,7 +1,7 @@
 # Creation and configuration of new ETL pipelines in Airflow
 
 ## Step 1: Creating an ETL configuration
-- add a new `.yaml` file inside `airflow/dags/configs`
+- add a new `.yaml` file and give it a descriptive name (e.g., `my_etl_pipeline.yaml`). If you want to run the pipeline with Airflow, you must place the `.yaml` file inside `airflow/dags/configs`
 - add your desired ETL-steps (i.e., extract, transform, load) to the configuration file (see the [ETL Configs How To](etl-config-how-to.md) for a detailed description of all available configuration options), for example:
 
     ```yaml
@@ -24,6 +24,7 @@
                 - type AS type_minor
         transform_steps:
           - transform_type: join_with_csv_mapping
+            # if using with airflow, place any mappings inside airflow/include/mappings/ and use the /opt/ prefix when specifying the path!
             mapping_path: /opt/airflow/include/mappings/Mapping_LS-QuestionTypesMajor.csv
             mapping_delimiter: ;
             keep_columns:
@@ -51,7 +52,7 @@
 - **detailed documentation on the types of extractors, transformers, and loaders as well as their parameters can be found [here](./etl-config-how-to.md)**
 
 ## Step 2: Creating a DAG
-A DAG (Directed Acyclic Graph) is a pipeline that is executed by Airflow. To run your ETL job in Airflow, you must add a DAG-file.
+If you want to run your pipeline with Airflow, the next step is to create a DAG file. A DAG (Directed Acyclic Graph) is a pipeline that is executed by Airflow. To run your ETL job in Airflow, you must add a DAG-file.
 
 - Add a file named `<YOUR_PIPELINE_NAME>_dag.py` to the `airflow/dags` directory
 - Copy the following code and replace the placeholders with your values (Note: in a future version, this procedure will be simplified by allowing to create DAGs from configuration files):
