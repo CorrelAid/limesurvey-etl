@@ -1,5 +1,3 @@
-from typing import Optional
-
 import pandas as pd
 
 from limesurvey_etl.config.transform_config.add_computed_column import (
@@ -28,6 +26,10 @@ class AddComputedColumnTransform(BaseTransform[AddComputedColumnConfig]):
             delimiter = self.config.operator.delimiter or "_"
             expand = self.config.operator.expand or False
             df[new_column_name] = df[input_columns].str.split(delimiter, expand=expand)
+        elif operator == "extract":
+            df[new_column_name] = df[input_columns].str.extract(
+                self.config.operator.regex, expand=self.config.operator.expand
+            )
 
         drop_input_columns = self.config.drop_input_columns
         if drop_input_columns == "all":

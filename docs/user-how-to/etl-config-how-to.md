@@ -132,8 +132,19 @@ Note: transformations are applied in order.
 
 ::: limesurvey_etl.config.transform_config.add_computed_column.AddComputedColumnConfig
 
-The `add_computed_columns` configuration requires to define a concat operation in the `operator` field as follows:
-::: limesurvey_etl.config.transform_config.add_computed_column.Operator
+The `add_computed_columns` configuration requires to define an operation in the `operator` field. The following operators are available:
+
+::: limesurvey_etl.config.transform_config.add_computed_column.SumOperator
+
+::: limesurvey_etl.config.transform_config.add_computed_column.ProductOperator
+
+::: limesurvey_etl.config.transform_config.add_computed_column.DifferenceOperator
+
+::: limesurvey_etl.config.transform_config.add_computed_column.ConcatOperator
+
+::: limesurvey_etl.config.transform_config.add_computed_column.SplitOperator
+
+::: limesurvey_etl.config.transform_config.add_computed_column.ExtractOperator
 
 ##### Example
 ```yaml

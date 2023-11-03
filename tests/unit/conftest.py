@@ -13,6 +13,7 @@ from limesurvey_etl.config.transform_config.join_with_csv_mapping import (
 )
 from limesurvey_etl.config.transform_config.melt_data import MeltDataConfig
 from limesurvey_etl.config.transform_config.rename_columns import RenameColumnsConfig
+from limesurvey_etl.config.transform_config.replace_values import ReplaceValuesConfig
 
 
 @pytest.fixture(scope="function")
@@ -67,6 +68,17 @@ def add_computed_column_config() -> AddComputedColumnConfig:
         column_name="question_id_and_text",
         input_columns=["question_id", "question_text"],
         operator={"name": "concat", "separator": "_"},
+        drop_input_columns="all",
+    )
+
+
+@pytest.fixture(scope="function")
+def add_computed_conlumn_config_extract() -> AddComputedColumnConfig:
+    return AddComputedColumnConfig(
+        transform_type="add_computed_column",
+        column_name="survey_number",
+        operator={"name": "extract", "regex": "(\d)"},
+        input_columns="title",
         drop_input_columns="all",
     )
 
@@ -169,4 +181,14 @@ def melt_data_config() -> MeltDataConfig:
         value_name="code",
         value_vars=["title"],
         var_name="name",
+    )
+
+
+@pytest.fixture(scope="function")
+def replace_values_config() -> ReplaceValuesConfig:
+    return ReplaceValuesConfig(
+        transform_type="replace_values",
+        replacement_values={
+            "title": {"Survey 1": "Questionnaire 1", "Survey 2": "Questionnaire 2"}
+        },
     )

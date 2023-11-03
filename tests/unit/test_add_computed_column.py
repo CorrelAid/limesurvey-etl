@@ -52,3 +52,13 @@ def test_add_computed_columns_split(
             ]
         )
     )
+
+
+def test_add_computed_columns_extract(
+    add_computed_conlumn_config_extract: AddComputedColumnConfig,
+    surveys_questions_data: pd.DataFrame,
+) -> None:
+    transform = AddComputedColumnTransform(add_computed_conlumn_config_extract)
+    df = transform.transform(surveys_questions_data)
+
+    assert df["survey_number"].equals(pd.Series(["1", "1", "2"]))
