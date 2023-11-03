@@ -1207,6 +1207,17 @@ If None (default), table is created directly from pandas df.</p>
           </td>
         </tr>
         <tr>
+          <td><code>right_table_source_schema</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[str]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Schema name of the right table if different from left table source schema. If none, source_schema is used for right table as well.</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
           <td><code>source_tables</code></td>
           <td>
                 <code>list[<a class="autorefs autorefs-internal" title="limesurvey_etl.config.transform_config.select_source_data.SourceTable" href="#limesurvey_etl.config.transform_config.select_source_data.SourceTable">SourceTable</a>]</code>
@@ -2520,7 +2531,7 @@ data frame after computation.</p>
         <tr>
           <td><code>operator</code></td>
           <td>
-                <code><span title="typing.Union">Union</span>[<span title="typing.Literal">Literal</span>[&#39;==&#39;], <span title="typing.Literal">Literal</span>[&#39;&gt;&#39;], <span title="typing.Literal">Literal</span>[&#39;&lt;&#39;], <span title="typing.Literal">Literal</span>[&#39;&gt;=&#39;], <span title="typing.Literal">Literal</span>[&#39;&lt;=&#39;], <span title="typing.Literal">Literal</span>[&#39;contains&#39;], <span title="typing.Literal">Literal</span>[&#39;not_contains&#39;]]</code>
+                <code><span title="typing.Union">Union</span>[<span title="typing.Literal">Literal</span>[&#39;==&#39;], <span title="typing.Literal">Literal</span>[&#39;!=&#39;], <span title="typing.Literal">Literal</span>[&#39;&gt;&#39;], <span title="typing.Literal">Literal</span>[&#39;&lt;&#39;], <span title="typing.Literal">Literal</span>[&#39;&gt;=&#39;], <span title="typing.Literal">Literal</span>[&#39;&lt;=&#39;], <span title="typing.Literal">Literal</span>[&#39;contains&#39;], <span title="typing.Literal">Literal</span>[&#39;not_contains&#39;]]</code>
           </td>
           <td>
             <div class="doc-md-description">
