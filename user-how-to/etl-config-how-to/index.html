@@ -594,11 +594,46 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#limesurvey_etl.config.transform_config.add_computed_column.Operator" class="md-nav__link">
-    Operator
+  <a href="#limesurvey_etl.config.transform_config.add_computed_column.SumOperator" class="md-nav__link">
+    SumOperator
   </a>
   
-    <nav class="md-nav" aria-label="Operator">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limesurvey_etl.config.transform_config.add_computed_column.ProductOperator" class="md-nav__link">
+    ProductOperator
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limesurvey_etl.config.transform_config.add_computed_column.DifferenceOperator" class="md-nav__link">
+    DifferenceOperator
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limesurvey_etl.config.transform_config.add_computed_column.ConcatOperator" class="md-nav__link">
+    ConcatOperator
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limesurvey_etl.config.transform_config.add_computed_column.SplitOperator" class="md-nav__link">
+    SplitOperator
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limesurvey_etl.config.transform_config.add_computed_column.ExtractOperator" class="md-nav__link">
+    ExtractOperator
+  </a>
+  
+    <nav class="md-nav" aria-label="ExtractOperator">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1674,7 +1709,7 @@ that are not set as id_vars.</p>
 
 </div><h5 id="example_3">Example</h5>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">trransform_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">melt_data</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">id_vars</span><span class="p">:</span><span class="w"> </span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">id_vars</span><span class="p">:</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">id</span>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nt">value_vars</span><span class="p">:</span>
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type</span>
@@ -1746,7 +1781,7 @@ that are not set as id_vars.</p>
         <tr>
           <td><code>operator</code></td>
           <td>
-                <code><a class="autorefs autorefs-internal" title="limesurvey_etl.config.transform_config.add_computed_column.Operator" href="#limesurvey_etl.config.transform_config.add_computed_column.Operator">Operator</a></code>
+                <code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="limesurvey_etl.config.transform_config.add_computed_column.SumOperator" href="#limesurvey_etl.config.transform_config.add_computed_column.SumOperator">SumOperator</a>, <a class="autorefs autorefs-internal" title="limesurvey_etl.config.transform_config.add_computed_column.ProductOperator" href="#limesurvey_etl.config.transform_config.add_computed_column.ProductOperator">ProductOperator</a>, <a class="autorefs autorefs-internal" title="limesurvey_etl.config.transform_config.add_computed_column.DifferenceOperator" href="#limesurvey_etl.config.transform_config.add_computed_column.DifferenceOperator">DifferenceOperator</a>, <a class="autorefs autorefs-internal" title="limesurvey_etl.config.transform_config.add_computed_column.ConcatOperator" href="#limesurvey_etl.config.transform_config.add_computed_column.ConcatOperator">ConcatOperator</a>, <a class="autorefs autorefs-internal" title="limesurvey_etl.config.transform_config.add_computed_column.SplitOperator" href="#limesurvey_etl.config.transform_config.add_computed_column.SplitOperator">SplitOperator</a>, <a class="autorefs autorefs-internal" title="limesurvey_etl.config.transform_config.add_computed_column.ExtractOperator" href="#limesurvey_etl.config.transform_config.add_computed_column.ExtractOperator">ExtractOperator</a>]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1788,8 +1823,7 @@ data frame after computation.</p>
 
   </div>
 
-</div><p>The <code>add_computed_columns</code> configuration requires to define a concat operation in the <code>operator</code> field as follows:
-</p>
+</div><p>The <code>add_computed_columns</code> configuration requires to define an operation in the <code>operator</code> field. The following operators are available:</p>
 
 
 <div class="doc doc-object doc-class">
@@ -1797,8 +1831,8 @@ data frame after computation.</p>
 
 
 
-<h2 id="limesurvey_etl.config.transform_config.add_computed_column.Operator" class="doc doc-heading">
-          <code>Operator</code>
+<h2 id="limesurvey_etl.config.transform_config.add_computed_column.SumOperator" class="doc doc-heading">
+          <code>SumOperator</code>
 
 
 </h2>
@@ -1807,7 +1841,7 @@ data frame after computation.</p>
   <div class="doc doc-contents first">
 
   
-      <p>Represents an operator used in computations.</p>
+      <p>Model representing a 'sum' operator. Computes the sum of values.</p>
 
 
 
@@ -1824,11 +1858,203 @@ data frame after computation.</p>
         <tr>
           <td><code>name</code></td>
           <td>
-                <code><span title="typing.Union">Union</span>[<span title="typing.Literal">Literal</span>[&#39;sum&#39;], <span title="typing.Literal">Literal</span>[&#39;product&#39;], <span title="typing.Literal">Literal</span>[&#39;difference&#39;], <span title="typing.Literal">Literal</span>[&#39;concat&#39;], <span title="typing.Literal">Literal</span>[&#39;split&#39;]]</code>
+                <code><span title="typing.Literal">Literal</span>[&#39;sum&#39;]</code>
           </td>
           <td>
             <div class="doc-md-description">
-              <p>Operation used to compute new column.</p>
+              <p>The name of the operator, which should be "sum".</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+
+<h2 id="limesurvey_etl.config.transform_config.add_computed_column.ProductOperator" class="doc doc-heading">
+          <code>ProductOperator</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents first">
+
+  
+      <p>Model representing a 'product' operator. Computes the product of values.</p>
+
+
+
+  <p><strong>Attributes:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>name</code></td>
+          <td>
+                <code><span title="typing.Literal">Literal</span>[&#39;product&#39;]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the operator, which should be "product".</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+
+<h2 id="limesurvey_etl.config.transform_config.add_computed_column.DifferenceOperator" class="doc doc-heading">
+          <code>DifferenceOperator</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents first">
+
+  
+      <p>Model representing a 'difference' operator. Subtracts the values.</p>
+
+
+
+  <p><strong>Attributes:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>name</code></td>
+          <td>
+                <code><span title="typing.Literal">Literal</span>[&#39;difference&#39;]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the operator, which should be "difference".</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+
+<h2 id="limesurvey_etl.config.transform_config.add_computed_column.ConcatOperator" class="doc doc-heading">
+          <code>ConcatOperator</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents first">
+
+  
+      <p>Model representing a 'concat' operator. Concatenates the values using a separator.</p>
+
+
+
+  <p><strong>Attributes:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>name</code></td>
+          <td>
+                <code><span title="typing.Literal">Literal</span>[&#39;concat&#39;]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the operator, which should be "concat".</p>
             </div>
           </td>
         </tr>
@@ -1839,7 +2065,71 @@ data frame after computation.</p>
           </td>
           <td>
             <div class="doc-md-description">
-              <p>Separator used to separate strings when using 'concat'. Defaults to '_'</p>
+              <p>Separator used to separate strings.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+
+<h2 id="limesurvey_etl.config.transform_config.add_computed_column.SplitOperator" class="doc doc-heading">
+          <code>SplitOperator</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents first">
+
+  
+      <p>Model representing a 'split' operator. Splites a value based on a delimiter.</p>
+
+
+
+  <p><strong>Attributes:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>name</code></td>
+          <td>
+                <code><span title="typing.Literal">Literal</span>[&#39;split&#39;]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the operator, which should be "split".</p>
             </div>
           </td>
         </tr>
@@ -1850,7 +2140,7 @@ data frame after computation.</p>
           </td>
           <td>
             <div class="doc-md-description">
-              <p>Delimiter used to split strings when using 'split' operator. Defaults to '_'</p>
+              <p>Delimiter used to split strings.</p>
             </div>
           </td>
         </tr>
@@ -1861,7 +2151,93 @@ data frame after computation.</p>
           </td>
           <td>
             <div class="doc-md-description">
-              <p>Whether or not to expand the split values into multiple columns when using the 'split' operator. Defaults to False.</p>
+              <p>Whether or not to expand the split values when using the 'split' operator.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+
+<h2 id="limesurvey_etl.config.transform_config.add_computed_column.ExtractOperator" class="doc doc-heading">
+          <code>ExtractOperator</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents first">
+
+  
+      <p>Model representing an 'extract' operator. Extracts a match from a string based on a regular expression.</p>
+
+
+
+  <p><strong>Attributes:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>name</code></td>
+          <td>
+                <code><span title="typing.Literal">Literal</span>[&#39;extract&#39;]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the operator, which should be "extract".</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><code>regex</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Regular expression used to extract from string.</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><code>expand</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Whether or not to expand the values if multiple matches found.</p>
             </div>
           </td>
         </tr>
@@ -2463,21 +2839,9 @@ and the new column names as values.</p>
           </td>
         </tr>
         <tr>
-          <td><code>column_name</code></td>
-          <td>
-                <code><span title="typing.Union">Union</span>[str, list[str]]</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>Columns in which to replace values.
-If None, then value will be replaced in the entire dataframe.</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
           <td><code>replacement_values</code></td>
           <td>
-                <code>dict[<span title="typing.Union">Union</span>[str, int, float, bool], <span title="typing.Union">Union</span>[str, int, float, bool]]</code>
+                <code>dict[str, dict[<span title="typing.Union">Union</span>[str, int, float, bool], <span title="typing.Union">Union</span>[str, int, float, bool]]]</code>
           </td>
           <td>
             <div class="doc-md-description">
