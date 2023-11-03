@@ -41,7 +41,10 @@ class SourceTable(BaseModel):
     """
 
     table_name: str
-    columns: list[str]
+    columns: Optional[list[str]] = Field(
+        None,
+        description="Columns to be selected from source table. If None, all columns are selected.",
+    )
 
 
 class SelectSourceDataConfig(BaseModel):
@@ -50,6 +53,7 @@ class SelectSourceDataConfig(BaseModel):
 
     Attributes:
         source_schema (str): Name of the database schema the source data is stored in. Defaults to 'raw'
+        right_table_source_schema (Optional[str]): Schema name of the right table if different from left table source schema. If none, source_schema is used for right table as well.
         source_tables (list[SourceTable]): List of source tables with their columns to be selected.
         join (Join, optional): Join configuration based on the Join class.
         filter (str, optional): Optional SQL filter clause.
@@ -59,6 +63,10 @@ class SelectSourceDataConfig(BaseModel):
     source_schema: str = Field(
         "raw",
         description="Name of the database schema the source data is stored in. Defaults to 'raw'",
+    )
+    right_table_source_schema: Optional[str] = Field(
+        None,
+        description="Schema name of the right table if different from left table source schema. If none, source_schema is used for right table as well.",
     )
     source_tables: list[SourceTable] = Field(
         ...,

@@ -10,24 +10,35 @@ class FilterCondition(BaseModel):
     Attributes:
         column (str): The column name to apply the condition on.
         value (str): The value to compare against.
-        operator (str): The comparison operator.
+        operator (Union[Literal["=="], Literal["!="], Literal[">"], Literal["<"], Literal[">="], Literal["<="], Literal["contains"], Literal["not_contains"]]): The comparison operator.
 
     """
 
     column: str
     value: str
-    operator: str
+    operator: Union[
+        Literal["=="],
+        Literal["!="],
+        Literal[">"],
+        Literal["<"],
+        Literal[">="],
+        Literal["<="],
+        Literal["contains"],
+        Literal["not_contains"],
+    ]
 
     @validator("operator")
     @classmethod
     def validate_operator(cls, o):
         operator_mapping = {
             "==": lambda x, y: x == y,
+            "!=": lambda x, y: x != y,
             ">": lambda x, y: x > y,
             "<": lambda x, y: x < y,
             ">=": lambda x, y: x >= y,
             "<=": lambda x, y: x <= y,
             "contains": lambda x, y: x.str.contains(y),
+            "not_contains": lambda x, y: ~x.str.contains(y),
         }
         if not o in operator_mapping.keys():
             raise ValueError(

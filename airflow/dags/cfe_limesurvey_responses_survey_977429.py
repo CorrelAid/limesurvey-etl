@@ -11,7 +11,9 @@ from airflow.utils.task_group import TaskGroup
 from airflow import DAG
 from limesurvey_etl.etl_pipeline import Pipeline
 
-PIPELINE = Pipeline.get_pipeline(Path("/opt/airflow/dags/configs/cfe_limesurvey.yaml"))
+PIPELINE = Pipeline.get_pipeline(
+    Path("/opt/airflow/dags/configs/cfe_responses_survey_977429.yaml")
+)
 
 DEFAULT_ARGS = {
     "owner": "airflow",
@@ -22,11 +24,11 @@ DEFAULT_ARGS = {
 }
 
 with DAG(
-    dag_id="cfe-limesurvey-etl",
+    dag_id="cfe-limesurvey-responses-survey-977429",
     default_args=DEFAULT_ARGS,
     catchup=False,
     max_active_runs=1,
-    schedule_interval="@daily",
+    schedule_interval=None,
 ) as dag:
     extract_limesurvey_data = PythonOperator(
         task_id="extract", python_callable=PIPELINE.run_extract

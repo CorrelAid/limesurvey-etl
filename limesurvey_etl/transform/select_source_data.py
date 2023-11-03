@@ -1,4 +1,5 @@
 import pandas as pd
+from sqlalchemy import inspect
 from sqlalchemy.engine import Engine
 
 from limesurvey_etl.config.transform_config.select_source_data import (
@@ -36,7 +37,14 @@ class SelectSourceDataTransform(BaseTransform[SelectSourceDataConfig]):
         # select data
         left_table_name = self.config.source_tables[0].table_name
         left_table_columns = self.config.source_tables[0].columns
-        left_table_columns = [f"left_table.{column}" for column in left_table_columns]
+        if left_table_columns is None:
+            inspector = inspect(staging_db_engine)
+            columns = inspector.get_columns(left_table_name, self.config.source_schema)
+            left_table_columns = [c["name"] for c in columns]
+        left_table_columns = [
+            f'left_table."{column.split(" ")[0]}" {" ".join(column.split(" ")[1:]) if len(column.split(" ")) > 1 else ""}'
+            for column in left_table_columns
+        ]
 
         # create sql statement
         sql_stmt = f"""
@@ -47,8 +55,16 @@ class SelectSourceDataTransform(BaseTransform[SelectSourceDataConfig]):
             # perform join
             right_table_name = self.config.source_tables[1].table_name
             right_table_columns = self.config.source_tables[1].columns
+            if right_table_columns is None:
+                inspector = inspect(staging_db_engine)
+                columns = inspector.get_columns(
+                    right_table_name,
+                    self.config.right_table_source_schema or self.config.source_schema,
+                )
+                right_table_columns = [c["name"] for c in columns]
             right_table_columns = [
-                f"right_table.{column}" for column in right_table_columns
+                f'right_table."{column.split(" ")[0]}" {" ".join(column.split(" ")[1:]) if len(column.split(" ")) > 1 else ""}'
+                for column in right_table_columns
             ]
             sql_stmt = f"""
                 SELECT DISTINCT
@@ -56,7 +72,7 @@ class SelectSourceDataTransform(BaseTransform[SelectSourceDataConfig]):
                     , {",".join(right_table_columns)}
                 FROM {self.config.source_schema}.{left_table_name} left_table
                 {self.config.join.type}
-                {self.config.source_schema}.{right_table_name} right_table
+                {self.config.right_table_source_schema or self.config.source_schema}.{right_table_name} right_table
                 ON left_table.{self.config.join.left_on}=right_table.{self.config.join.right_on}
             """
         if self.config.filter is not None:

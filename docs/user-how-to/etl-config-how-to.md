@@ -105,6 +105,7 @@ The `transform_steps` field is a list of transformations that should be applied 
 - `join_with_csv_mapping`
 - `rename_columns`
 - `replace_values`
+- `cast_data_type`
 
 Note: transformations are applied in order.
 
@@ -222,6 +223,17 @@ You can also use the `filter_data` transform step multiple times to perform more
   replacement_values:
     999: 30
     "Unknown": "Other"
+```
+
+::: limesurvey_etl.config.transform_config.cast_data_type.CastDataTypeConfig
+
+##### Example
+```yaml
+- transform_type: cast_data_type
+  column_names:
+    - question_id
+    - survey_id
+  target_data_type: int
 ```
 
 ## Step 3: Define the Load Step

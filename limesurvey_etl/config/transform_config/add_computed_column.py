@@ -1,4 +1,4 @@
-from typing import Literal, Union
+from typing import Literal, Optional, Union
 
 from pydantic import BaseModel, Field, validator
 
@@ -103,7 +103,6 @@ class AddComputedColumnConfig(BaseModel):
             Operation used to compute the new column.
         drop_input_columns (Union[Literal["all"], list[str]], optional): Input columns to be dropped from
             data frame after computation.
-
     """
 
     transform_type: Literal["add_computed_column"]

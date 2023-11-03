@@ -26,12 +26,15 @@ from limesurvey_etl.load.reporting_db import ReportingDBLoad  # noqa
 from limesurvey_etl.settings.staging_db_settings import StagingDBSettings
 from limesurvey_etl.transform.add_columns import AddColumnsTransform  # noqa
 from limesurvey_etl.transform.add_computed_column import AddComputedColumnTransform
+from limesurvey_etl.transform.cast_data_type import CastDataTypeTransform  # noqa
 from limesurvey_etl.transform.fill_null_values import FillNullValuesTransform  # noqa
 from limesurvey_etl.transform.filter_data import FilterDataTransform  # noqa
 from limesurvey_etl.transform.join_with_csv_mapping import (  # noqa
     JoinWithCSVMappingTransform,
 )
+from limesurvey_etl.transform.melt_data import MeltDataTransform  # noqa
 from limesurvey_etl.transform.rename_columns import RenameColumnsTransform  # noqa
+from limesurvey_etl.transform.replace_values import ReplaceValuesTransform
 from limesurvey_etl.transform.select_source_data import (  # noqa
     SelectSourceDataTransform,
 )
@@ -75,6 +78,9 @@ class Transformer(Enum):
     JoinWithCSVMappingTransform = "join_with_csv_mapping"
     RenameColumnsTransform = "rename_columns"
     AddComputedColumnTransform = "add_computed_column"
+    MeltDataTransform = "melt_data"
+    ReplaceValuesTransform = "replace_values"
+    CastDataTypeTransform = "cast_data_type"
 
 
 class Loader(Enum):
@@ -217,9 +223,13 @@ class Pipeline:
                         name=transformation_pipeline.config.table_name,
                         con=self.staging_db_engine,
                         schema=transformation_pipeline.config.staging_schema,
-                        if_exists="append",
+                        if_exists="append"
+                        if transformation_pipeline.config.columns is not None
+                        else "replace",
                         index=False,
-                        method=method,
+                        method=method
+                        if transformation_pipeline.config.columns is not None
+                        else None,
                     )
 
     def run_load(self) -> None:

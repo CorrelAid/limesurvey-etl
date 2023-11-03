@@ -1,9 +1,13 @@
+from enum import Enum
+
 import pandas as pd
 
 from limesurvey_etl.config.transform_config.add_computed_column import (
     AddComputedColumnConfig,
 )
 from limesurvey_etl.transform.base import BaseTransform
+
+CAST_TYPES = {"str": str, "int": int, "bool": bool, "float": float}
 
 
 class AddComputedColumnTransform(BaseTransform[AddComputedColumnConfig]):

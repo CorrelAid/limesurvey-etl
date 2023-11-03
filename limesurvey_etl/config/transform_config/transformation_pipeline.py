@@ -8,11 +8,13 @@ from limesurvey_etl.config.transform_config.add_columns import AddColumnsConfig
 from limesurvey_etl.config.transform_config.add_computed_column import (
     AddComputedColumnConfig,
 )
+from limesurvey_etl.config.transform_config.cast_data_type import CastDataTypeConfig
 from limesurvey_etl.config.transform_config.fill_null_values import FillNullValuesConfig
 from limesurvey_etl.config.transform_config.filter_data import FilterDataConfig
 from limesurvey_etl.config.transform_config.join_with_csv_mapping import (
     JoinWithCSVMappingConfig,
 )
+from limesurvey_etl.config.transform_config.melt_data import MeltDataConfig
 from limesurvey_etl.config.transform_config.rename_columns import RenameColumnsConfig
 from limesurvey_etl.config.transform_config.replace_values import ReplaceValuesConfig
 from limesurvey_etl.config.transform_config.select_source_data import (
@@ -90,6 +92,8 @@ class TransformationPipelineConfig(BaseModel):
             RenameColumnsConfig,
             ReplaceValuesConfig,
             AddComputedColumnConfig,
+            MeltDataConfig,
+            CastDataTypeConfig,
         ]
     ] = Field(
         None,

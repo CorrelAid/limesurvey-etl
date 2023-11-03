@@ -1,11 +1,11 @@
 import logging
 
 import pandas as pd
+import sqlalchemy.exc
 from sqlalchemy import MetaData, Table, create_engine, insert, inspect, select
 from sqlalchemy.dialects.mysql import insert as mysql_insert
 from sqlalchemy.dialects.postgresql import insert as postgresql_insert
 from sqlalchemy.engine import Engine
-from sqlalchemy.schema import CreateSchema
 
 from limesurvey_etl.config.load_config.reporting_db import ReportingDBLoadConfig
 from limesurvey_etl.connectors.reporting_db_connect import ReportingDBConnect
@@ -133,11 +133,20 @@ class ReportingDBLoad(BaseLoad[ReportingDBLoadConfig]):
             method = sql_driver_to_method_mapper[
                 ReportingDBSettings().reporting_db_sqlalchemy_driver
             ]
-            df.to_sql(
-                name=table_name,
-                con=reporting_db_engine,
-                schema=reporting_schema,
-                if_exists="append",
-                index=False,
-                method=method,
-            )
+            try:
+                df.to_sql(
+                    name=table_name,
+                    con=reporting_db_engine,
+                    schema=reporting_schema,
+                    if_exists="append",
+                    index=False,
+                    method=method,
+                )
+            except sqlalchemy.exc.ProgrammingError:
+                df.to_sql(
+                    name=table_name,
+                    con=reporting_db_engine,
+                    schema=reporting_schema,
+                    if_exists="replace",
+                    index=False,
+                )

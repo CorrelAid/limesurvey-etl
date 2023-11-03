@@ -6,6 +6,7 @@ from limesurvey_etl.config.transform_config.add_columns import AddColumnsConfig
 from limesurvey_etl.config.transform_config.add_computed_column import (
     AddComputedColumnConfig,
 )
+from limesurvey_etl.config.transform_config.cast_data_type import CastDataTypeConfig
 from limesurvey_etl.config.transform_config.fill_null_values import FillNullValuesConfig
 from limesurvey_etl.config.transform_config.filter_data import FilterDataConfig
 from limesurvey_etl.config.transform_config.join_with_csv_mapping import (
@@ -145,11 +146,11 @@ def filter_data_config() -> FilterDataConfig:
 
 
 @pytest.fixture(scope="function")
-def filter_data_config_contains() -> FilterDataConfig:
+def filter_data_config_not_contains() -> FilterDataConfig:
     return FilterDataConfig(
         transform_type="filter_data",
         conditions=[
-            {"column": "question_text", "value": "improve", "operator": "contains"}
+            {"column": "question_text", "value": "improve", "operator": "not_contains"}
         ],
     )
 
@@ -191,4 +192,13 @@ def replace_values_config() -> ReplaceValuesConfig:
         replacement_values={
             "title": {"Survey 1": "Questionnaire 1", "Survey 2": "Questionnaire 2"}
         },
+    )
+
+
+@pytest.fixture(scope="function")
+def cast_data_type_config() -> CastDataTypeConfig:
+    return CastDataTypeConfig(
+        transform_type="cast_data_type",
+        column_names="question_id",
+        target_data_type="str",
     )
