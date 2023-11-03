@@ -41,10 +41,15 @@ class SelectSourceDataTransform(BaseTransform[SelectSourceDataConfig]):
             inspector = inspect(staging_db_engine)
             columns = inspector.get_columns(left_table_name, self.config.source_schema)
             left_table_columns = [c["name"] for c in columns]
-        left_table_columns = [
-            f'left_table."{column.split(" ")[0]}" {" ".join(column.split(" ")[1:]) if len(column.split(" ")) > 1 else ""}'
-            for column in left_table_columns
-        ]
+        if self.staging_db_settings.staging_db_sqlalchemy_driver == "postgresql":
+            left_table_columns = [
+                f'left_table."{column.split(" ")[0]}" {" ".join(column.split(" ")[1:]) if len(column.split(" ")) > 1 else ""}'
+                for column in left_table_columns
+            ]
+        else:
+            left_table_columns = [
+                f"left_table.{column}" for column in left_table_columns
+            ]
 
         # create sql statement
         sql_stmt = f"""
@@ -62,10 +67,15 @@ class SelectSourceDataTransform(BaseTransform[SelectSourceDataConfig]):
                     self.config.right_table_source_schema or self.config.source_schema,
                 )
                 right_table_columns = [c["name"] for c in columns]
-            right_table_columns = [
-                f'right_table."{column.split(" ")[0]}" {" ".join(column.split(" ")[1:]) if len(column.split(" ")) > 1 else ""}'
-                for column in right_table_columns
-            ]
+            if self.staging_db_settings.staging_db_sqlalchemy_driver == "postgresql":
+                right_table_columns = [
+                    f'right_table."{column.split(" ")[0]}" {" ".join(column.split(" ")[1:]) if len(column.split(" ")) > 1 else ""}'
+                    for column in right_table_columns
+                ]
+            else:
+                right_table_columns = [
+                    f"right_table.{column}" for column in right_table_columns
+                ]
             sql_stmt = f"""
                 SELECT DISTINCT
                     {",".join(left_table_columns)}
