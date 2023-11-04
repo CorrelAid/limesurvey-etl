@@ -18,6 +18,7 @@ jinja2 = "3.1.2"
 pyyaml = "6.0"
 azure-servicebus = "7.11.3"
 python-dotenv = "1.0.0"
+sshtunnel = "0.4.0
 
 [tool.poetry.group.dev.dependencies]
 mkdocs = "1.5.*"
