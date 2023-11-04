@@ -86,6 +86,13 @@ Open the `.env` file you just created in your IDE or text editor and append the 
 - **Reporting database related variables**:  The reporting database is where the final (i.e., reporting) data is stored. You can provide values for a MySQL DB / MariaDB (set `STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"`) or a PostgresDB (set `STAGING_DB_SQLALCHEMY_DRIVER="postgresql"`). Other databases are currently not supported. **Note:** If the database is running on the same machine as airflow, then set `REPORTING_DB_HOST=host.docker.internal`! **It is possible to use the same database as staging and reporting database**.
 
 ```bash
+# Airflow related variables
+AIRFLOW_PG_USER="<USERNAME_FOR_AIRFLOW_DB>" # choose a username for the airflow db
+AIRFLOW_PG_PASSWORD="<PASSWORD_FOR_AIRFLOW_DB_USER>" # set a password for the airflow db user
+AIRFLOW_PG_DB="<AIRFLOW_DB_NAME>" # choose a name for the airflow db
+_AIRFLOW_WWW_USER_USERNAME="<USERNAME_FOR_AIRFLOW_UI_LOGIN>" # choose an admin username for logging into the Airflow UI (you can add additional users later via the "Security" tab in the Airflow UI)
+_AIRFLOW_WWW_USER_PASSWORD="<PW_FOR_AIRFLOW_UI_LOGIN>" # choose a password to login to the Airflow UI
+
 # Variables required to connect with the Limesurvey Database
 LIMESURVEY_SSH_PORT="<LIMESURVEY_SSH_PORT_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE>"
 LIMESURVEY_SSH_HOST="<LIMESURVEY_SSH_HOST_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE>"
