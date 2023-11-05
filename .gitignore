@@ -100,3 +100,4 @@ airflow/logs/
 42_mod-wrangle-sensitive-data.R
 
 logs
+poetry.lock

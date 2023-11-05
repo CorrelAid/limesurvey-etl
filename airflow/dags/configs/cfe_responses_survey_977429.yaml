@@ -1,0 +1,138 @@
+extract:
+  extract_type: limesurvey_extract
+  tables:
+    - lime_survey_977429
+
+transformation_pipelines:
+  - table_name: tmp_survey_977429
+    staging_schema: staging
+    source_data:
+      source_schema: raw
+      source_tables:
+        - table_name: lime_survey_977429
+    transform_steps:
+      - transform_type: melt_data
+        id_vars:
+          - "id"
+        var_name: "name"
+        value_name: "answer_code"
+      - transform_type: filter_data
+        conditions:
+          - column: name
+            value: comment
+            operator: not_contains
+      - transform_type: add_computed_column
+        column_name:
+          - survey_id
+          - ls_gid
+          - ls_qid_and_more
+        input_columns: name
+        operator:
+          name: split
+          delimiter: X
+          expand: True
+      - transform_type: add_computed_column
+        column_name: ls_qid
+        input_columns: ls_qid_and_more
+        operator:
+          name: extract
+          regex: (^.{4})
+      - transform_type: add_computed_column
+        column_name: ls_sqid_minor_and_more
+        input_columns: ls_qid_and_more
+        operator:
+          name: extract
+          regex: ^.{4}(.+)
+      - transform_type: add_computed_column
+        column_name: ls_sqid_minor
+        input_columns: ls_sqid_minor_and_more
+        operator:
+          name: extract
+          regex: (^.{5})
+      - transform_type: add_computed_column
+        column_name: scale_id
+        input_columns: ls_sqid_minor_and_more
+        operator:
+          name: extract
+          regex: .+#(\d+)
+      - transform_type: fill_null_values
+        column_name: ls_sqid_minor
+        value: SQ001
+      - transform_type: replace_values
+        replacement_values:
+          ls_sqid_minor:
+            other: SQother
+      - transform_type: fill_null_values
+        column_name: ls_qid
+        value: 0
+      - transform_type: fill_null_values
+        column_name: scale_id
+        value: 0
+      - transform_type: rename_columns
+        colname_to_colname:
+          ls_qtitle: question_item_id
+          id: respondent
+          answer_code: value
+      - transform_type: cast_data_type
+        column_names: ls_qid
+        target_data_type: int
+  - table_name: tmp_2_survey_977429
+    staging_schema: staging
+    source_data:
+      source_schema: staging
+      right_table_source_schema: raw
+      source_tables:
+        - table_name: tmp_survey_977429
+        - table_name: lime_questions
+          columns:
+            - qid
+            - parent_qid
+            - title
+      join:
+        type: LEFT JOIN
+        left_table: tmp_2_survey_977429
+        right_table: lime_questions
+        left_on: ls_qid
+        right_on: qid
+      filter: "WHERE right_table.parent_qid = 0"
+    transform_steps:
+      - transform_type: rename_columns
+        colname_to_colname:
+          ls_qid: question_item_id
+      - transform_type: add_computed_column
+        column_name: subquestion_id
+        input_columns:
+          - question_item_id
+          - ls_sqid_minor
+        operator:
+          name: concat
+          separator: "_"
+  - table_name: responses_survey_977429
+    staging_schema: staging
+    source_data:
+      source_schema: staging
+      source_tables:
+        - table_name: tmp_2_survey_977429
+        - table_name: question_items
+          columns:
+            - question_item_id
+            - type_major
+      join:
+        type: LEFT JOIN
+        left_table: tmp_survey_977429
+        right_table: question_items
+        left_on: question_item_id
+        right_on: question_item_id
+    transform_steps:
+      - transform_type: filter_data
+        conditions:
+          - column: type_major
+            value: nan
+            operator: "!="
+
+load:
+  load_type: reporting_db_load
+  staging_schema: staging
+  target_schema: reporting
+  tables:
+    - responses_survey_977429

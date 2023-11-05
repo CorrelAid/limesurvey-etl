@@ -9,4 +9,7 @@ RUN apt-get update \
 USER airflow
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-COPY dags/ /opt/airflow/dags
+
+COPY ./airflow/dags/ /opt/airflow/dags/
+COPY ./limesurvey_etl/ /opt/airflow/include/limesurvey_etl/
+WORKDIR /airflow

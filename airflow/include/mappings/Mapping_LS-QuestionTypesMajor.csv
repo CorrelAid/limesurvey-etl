@@ -1,0 +1,29 @@
+Fragetyp Major (LS);Fragetyp Major (CFE);Fragetyp Minor (LS);Fragetyp-ID (LS);Display Type;Unterfragen;1 offenes Feld
+Array;Matrix;Array (5 point choice);A;text;Yes;No
+Array;Matrix;Array (10 point choice);B;text;Yes;No
+Array;Matrix;Array (Yes/Uncertain/No);C;text;Yes;No
+Array;Matrix;Array (Increase/Same/Decrease);E;text;Yes;No
+Array;Matrix;Array flexible row format;F;text;Yes;No
+Array;Matrix;Array flexible column format;H;text;Yes;No
+Array;Multiple Choice;Array (flexible Labels) Dual Scale;1;text;Yes;No
+Array;Numerisch;Array (Multi Flexible) (Numbers);:;numeric;No;Yes
+Array;Matrix;Array (Multi Flexible) (Text);";";text;Yes;Yes
+Mask;Single Choice;Date;D;datetime;No;No
+Mask;Single Choice;Gender drop down list;G;text;No;No
+Mask;Multiple Choice;Multiple numerical input;K;numeric;Yes;No
+Mask;Single Choice;Yes/No Buttons;Y;text;No;No
+Mask;Numerisch;Numerical Input;N;numeric;No;No
+Mask;Numerisch;Multiple Numerical Input;N;numeric;No;No
+Multiple Choice;Multiple Choice;Multiple Options Checkbox;M;text;Yes;No
+Multiple Choice;Multiple Choice;Multiple Options with comment;P;text;Yes;Yes
+Single Choice;Single Choice;5-point choice;5;text;No;No
+Single Choice;Single Choice;List (dropdown);!;text;No;No
+Single Choice;Single Choice;List (radio button);L;text;No;No
+Single Choice;Single Choice;Drop Down List ;W;text;No;No
+Single Choice;Open;List with Comment;O;text;No;No
+Text;Multiple Choice;Multiple Short Texts;Q;text;Yes;No
+Text;Open;Short free text;S;text;No;No
+Text;Open;Long free text;T;text;No;No
+Text;Open;Huge free text;U;text;No;No
+Instruction;Text display;Instruction;X;text;No;No
+Custom;Custom;Custom;*;;No;No

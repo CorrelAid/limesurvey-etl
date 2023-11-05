@@ -1,6 +1,9 @@
-# CFE Limesurvey
+# Welcome to Limesurvey ETL
 
-# What is this project about? - The Problem & Goal
+This is the documentation of the Limesurvey ETL project. The goal is to provide an ETLaaS (ETL as a Service) application to process data from [Limesurvey](https://www.limesurvey.org/).
+
+
+## What is this project about? - The Problem & Goal
 
 To become more data driven in their work, non-profits need to collect data. As an open source and privacy-aware software, [Limesurvey](https://www.limesurvey.org/) is a good choice, especially for German NPOs.
 
@@ -16,11 +19,6 @@ The goal is that the resulting code is not specific to CFE data, but can be used
 
 (from the [Calls for
 Applications](https://citizensforeurope.notion.site/Calls-for-Applications-Data4Good-Projects-A-survey-research-ecosystem-for-diversity-and-visibility-ed7b72486a8d4bff8b74eaa851b3f029#873799b87fff4abe86b932e9a261972f))
-
-# Setup
-
-## Getting Started
-To get started with deploying your ETL pipelines, check out the [project documentation](https://correlaid.github.io/limesurvey-etl/)
 
 ## Project Organization
 
