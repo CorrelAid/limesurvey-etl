@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from typing import Literal, Union
 
@@ -49,7 +50,8 @@ class JoinWithCSVMappingConfig(BaseModel):
     @validator("mapping_path")
     @classmethod
     def transform_mapping_path(cls, path):
-        return Path(path)
+        root_dir = os.getenv("ROOT_DIR") or ""
+        return Path(root_dir) / Path(path)
 
     @root_validator()
     @classmethod

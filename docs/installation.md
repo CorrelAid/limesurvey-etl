@@ -58,7 +58,7 @@ Next, you can start adding an ETL pipeline configuration as described in the [Us
 
 Once you created a pipeline configuration, you can run it from your terminal by entering the following command:
 
-`poetry run python -m limesurvey_etl --config_file <PATH/TO/YOUR/config.yaml --steps all`
+`poetry run python -m limesurvey_etl --config_file <PATH/TO/YOUR/config.yaml --step all`
 
 - The `--config_file` flag specifies the path to the configuration `.yaml`-file to be used for the pipeline
 - The `--steps` flag specifies which step(s) of the ETL pipeline should be executed. Choices:

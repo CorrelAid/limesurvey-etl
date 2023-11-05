@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "Limesurvey ETL"
+name = "limesurvey_etl"
 version = "0.1.0"
 description = ""
 authors = ["Timo Hartmann <timo.hartmann@posteo.de>"]
