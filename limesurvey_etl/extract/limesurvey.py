@@ -46,7 +46,8 @@ class LimesurveyExtract(BaseExtract[LimesurveyExtractConfig]):
         staging_schema = self.config.staging_schema
         with self.staging_db_engine.connect() as conn:
             conn.execute(f"CREATE SCHEMA IF NOT EXISTS {staging_schema};")
-
+            if self.staging_db_engine.url.drivername == "mysql+pymysql":
+                conn.execute("SET CHARACTER SET utf8mb4;")
         logging.info("Successfully created staging schema.")
 
         # extract data and store it to staging db

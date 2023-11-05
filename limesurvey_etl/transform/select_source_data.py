@@ -46,6 +46,11 @@ class SelectSourceDataTransform(BaseTransform[SelectSourceDataConfig]):
                 f'left_table."{column.split(" ")[0]}" {" ".join(column.split(" ")[1:]) if len(column.split(" ")) > 1 else ""}'
                 for column in left_table_columns
             ]
+        elif self.staging_db_settings.staging_db_sqlalchemy_driver == "mysql+pymysql":
+            left_table_columns = [
+                f'left_table.`{column.split(" ")[0]}` {" ".join(column.split(" ")[1:]) if len(column.split(" ")) > 1 else ""}'
+                for column in left_table_columns
+            ]
         else:
             left_table_columns = [
                 f"left_table.{column}" for column in left_table_columns
@@ -70,6 +75,13 @@ class SelectSourceDataTransform(BaseTransform[SelectSourceDataConfig]):
             if self.staging_db_settings.staging_db_sqlalchemy_driver == "postgresql":
                 right_table_columns = [
                     f'right_table."{column.split(" ")[0]}" {" ".join(column.split(" ")[1:]) if len(column.split(" ")) > 1 else ""}'
+                    for column in right_table_columns
+                ]
+            elif (
+                self.staging_db_settings.staging_db_sqlalchemy_driver == "mysql+pymysql"
+            ):
+                right_table_columns = [
+                    f'right_table.`{column.split(" ")[0]}` {" ".join(column.split(" ")[1:]) if len(column.split(" ")) > 1 else ""}'
                     for column in right_table_columns
                 ]
             else:

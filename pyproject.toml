@@ -7,18 +7,14 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10.0"
-black = "^23.9.1"
-mariadb = "1.*"
 pydantic = "1.10.9"
 pandas = "1.5.1"
 SQLAlchemy = "1.4.42"
 PyMySQL = "1.0.2"
-sqlparse = "0.4.3"
-jinja2 = "3.1.2"
 pyyaml = "6.0"
-azure-servicebus = "7.11.3"
 python-dotenv = "1.0.0"
 sshtunnel = "0.4.0"
+psycopg2 = "^2.9.9"
 
 [tool.poetry.group.dev.dependencies]
 mkdocs = "1.5.*"
