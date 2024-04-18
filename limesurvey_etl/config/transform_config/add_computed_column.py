@@ -1,6 +1,6 @@
 from typing import Literal, Optional, Union
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 
 class SumOperator(BaseModel):
@@ -86,7 +86,7 @@ class ExtractOperator(BaseModel):
         description="Whether or not to expand the values if multiple matches found.",
     )
 
-    @validator("regex")
+    @field_validator("regex")
     def validate_regex(cls, regex: str):
         return rf"{regex}"
 

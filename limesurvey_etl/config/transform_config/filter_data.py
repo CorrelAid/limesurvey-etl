@@ -1,6 +1,6 @@
-from typing import Literal, Union
+from typing import Callable, Literal, Optional, Union
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 
 class FilterCondition(BaseModel):
@@ -27,9 +27,9 @@ class FilterCondition(BaseModel):
         Literal["not_contains"],
     ]
 
-    @validator("operator")
+    @field_validator("operator")
     @classmethod
-    def validate_operator(cls, o):
+    def validate_operator(cls, o: str) -> Callable:
         operator_mapping = {
             "==": lambda x, y: x == y,
             "!=": lambda x, y: x != y,
@@ -44,6 +44,7 @@ class FilterCondition(BaseModel):
             raise ValueError(
                 f"Invalid Operator, got {o}, must be one of {operator_mapping.keys()}"
             )
+        print("TYPE: ", type(operator_mapping[o]))
         return operator_mapping[o]
 
 
@@ -63,7 +64,7 @@ class FilterDataConfig(BaseModel):
     conditions: list[FilterCondition] = Field(
         ..., description="List of FilterCondition objects"
     )
-    logical_operator: Union[Literal["AND"], Literal["OR"]] = Field(
+    logical_operator: Optional[Union[Literal["AND"], Literal["OR"]]] = Field(
         None,
         description="Logical operator to be applied if multiple conditions should be applied.",
     )

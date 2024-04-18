@@ -162,6 +162,7 @@ class Pipeline:
         return self.extract.extract()
 
     def run_transform(self, table_name: str = None) -> None:
+
         for transformation_pipeline in self.transformation_pipelines:
             if (
                 transformation_pipeline["table_name"] == table_name
@@ -177,6 +178,8 @@ class Pipeline:
                 # create table in staging area
                 staging_schema_name = transformation_pipeline.config.staging_schema
                 staging_table_name = transformation_pipeline.config.table_name
+                with self.staging_db_engine.connect() as conn:
+                    conn.execute(f"CREATE SCHEMA IF NOT EXISTS {staging_schema_name}")
 
                 if transformation_pipeline.config.columns is not None:
                     logging.info(f"Creating table {staging_table_name}")
@@ -223,13 +226,17 @@ class Pipeline:
                         name=transformation_pipeline.config.table_name,
                         con=self.staging_db_engine,
                         schema=transformation_pipeline.config.staging_schema,
-                        if_exists="append"
-                        if transformation_pipeline.config.columns is not None
-                        else "replace",
+                        if_exists=(
+                            "append"
+                            if transformation_pipeline.config.columns is not None
+                            else "replace"
+                        ),
                         index=False,
-                        method=method
-                        if transformation_pipeline.config.columns is not None
-                        else None,
+                        method=(
+                            method
+                            if transformation_pipeline.config.columns is not None
+                            else None
+                        ),
                     )
 
     def run_load(self) -> None:
@@ -264,19 +271,21 @@ class Pipeline:
                     metadata,
                     schema=schema,
                     *(
-                        Column(
-                            column.name,
-                            column.type,
-                            ForeignKey(column.foreign_key),
-                            nullable=column.nullable,
-                            primary_key=column.primary_key,
-                        )
-                        if column.foreign_key is not None
-                        else Column(
-                            column.name,
-                            column.type,
-                            nullable=column.nullable,
-                            primary_key=column.primary_key,
+                        (
+                            Column(
+                                column.name,
+                                column.type,
+                                ForeignKey(column.foreign_key),
+                                nullable=column.nullable,
+                                primary_key=column.primary_key,
+                            )
+                            if column.foreign_key is not None
+                            else Column(
+                                column.name,
+                                column.type,
+                                nullable=column.nullable,
+                                primary_key=column.primary_key,
+                            )
                         )
                         for column in columns
                     ),

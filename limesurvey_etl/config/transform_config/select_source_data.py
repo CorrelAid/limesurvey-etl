@@ -1,7 +1,7 @@
 import sys
 from typing import Literal, Optional
 
-from pydantic import BaseModel, Field, PrivateAttr, validator
+from pydantic import BaseModel, Field, PrivateAttr, field_validator
 
 
 class Join(BaseModel):
@@ -21,7 +21,7 @@ class Join(BaseModel):
     left_on: Optional[str]
     right_on: Optional[str]
 
-    @validator("type")
+    @field_validator("type")
     @classmethod
     def validate_join_type(cls, t):
         join_types = ["JOIN", "LEFT JOIN", "RIGHT JOIN", "INNER JOIN", "OUTTER JOIN"]

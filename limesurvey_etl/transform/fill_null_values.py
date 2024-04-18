@@ -7,7 +7,7 @@ from limesurvey_etl.transform.base import BaseTransform
 class FillNullValuesTransform(BaseTransform[FillNullValuesConfig]):
     def transform(self, df: pd.DataFrame) -> pd.DataFrame:
         column = self.config.column_name
-        if self.config.value:
+        if self.config.value is not None:
             df[column] = df[column].fillna(self.config.value)
         else:
             df[column] = df[column].fillna(method=self.config.method)

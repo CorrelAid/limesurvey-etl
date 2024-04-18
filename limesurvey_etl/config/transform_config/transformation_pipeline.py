@@ -1,7 +1,7 @@
 import sys
 from typing import Optional, Sequence, Union
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 from sqlalchemy.sql.sqltypes import INTEGER, VARCHAR  # noqa
 
 from limesurvey_etl.config.transform_config.add_columns import AddColumnsConfig
@@ -49,9 +49,9 @@ class Column(BaseModel):
         description="Whether or not the column is a primary key column in the reporting table",
     )
     nullable: bool = Field(False, description="Whether or not the column can be Null")
-    foreign_key: Optional[str]
+    foreign_key: Optional[str] = None
 
-    @validator("type")
+    @field_validator("type")
     @classmethod
     def validate_sqlalchemy_type(cls, type: str):
         base_type = type.split("(")[0]

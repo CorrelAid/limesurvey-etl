@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from typing import Literal, Union
 
-from pydantic import BaseModel, Field, root_validator, validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 
 class JoinWithCSVMappingConfig(BaseModel):
@@ -47,18 +47,17 @@ class JoinWithCSVMappingConfig(BaseModel):
         None, description="Column names to join on in the mapping data frame."
     )
 
-    @validator("mapping_path")
+    @field_validator("mapping_path")
     @classmethod
     def transform_mapping_path(cls, path):
         root_dir = os.getenv("ROOT_DIR") or ""
         return Path(root_dir) / Path(path)
 
-    @root_validator()
-    @classmethod
-    def validate_join_cols(cls, field_values):
-        on = field_values["on"]
-        left_on = field_values["left_on"]
-        right_on = field_values["right_on"]
+    @model_validator(mode="after")
+    def validate_join_cols(self):
+        on = self.on
+        left_on = self.left_on
+        right_on = self.right_on
         if on is None and left_on is None and right_on is None:
             raise ValueError(
                 "Either 'on' or both 'left_on' and 'right_on' must not be None."
@@ -69,4 +68,4 @@ class JoinWithCSVMappingConfig(BaseModel):
             left_on is None and right_on is not None
         ):
             raise ValueError("Both 'right_on' and 'left_on' must be set.")
-        return field_values
+        return self

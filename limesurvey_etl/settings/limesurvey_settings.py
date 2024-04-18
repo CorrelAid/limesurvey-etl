@@ -1,6 +1,7 @@
 from typing import Optional
 
-from pydantic import BaseSettings, Field
+from pydantic import Field
+from pydantic_settings import BaseSettings
 
 
 class LimesurveySettings(BaseSettings):

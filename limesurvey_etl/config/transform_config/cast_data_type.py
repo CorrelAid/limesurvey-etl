@@ -1,6 +1,6 @@
 from typing import Literal, Union
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 DATA_TYPES = {"str": str, "int": int, "bool": bool, "float": float}
 
@@ -14,7 +14,7 @@ class CastDataTypeConfig(BaseModel):
         Literal["str"], Literal["int"], Literal["bool"], Literal["float"]
     ] = Field(..., description="Data type the selected column(s) should be casted to.")
 
-    @validator("target_data_type")
+    @field_validator("target_data_type")
     def validate_target_data_type(cls, data_type):
         if data_type not in DATA_TYPES:
             raise ValueError(f'Data type must be on of {", ".join(DATA_TYPES.keys())}')

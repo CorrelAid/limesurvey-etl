@@ -20,6 +20,32 @@ To run an ETL pipeline locally, you must set a number of environment variables.
 Create a `.env` file and store it at the project repository's root directory. Open the `.env` file you just created in your IDE or text editor and append the following three blocks of environment variables to it:
 
 - **Limesurvey DB related variables**: These variables are required for the platform to connect with the Limesurvey database. You must provide the variables for establishing an SSH connection as well as for the actual Limesurvey database.
+- **Target database related variables**: The target database is where the raw, intermediary, and final reporting data are stored. **This database can, optionally, be created for you upon deployment when [running ETL pipelines with Airflow](#2-orchestrating-etl-pipelines-with-airflow), but you can also use your own database to run pipelines locally.**
+
+
+```bash
+# Variables required to connect with the Limesurvey Database
+LIMESURVEY_USE_SSH=True # set to False if ssh is not used
+LIMESURVEY_SSH_PORT="<LIMESURVEY_SSH_PORT_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE>"
+LIMESURVEY_SSH_HOST="<LIMESURVEY_SSH_HOST_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE>"
+LIMESURVEY_SSH_USERNAME="<LIMESURVEY_SSH_USER_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE>"
+LIMESURVEY_SSH_PASSWORD="<LIMESURVEY_SSH_PW_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE>"
+LIMESURVEY_DB_NAME="<NAME OF THE LIMESURVEY DB>"
+LIMESURVEY_DB_PORT="<PORT OF THE LIMESURVEY DB>"
+LIMESURVEY_DB_USERNAME="<LIMESURVEY DB SQL USER>"
+LIMESURVEY_DB_PASSWORD="LIMESURVEY DB SQL PASSWORD"
+LIMESURVEY_DB_HOST="127.0.0.1" # always 127.0.0.1 if SSH is used, or actual host if SSH is not used
+
+# Variables for connecting with the database where you want the raw, staging, and reporting data to be stored.
+TARGET_DB_NAME="<NAME OF THE DATABASE>"
+TARGET_DB_USERNAME="<USERNAME TO AUTHENTICATE WITH THE DB>"
+TARGET_DB_PASSWORD="<PASSWORD TO AUTHENTICATE WITH THE DB"
+TARGET_DB_SQLALCHEMY_DRIVER="postgresql" # "postgresql" for a postgres DB or "mysql+pymysql" if Staging DB is a MYSQL DB (e.g., MariaDB)
+TARGET_DB_HOST="<HOST OF THE TARGET DB>"
+TARGET_DB_PORT="<PORT OF THE TARGET DB>"
+```
+
+Optionally, you can also configure the platform to use two separate databases for intermediary and final reporting data. To this end, simply replace the target database related variables with the following:
 - **Staging database related variables**: The staging database is where the raw and intermediary data are stored. **this database is NOT created automatically for you!** You can provide values for a MySQL DB / MariaDB (set `STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"`) or a PostgresDB (set `STAGING_DB_SQLALCHEMY_DRIVER="postgresql"`). Other databases are currently not supported.
 - **Reporting database related variables**:  The reporting database is where the final (i.e., reporting) data is stored. **this database is NOT created automatically for you!** You can provide values for a MySQL DB / MariaDB (set `STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"`) or a PostgresDB (set `STAGING_DB_SQLALCHEMY_DRIVER="postgresql"`). Other databases are currently not supported. **It is possible to use the same database as staging and reporting database**.
 
@@ -82,8 +108,37 @@ Open the `.env` file you just created in your IDE or text editor and append the 
 
 - **Airflow related variables**: You can choose arbitrary values here. These are required for logging into the Airflow UI and the Airflow DB (advanced users), which contains Airflow related metadata.
 - **Limesurvey DB related variables**: These variables are required for the platform to connect with the Limesurvey database. You must provide the variables for establishing an SSH connection as well as for the actual Limesurvey database.
+- **Target database related variables**: The target database is where the raw, intermediary, and final reporting data are stored. **This database can, optionally, be created for you upon deployment when [running ETL pipelines with Airflow](#2-orchestrating-etl-pipelines-with-airflow), but you can also use your own database to run pipelines locally.**
+
+
+```bash
+# Variables required to connect with the Limesurvey Database
+LIMESURVEY_USE_SSH=True # set to False if ssh is not used
+LIMESURVEY_SSH_PORT="<LIMESURVEY_SSH_PORT_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE>"
+LIMESURVEY_SSH_HOST="<LIMESURVEY_SSH_HOST_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE>"
+LIMESURVEY_SSH_USERNAME="<LIMESURVEY_SSH_USER_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE>"
+LIMESURVEY_SSH_PASSWORD="<LIMESURVEY_SSH_PW_IF_SSH_IS_USED_ELSE_DELETE_VARIABLE>"
+LIMESURVEY_DB_NAME="<NAME OF THE LIMESURVEY DB>"
+LIMESURVEY_DB_PORT="<PORT OF THE LIMESURVEY DB>"
+LIMESURVEY_DB_USERNAME="<LIMESURVEY DB SQL USER>"
+LIMESURVEY_DB_PASSWORD="LIMESURVEY DB SQL PASSWORD"
+LIMESURVEY_DB_HOST="127.0.0.1" # always 127.0.0.1 if SSH is used, or actual host if SSH is not used
+
+# Variables for connecting with the database where you want the raw, staging, and reporting data to be stored.
+# You can choose arbitrary values for the following variables if you use the full deployment incl. a database created for you.
+TARGET_DB_NAME="<NAME OF THE DATABASE>"
+TARGET_DB_USERNAME="<USERNAME TO AUTHENTICATE WITH THE DB>"
+TARGET_DB_PASSWORD="<PASSWORD TO AUTHENTICATE WITH THE DB"
+
+# In case you want to use your own database, you must also set the following env vars
+TARGET_DB_SQLALCHEMY_DRIVER="postgresql" # "postgresql" for a postgres DB or "mysql+pymysql" if Staging DB is a MYSQL DB (e.g., MariaDB)
+TARGET_DB_HOST="<HOST OF THE TARGET DB>"
+TARGET_DB_PORT="<PORT OF THE TARGET DB>"
+```
+
+Optionally, you can also configure the platform to use two separate databases for intermediary and final reporting data. To this end, simply replace the target database related variables with the following:
 - **Staging database related variables**: The staging database is where the raw and intermediary data are stored. You must provide the database credentials to an existing database maintained by you, i.e., **this database is NOT created automatically for you!** You can provide values for a MySQL DB / MariaDB (set `STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"`) or a PostgresDB (set `STAGING_DB_SQLALCHEMY_DRIVER="postgresql"`). Other databases are currently not supported. **Note:** If the database is running on the same machine as airflow, then set `STAGING_DB_HOST=host.docker.internal`!
-- **Reporting database related variables**:  The reporting database is where the final (i.e., reporting) data is stored. **this database is NOT created automatically for you!** You can provide values for a MySQL DB / MariaDB (set `STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"`) or a PostgresDB (set `STAGING_DB_SQLALCHEMY_DRIVER="postgresql"`). Other databases are currently not supported. **Note:** If the database is running on the same machine as airflow, then set `REPORTING_DB_HOST=host.docker.internal`! **It is possible to use the same database as staging and reporting database**.
+- **Reporting database related variables**:  The reporting database is where the final (i.e., reporting) data is stored. **this database is NOT created automatically for you!** You can provide values for a MySQL DB / MariaDB (set `STAGING_DB_SQLALCHEMY_DRIVER="mysql+pymysql"`) or a PostgresDB (set `STAGING_DB_SQLALCHEMY_DRIVER="postgresql"`). Other databases are currently not supported. **Note:** If the database is running on the same machine as airflow, then set `REPORTING_DB_HOST=host.docker.internal`! **It is possible to use the same database as staging and reporting database**:
 
 ```bash
 # Airflow related variables
@@ -125,17 +180,26 @@ REPORTING_DB_USERNAME="<SQL USER OF THE REPORTING DB>"
 #### Setup Airflow
 To start Airflow, make sure the Docker daemon is running (e.g., by starting docker desktop or starting the docker service) and run
 ```bash
-docker compose up
+docker compose --profile fullDeployment up
 ```
-This may take a while. Once the setup is complete, you should repeatedly see a message similar to the following in your terminal:
+This will setup a target postgres database, an airflow database, and the airflow components. This may take a while. Once the setup is complete, you should repeatedly see a message similar to the following in your terminal:
 ```
 limesurvey-etl-airflow-webserver-1  | 127.0.0.1 - - [19/Oct/2023:14:16:17 +0000] "GET /health HTTP/1.1" 200 141 "-" "curl/7.74.0"
 ```
+In case you do not want a full deployment including a target database, run the following command instead:
+```bash
+docker compose up
+```
 
-The Airflow Webserver is now running and the Airflow UI can be accessed through a regular browser by entering the following URL: `localhost:8080`. Use the credentials defined in your `.env` file (`_AIRFLOW_WWW_USER_USERNAME` and `_AIRFLOW_WWW_USER_PASSWORD`) to login. You can add additional users via the "Security" tab at the top of the Airflow UI after successful login. Airflow DAGs will run depending on their schedules as long as Airflow is running. Press `control+c` or `strg+c` to stop the process, depending on your operating system.
+The Airflow Webserver is now running and the Airflow UI can be accessed through a regular browser by entering the following URL: `localhost:8080`. Use the credentials defined in your `.env` file (`_AIRFLOW_WWW_USER_USERNAME` and `_AIRFLOW_WWW_USER_PASSWORD`) to login. You can add additional users via the "Security" tab at the top of the Airflow UI after successful login. Airflow DAGs will run depending on their schedules as long as Airflow is running. If using the `fullDeployment` profile, the target DB is available at `localhost:5433`.
+
+Press `control+c` or `strg+c` to stop the process in your terminal, depending on your operating system. **This will shut down all docker containers, including the target database.**
 
 #### Adding ETL pipelines
 Once Airflow is up and running, you can start adding your ETL pipelines as described in the [User Guide](user-how-to/creating-dags.md).
+
+#### Accessing the data when using the full deployment
+When you run the `docker compose up` command with the `--profile fullDeployment` flag, a target database will be created for you. It is served at `localhost:5433` and you can access it using a tool like [pgcli](https://www.pgcli.com/) or [dbeaver](https://dbeaver.io/).
 
 #### Clean up
 To clean up the environment, run

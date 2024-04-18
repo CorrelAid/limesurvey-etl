@@ -1,6 +1,6 @@
 from typing import Literal, Union
 
-from pydantic import BaseModel, Field, root_validator
+from pydantic import BaseModel, Field, model_validator
 
 
 class FillNullValuesConfig(BaseModel):
@@ -29,15 +29,14 @@ class FillNullValuesConfig(BaseModel):
         description="Method to use for filling Null values in Column. ffil -> propagate last valid observation forward to next valid. backfill -> use next valid observation to fill gap",
     )
 
-    @root_validator()
-    @classmethod
-    def validate_value_or_method(cls, field_values):
-        value = field_values["value"]
-        method = field_values["method"]
+    @model_validator(mode="after")
+    def validate_value_or_method(self):
+        value = self.value
+        method = self.method
 
         if value is None and method is None:
             raise ValueError("Either value or method must be set.")
         if value is not None and method is not None:
             raise ValueError("Either value or method must be set, but not both.")
 
-        return field_values
+        return self

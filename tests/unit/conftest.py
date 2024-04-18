@@ -78,7 +78,7 @@ def add_computed_conlumn_config_extract() -> AddComputedColumnConfig:
     return AddComputedColumnConfig(
         transform_type="add_computed_column",
         column_name="survey_number",
-        operator={"name": "extract", "regex": "(\d)"},
+        operator={"name": "extract", "regex": r"(\d)"},
         input_columns="title",
         drop_input_columns="all",
     )
@@ -139,7 +139,7 @@ def filter_data_config() -> FilterDataConfig:
         transform_type="filter_data",
         conditions=[
             {"column": "survey_id", "value": "1", "operator": "=="},
-            {"column": "question_id", "value": 1, "operator": ">"},
+            {"column": "question_id", "value": "1", "operator": ">"},
         ],
         logical_operator="AND",
     )

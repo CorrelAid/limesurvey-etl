@@ -57,17 +57,17 @@ transformation_pipelines:
           regex: .+#(\d+)
       - transform_type: fill_null_values
         column_name: ls_sqid_minor
-        value: SQ001
+        value: "SQ001"
       - transform_type: replace_values
         replacement_values:
           ls_sqid_minor:
             other: SQother
       - transform_type: fill_null_values
         column_name: ls_qid
-        value: 0
+        value: "0"
       - transform_type: fill_null_values
         column_name: scale_id
-        value: 0
+        value: "0"
       - transform_type: rename_columns
         colname_to_colname:
           ls_qtitle: question_item_id

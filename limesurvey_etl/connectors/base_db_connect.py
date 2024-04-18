@@ -3,7 +3,7 @@ import sys
 from abc import ABC, abstractmethod
 from typing import Generic, TypeVar
 
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import SQLAlchemyError
