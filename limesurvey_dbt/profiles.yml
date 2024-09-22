@@ -1,0 +1,11 @@
+limesurvey_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('TARGET_DB_HOST', 'localhost') }}"
+      user: "{{ env_var('TARGET_DB_USERNAME') }}"
+      password: "{{ env_var('TARGET_DB_PASSWORD') }}"
+      port: "{{ env_var('TARGET_DB_PORT', '5433') | int }}"
+      dbname: "{{ env_var('TARGET_DB_NAME') }}"
+      schema: staging

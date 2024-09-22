@@ -1,0 +1,179 @@
+
+version: 2
+
+models:
+  - name: question_groups
+    description: "Model to generate staging table for question_groups"
+    columns:
+      - name: question_group_id
+        description: "primary key"
+        data_type: integer
+        tests:
+          - unique
+          - not_null
+      - name: question_group_name
+        data_type: varchar(255)
+      - name: description
+        data_type: varchar(255)
+
+  - name: respondents
+    description: "Model to generate staging table for respondents"
+    columns:
+      - name: respondent_id
+        description: "primary key"
+        data_type: integer
+        tests:
+          - unique
+          - not_null
+
+  - name: question_items
+    description: "Model to generate staging table for question_items"
+    columns:
+      - name: question_item_id
+        description: "primary key"
+        data_type: integer
+        tests:
+          - unique
+          - not_null
+      - name: question_item_title
+        data_type: varchar(255)
+      - name: question_group_id
+        description: "foreign key"
+        data_type: integer
+        tests:
+          - not_null
+      - name: type_major
+        data_type: varchar(255)
+      - name: type_minor
+        data_type: varchar(255)
+
+  - name: subquestions
+    description: "Model to generate staging table for subquestions"
+    columns:
+      - name: subquestion_id
+        description: "primary key"
+        data_type: integer
+        tests:
+          - unique
+          - not_null
+      - name: question_item_id
+        description: "foreign key"
+        data_type: integer
+        tests:
+          - not_null
+      - name: subquestion_item_title
+        data_type: varchar(50)
+      - name: question_item_title
+        data_type: varchar(50)
+
+  - name: diversity_items
+    description: "Model to generate staging table for respondents"
+    columns:
+      - name: diversity_item_id
+        description: "primary key"
+        data_type: varchar(255)
+        tests:
+          - unique
+          - not_null
+      - name: diversity_group_id
+        data_type: varchar(255)
+      - name: type_major
+        data_type: varchar(255)
+      - name: type_minor
+        data_type: varchar(255)
+
+  - name: question_items_dict
+    description: "Model to generate staging table for question_items_dict"
+    dbt_utils.unique_combination_of_columns:
+      combination_of_columns:
+        - question_item_id
+        - lang
+    columns:
+      - name: question_item_id
+        description: "primary key"
+        data_type: integer
+        tests:
+          - not_null
+      - name: lang
+        description: "primary key"
+        data_type: varchar(2)
+        tests:
+          - not_null
+      - name: question_item_title
+        data_type: varchar(255)
+      - name: label_major
+        data_type: varchar(10000)
+      - name: label_major_short
+        type: varchar(255)
+      - name: label_minor
+        data_type: varchar(255)
+
+  - name: subquestions_dict
+    description: "Model for the staging table subquestions_dict"
+    columns:
+      - name: subquestion_id
+        description: "foreign key, primary key"
+        data_type: integer
+        tests:
+          - unique
+          - not_null
+      - name: subquestion_item_title
+        data_type: varchar(255)
+      - name: question_item_title
+        data_type: varchar(255)
+      - name: subquestion_id_minor
+        data_type: varchar(50)
+      - name: lang
+        data_typy: varchar(2)
+      - name: label_minor
+        data_type: varchar(255)
+
+  - name: question_answers_dict
+    description: "Model for the staging table question_answers_dict"
+    dbt_utils.unique_combination_of_columns:
+      combination_of_columns:
+        - question_item_id
+        - lang
+        - answer_id
+    columns:
+      - name: question_item_id
+        description: "foreign key, primary key"
+        data_type: integer
+        tests:
+          - not_null
+      - name: question_item_title
+        data_type: varchar(255)
+        tests:
+          - not_null
+      - name: lang
+        data_type: varchar(2)
+        tests:
+          - not_null
+      - name: answer_id
+        data_type: varchar(50)
+        tests:
+          - not_null
+      - name: answer_text
+        data_type: varchar(10000)
+
+  - name: diversity_items_dict
+    description: "Model for the staging table diversity_items_dict"
+    columns:
+      - name: diversity_item_id
+        description: "primary key"
+        data_type: varchar(255)
+        tests:
+          - unique
+          - not_null
+      - name: lang
+        data_type: varchar(2)
+      - name: label_long
+        type: varchar(10000)
+
+sources:
+  - name: "{{ env_var('TARGET_DB_NAME')}}"
+    schema: raw
+    tables:
+      - name: lime_group_l10ns
+      - name: lime_questions
+      - name: lime_question_l10ns

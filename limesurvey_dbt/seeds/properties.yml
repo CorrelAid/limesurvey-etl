@@ -1,0 +1,6 @@
+version: 2
+
+seeds:
+  - name: Mapping_LS-QuestionTypesMajor
+    config:
+      delimiter: ";"

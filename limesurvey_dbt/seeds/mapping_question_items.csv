@@ -1,0 +1,46 @@
+,question_item_id,lang,label_major,label_minor,type_major,type_minor
+0,q0100,de,ppahmghaycphmszfibpbirxcmjdokkyqnqybocpywgs,,Text Display,X
+1,q0101,de,bvpzgputpocehewxmtqnfjtlebyebnqcworziefingtwkhtuvkmklvwfdvqpgabvyxval,"Please indicate your assessment on a scale from 1 (""no knowledge"") to 5 (""very good knowledge"").",Matrix,F
+2,q0102,de,bmwezjmdliwzryhbsadsrlcqujtyyhiwieqqjlyohwbhwkqvwgcddntywwcfiofrzlqbzxcgji,Please select one of the following answers.,Single Choice,Y
+3,q0103,de,akhswwzoivtgxzmywlmqaqiikqsejqbzspuidmksqzhfjaqjrdenqlqhxinmksuziouasndlzkoznzzmrtdsxtsqnvwrig,Please select one of the following answers.,Single Choice,L
+4,q0104,de,zjrzikqycfpgfsryeuvibbjdzbubqekojxdgiotymvaosaxgqmsnplpi,Please select one of the following answers.,Single Choice,L
+5,q0200,de,klqmimuflstqvbxyzaurhmtorzlgpzwqoopkrrgwuooropvwcpgrqwwilohqdjnqcgysnvxeeolslagogaj,,Text Display,X
+6,q0201,de,znjhjqmphtgavaktwhimfnqjapscivxoqzpeofdcudiredshcmcnpvlmkrofktyemvbmhffijhqezominxhjuehtrcp,,Matrix,F
+7,q0202,de,tmjeqppuzuykkpwkrsfkicoitaksnxjzydyhytrrpqherpm,,Single Choice,Y
+8,q0203,de,bmvkuhbggjqqxhxabcrtycuoewbxckmeiqshkcmcmkdimlymhalsjchnbrgoedouefejfnbwhsviaewkzmbcstqpcofuxrjmjjwb,,Matrix,F
+9,q0300,de,vjnegfjanmdjwhkthddxogavibnqldtxcxauhbjzribvnrwme,,Text Display,X
+10,q0301,de,zdbnfuugqgas,"Please indicate your assessment on a scale from 1 (""never"") to 5 (""very often"").",Matrix,F
+11,q0302,de,pdugepzhunlhhaxtqgdsamlaqfscwrjy,Please select one of the following answers.,Single Choice,L
+12,q0303,de,ihchykbryfafftivwteumrcqjrnxozsvbriepttfplkgfyvvpanqryntdzhxkvgostrjj,,Single Choice,Y
+13,q0304,de,jdknjsnhcuzphramhxewz,Please indicate all answers that apply.,Multiple Choice,M
+14,q0305,de,jcoawpxgwzeyqttlxghuxelscgdumqlqgqbjxxfgqpmqytwualrsjqnyeakx,Please indicate all answers that apply.,Multiple Choice,M
+15,q0306,de,xkpukgszkglnejqgpqujbbnmesdqdwrnrhecpjkoyruquhwesvesupgxjtmmufgbrmi,Please indicate all answers that apply.,Multiple Choice,M
+16,q0307,de,dvjcayjkshqbkrbgjxjnauwygjmbczbfelymlvlymq,Please indicate all answers that apply.,Multiple Choice,M
+17,q0308,de,lxxunbgwjbmfqxujjihshzsyuayl,Please do not fill in any names or e-mail addresses) in the empty field. By doing so you protect your anonymity - and (potentially) the anonymity of third parties.,Open,T
+18,q0400,de,threxgaojcqbmrcxktdadimgjitpupko,,Text Display,X
+19,q0401,de,waheljhjilrxpikgresszisdantrxtwghmzdyoalyidx,Please indicate all answers that apply.,Multiple Choice,M
+20,q0402,de,aduxlazgrnsdzigkocijkpsqnvu,Please select one of the following answers.,Single Choice,L
+21,q0403,de,pomhpejtvqhotkvykerokfwcxuowda,Please indicate all answers that apply.,Multiple Choice,M
+22,q0404,de,mvwphlylhkwnj,,Text Display,X
+23,q0405,de,lbmlwwnzvbyrdnhvysedzrneovcblpzztypnomxasxyavrjkbgezkejfvssfwjuyojhathnvh,,Numeric,L
+24,q0406,de,cbcvkaladumygdlk,,Numeric,L
+25,q0407,de,rjbaagcvqufqnwosfwwthgoaghsbnnttqzpfvzqpowyqdsgenikvosj,,Numeric,L
+26,q0408,de,clmeprkgpkxwnxsyywbbrbunchsxaxivzqvdzbggmamgvhxtjfwhklfphwiwerqsluhdooctdt,Please indicate all answers that apply.,Multiple Choice,M
+27,q0409,de,gsqtkbuzwrbahephvsrpuharzriqpdzqzpkvbcvlwkdltdifabergpzvugebgbpscltqahm,Please select one of the following answers.,Single Choice,Y
+28,q0410,de,caebhvjdbojnieipyoksckttbbodhxxhnyodvuglltpvdvcetpiaw,Please select one of the following answers.,Single Choice,L
+29,q0411,de,oopynlbwslvqtomxabtpfmfvhmtphykrvo,Please select one of the following answers.,Single Choice,Y
+30,q0412,de,lomlxqvzevynllbakbpatnloqbbrzrfkxhymuwriuyttmwnlifqgnpcffuluzpkxuqngevwanaxxeyqrksesvsww,,Matrix,1
+31,q0413,de,yyyafnttqq,Please select one of the following answers.,Single Choice,L
+32,q0414,de,euzlvtxvnsjpbfihi,Please indicate all answers that apply.,Multiple Choice,M
+33,q0415,de,soqumoaaejjtgojcopeppuakziyswz,Please indicate all answers that apply.,Multiple Choice,M
+34,q0416,de,ibyxegsfateqlhhixczeypburtukatwboriqqwkytvrtajbexckgwepojxdxcahlcrcxm,Please select one of the following answers.,Single Choice,Y
+35,q0417,de,amofsucnxmoxcjeoluyelkjmrzeciujocjcvqexdebeygtyjdtjopuppjtvqtthjvtliimdcanbstaqzfcymyygmpzrcgvagrazf,Please indicate all answers that apply.,Multiple Choice,M
+36,q0418,de,jujanrtklikpyytytapricorqhfezbq,Please select one of the following answers.,Single Choice,L
+37,q0419,de,cpozyctzpuaneyvzboznuodhhhtskcaoklfjhybtxfvesdezzfsfgdpajgwmt,Please select one of the following answers.,Single Choice,L
+38,q0420,de,tkbpbbtcdrlalabgikynamkhtgpskgstnjtqjljvmrruqwnyapxrbka,Please select one of the following answers.,Single Choice,L
+39,q0421,de,jnffhrryepxfodpaqbrgxtfwazophoqurl,Please indicate all answers that apply.,Multiple Choice,M
+40,q0500,de,lxezzkjfredivfwtjouejhetfvrduanzmpyzykfwlca,,Text Display,X
+41,q0501,de,sivyzahxzcysmwpyqkgobjagrslftbyc,Please indicate all answers that apply.,Multiple Choice,M
+42,q0601,de,gzslwyoajaersbbouwfavauabbhcjblrdzdupxbaymsstdlvrmjfvqsbkqljlksdjxwkelsveoqlhalqw,,Text Display,X
+43,q0602,de,fliptznhbkcxlyoxacaituxidjddjlxvjixyttepwivhaolxgfaoyrhsnhjkoyuccouvjtqqwnedxhsenmow,,Open,T
+44,q0603,de,kopuuzawjowcklbitcuogfabosqsasdqxnljydlrudetlgqdcjceeoryvgttqfkoqqvc,,Text Display,X

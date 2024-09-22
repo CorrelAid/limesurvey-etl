@@ -1,0 +1,11 @@
+
+version: 2
+
+models:
+  - name: lime_survey_977429
+
+sources:
+  - name: "{{ env_var('TARGET_DB_NAME')}}"
+    schema: raw
+    tables:
+      - name: lime_survey_977429
