@@ -12,22 +12,20 @@
         <link rel="prev" href="../../installation/">
       
       
-        <link rel="next" href="../etl-config-how-to/">
-      
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.7">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.18">
     
     
       
-        <title>Creation and configuration of new ETL pipelines in Airflow - Limesurvey ETL</title>
+        <title>Creation/modification of ETL pipelines in Airflow - Limesurvey ETL</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.4b4a2bd9.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.66ac8b77.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -68,16 +66,13 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="darkblue" data-md-color-accent="purple">
   
     
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
-    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
         
-        <a href="#creation-and-configuration-of-new-etl-pipelines-in-airflow" class="md-skip">
+        <a href="#creationmodification-of-etl-pipelines-in-airflow" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Creation and configuration of new ETL pipelines in Airflow
+              Creation/modification of ETL pipelines in Airflow
             
           </span>
         </div>
@@ -124,9 +119,9 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="darkblue" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="darkblue" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
     
-      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
       </label>
     
@@ -134,15 +129,18 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
     
-      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
       </label>
     
   
 </form>
       
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -294,6 +292,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../.." class="md-nav__link">
         
@@ -310,6 +309,7 @@
     
       
       
+  
   
   
   
@@ -334,17 +334,21 @@
     
   
   
-    
-    
+  
     
     
     
       
+        
+        
       
+      
+        
+      
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
@@ -375,6 +379,7 @@
     
   
   
+  
     <li class="md-nav__item md-nav__item--active">
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
@@ -387,7 +392,7 @@
           
   
   <span class="md-ellipsis">
-    Creation and configuration of new ETL pipelines in Airflow
+    Creation/modification of ETL pipelines in Airflow
   </span>
   
 
@@ -398,7 +403,7 @@
         
   
   <span class="md-ellipsis">
-    Creation and configuration of new ETL pipelines in Airflow
+    Creation/modification of ETL pipelines in Airflow
   </span>
   
 
@@ -420,22 +425,19 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#step-1-creating-an-etl-configuration" class="md-nav__link">
-    Step 1: Creating an ETL configuration
+  <a href="#adding-a-new-survey" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding a new survey
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-creating-a-dag" class="md-nav__link">
-    Step 2: Creating a DAG
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-monitoring-running-a-dag" class="md-nav__link">
-    Step 3: Monitoring / running a DAG
+  <a href="#monitoring-running-a-dag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring / running a DAG
+    </span>
   </a>
   
 </li>
@@ -454,12 +456,13 @@
   
   
   
+  
     <li class="md-nav__item">
-      <a href="../etl-config-how-to/" class="md-nav__link">
+      <a href="../etl-config-how-to.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    ETL Configs How To
+    None
   </span>
   
 
@@ -491,129 +494,53 @@
                   
 
 
-<h1 id="creation-and-configuration-of-new-etl-pipelines-in-airflow">Creation and configuration of new ETL pipelines in Airflow</h1>
-<h2 id="step-1-creating-an-etl-configuration">Step 1: Creating an ETL configuration</h2>
+<h1 id="creationmodification-of-etl-pipelines-in-airflow">Creation/modification of ETL pipelines in Airflow</h1>
+<p>This repository contains three demo DAGs:</p>
 <ul>
-<li>add a new <code>.yaml</code> file and give it a descriptive name (e.g., <code>my_etl_pipeline.yaml</code>). If you want to run the pipeline with Airflow, you must place the <code>.yaml</code> file inside <code>airflow/dags/configs</code></li>
+<li><code>extract_limesurvey_data</code>: This DAG includes functionality to extract some raw data from Limesurvey using SSH and load it to the <code>raw</code> schema in the target database. The names of the tables that should be extracted are specified in line 14 of <a href="../../airflow/dags/extract_limesurvey_data.py">`airflow/dags/extract_limesurvey_data.py</a>. You can add/modify the values in the list to change what data is extracted. This DAG will fail if either of the tables does not exist in the Limesurvey DB.</li>
+<li><code>run_dbt_meta_tables</code>: This DAG runs the dbt models to transform the meta tables, e.g., question answers, question items, respondents, etc. After successful completion, the transformed data will be available in the reporting schema of the target database. The <a href="../../limesurvey_dbt/models/meta_tables/">dbt models</a> used for these transformations use some <a href="../../limesurvey_dbt/seeds/">seed data</a> to replace values based on some mappings. The replacement values in the .csv files are fictional, so you might want to add you own values here. </li>
+<li><code>run_dbt_surveys</code>: This DAG runs the dbt models to transform the actual survey data. After successful completion, the transformed data will be available in the reporting schema of the target database. The dbt models to transform the survey data are located in <a href="../../limesurvey_dbt/models/surveys/">limesurvey_dbt/models/surveys</a>. The folder currently contains a demo model <a href="../../limesurvey_dbt/models/surveys/lime_survey_977429.sql"><code>lime_survey_977429.sql</code></a>. Note that <code>lime_survey_977429</code> is also part of the extracted tables specified in line 14 in <a href="../../airflow/dags/extract_limesurvey_data.py">airflow/dags/extract_limesurvey_data.py</a>. </li>
+</ul>
+<h2 id="adding-a-new-survey">Adding a new survey</h2>
+<p>Adding a new survey is simple. It only requires you to make a few changes. Let's say you want to add a survey that is called <code>lime_survey_123456</code>: </p>
+<ol>
+<li>Add the table <code>lime_survey_123456</code> to the list of extracted tables in line 14 of <a href="../../airflow/dags/extract_limesurvey_data.py">airflow/dags/extract_limesurvey_data.py</a>.</li>
 <li>
-<p>add your desired ETL-steps (i.e., extract, transform, load) to the configuration file (see the <a href="../etl-config-how-to/">ETL Configs How To</a> for a detailed description of all available configuration options), for example:</p>
-<p><div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">extract</span><span class="p">:</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">extract_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">limesurvey_extract</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">tables</span><span class="p">:</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lime_questions</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nt">transformation_pipelines</span><span class="p">:</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">table_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">question_items</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="nt">staging_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">staging</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="nt">source_data</span><span class="p">:</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">      </span><span class="nt">source_tables</span><span class="p">:</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">table_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lime_questions</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">          </span><span class="nt">columns</span><span class="p">:</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">qid AS question_item_id</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">title AS question_item_title</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gid AS question_group_id</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type AS type_major</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type AS type_minor</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="nt">transform_steps</span><span class="p">:</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">transform_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">join_with_csv_mapping</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">        </span><span class="c1"># if using with airflow, place any mappings inside airflow/include/mappings/ and use the /opt/ prefix when specifying the path!</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">        </span><span class="nt">mapping_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/airflow/include/mappings/Mapping_LS-QuestionTypesMajor.csv</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">        </span><span class="nt">mapping_delimiter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">;</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">        </span><span class="nt">keep_columns</span><span class="p">:</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Fragetyp</span><span class="nv"> </span><span class="s">Major</span><span class="nv"> </span><span class="s">(CFE)&quot;</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">        </span><span class="nt">left_on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type_major</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">        </span><span class="nt">right_on</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Fragetyp-ID</span><span class="nv"> </span><span class="s">(LS)&quot;</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">        </span><span class="nt">how</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">left</span>
-<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">transform_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rename_columns</span>
-<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">        </span><span class="nt">colname_to_colname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Fragetyp</span><span class="nv"> </span><span class="s">Major</span><span class="nv"> </span><span class="s">(CFE)&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">type_major</span>
-<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
-<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="nt">load</span><span class="p">:</span>
-<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">  </span><span class="nt">load_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reporting_db_load</span>
-<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w">  </span><span class="nt">staging_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">staging</span>
-<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="w">  </span><span class="nt">target_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reporting</span>
-<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="w">  </span><span class="nt">tables</span><span class="p">:</span>
-<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">question_items</span>
+<p>Create a new file <a href="../../limesurvey_dbt/models/surveys/">limesurvey_dbt/models/surveys/lime_survey_123456.sql</a>. Add the following content to the newly created   file and save the changes:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="err">{{</span><span class="w"> </span><span class="n">transform_survey</span><span class="p">(</span><span class="s1">&#39;lime_survey_123456&#39;</span><span class="p">)</span><span class="w"> </span><span class="err">}}</span>
 </code></pre></div>
-In this example, the table <code>lime_questions</code> is extracted from Limesurvey and stored in the <code>raw</code> schema of the staging database based on the <code>.env</code> file (if you do not have an <code>.env</code> file yet, follow the procedure desscribed <a href="../../installation/#setting-necessary-environment-variables">here</a>).</p>
-<p>Next, a transformation pipeline is defined that transforms data based on <code>raw.lime_questions</code> (i.e., the extracted table) and stores it in a table <code>question_items</code> in the <code>staging</code> schema of the staging database. <strong>Note: if the table you want to store the data in does not yet exists and you want to take control over the column types (e.g., setting primary keys and column types), you can define that using the <code>columns</code> parameter. See the <a href="../etl-config-how-to/#step-2-define-the-transform-steps">ETL Configs How To</a> for details on how to configure it.</strong> The transformation pipeline consists of two transformation steps: first, the data is joined with a mapping <code>.csv</code>-file stored in the <code>airflow/include/mappings</code> directory (note: to be available, mapping files must be placed inside the <code>airflow/include</code> directory and the <code>/opt/</code> prefix is always required when specifying the path in the configuration file). Second, the column "Fragetyp Major (CFE)" is renamed to "type_major".</p>
-<p>Finally, the load step loads the <code>question_items</code> table to the <code>reporting</code> schema of the database.</p>
+3. Modify [limesurvey_dbt/models/surveys/schema.yml]: </p>
 </li>
 <li>
-<p><strong>you can choose from a variety of extractors, transformers, and loaders that can be combined in any way</strong></p>
+<p>Under models, add a new entry:</p>
 </li>
-<li><strong>detailed documentation on the types of extractors, transformers, and loaders as well as their parameters can be found <a href="../etl-config-how-to/">here</a></strong></li>
-</ul>
-<h2 id="step-2-creating-a-dag">Step 2: Creating a DAG</h2>
-<p>If you want to run your pipeline with Airflow, the next step is to create a DAG file. A DAG (Directed Acyclic Graph) is a pipeline that is executed by Airflow. To run your ETL job in Airflow, you must add a DAG-file.</p>
+</ol>
+<p><code>- name: lime_survey_123456</code>
+- Under sources, add a new table to the existing source (just below lime_survey_977429): </p>
+<div class="highlight"><pre><span></span><code>`- name: lime_survey_123456`
+</code></pre></div>
+<p>That's it. When the DAGs are executed the next time, the new survey should be extracted, transformed, and loaded to the reporating table. </p>
+<h2 id="monitoring-running-a-dag">Monitoring / running a DAG</h2>
+<p>You can click on the DAG to open Airflow's grid view and monitor the DAG runs. In this view, you can also manually trigger a DAG by clicking on the small play-button in the upper right corner. Otherwise, the DAGs will be run on a schedule, which is specified in <a href="../../airflow/dags/extract_limesurvey_data.py">airflow/dags/extract_limesurvey_data.py</a>:</p>
 <ul>
-<li>Add a file named <code>&lt;YOUR_PIPELINE_NAME&gt;_dag.py</code> to the <code>airflow/dags</code> directory</li>
-<li>Copy the following code and replace the placeholders with your values (Note: in a future version, this procedure will be simplified by allowing to create DAGs from configuration files):
-  <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kn">from</span> <span class="nn">airflow.contrib.hooks.ssh_hook</span> <span class="kn">import</span> <span class="n">SSHHook</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="kn">from</span> <span class="nn">airflow.contrib.operators.ssh_operator</span> <span class="kn">import</span> <span class="n">SSHOperator</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="kn">from</span> <span class="nn">airflow.models</span> <span class="kn">import</span> <span class="n">Variable</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="kn">from</span> <span class="nn">airflow.operators.python_operator</span> <span class="kn">import</span> <span class="n">PythonOperator</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="kn">from</span> <span class="nn">airflow.utils.task_group</span> <span class="kn">import</span> <span class="n">TaskGroup</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="kn">from</span> <span class="nn">limesurvey_etl.etl_pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="c1"># REPLACE THE FOLLOWING VALUES</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1"># replace with the name of your etl configuration file</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="n">CONFIG_FILE_NAME</span> <span class="o">=</span> <span class="s2">&quot;&lt;YOUR_ETL_CONFIG_FILE&gt;.yaml&quot;</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="c1"># give your DAG a unique name (it will be used to be displayed in the Airflow UI)</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="n">DAG_ID</span> <span class="o">=</span> <span class="s2">&quot;&lt;YOUR_DAG_NAME&gt;&quot;</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="c1"># set the schedule defining when your DAG should run using a crontab or None</span>
-<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="c1"># e.g., &quot;0 0 * * *&quot; for once a day at 12:00 AM</span>
-<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="n">DAG_SCHEDULE</span> <span class="o">=</span> <span class="s2">&quot;YOUR_DAG_SCHEDULE&quot;</span>
-<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>
-<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="c1"># OPTIONALLY MODIFY THE AIRFLOW DEFAULT_ARGS (advanced users)</span>
-<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="n">DEFAULT_ARGS</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>    <span class="s2">&quot;start_date&quot;</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>    <span class="s2">&quot;retries&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>    <span class="s2">&quot;retry_delay&quot;</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
-<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>    <span class="s2">&quot;execution_timeout&quot;</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="p">}</span>
-<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>
-<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="n">PIPELINE</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="o">.</span><span class="n">get_pipeline</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/opt/airflow/dags/configs/</span><span class="si">{</span><span class="n">CONFIG_FILE_NAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
-<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>
-<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
-<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>    <span class="n">dag_id</span><span class="o">=</span><span class="n">DAG_ID</span><span class="p">,</span>
-<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>    <span class="n">default_args</span><span class="o">=</span><span class="n">DEFAULT_ARGS</span><span class="p">,</span>
-<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>    <span class="n">catchup</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>    <span class="n">max_active_runs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>    <span class="n">schedule</span><span class="o">=</span><span class="n">DAG_SCHEDULE</span><span class="p">,</span>
-<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
-<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a>    <span class="n">extract_limesurvey_data</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
-<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>        <span class="n">task_id</span><span class="o">=</span><span class="s2">&quot;extract&quot;</span><span class="p">,</span> <span class="n">python_callable</span><span class="o">=</span><span class="n">PIPELINE</span><span class="o">.</span><span class="n">run_extract</span>
-<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a>    <span class="p">)</span>
-<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a>
-<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a>    <span class="k">with</span> <span class="n">TaskGroup</span><span class="p">(</span><span class="n">group_id</span><span class="o">=</span><span class="s2">&quot;transform&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">transform</span><span class="p">:</span>
-<a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a>        <span class="n">task_list</span> <span class="o">=</span> <span class="p">[]</span>
-<a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a>        <span class="k">for</span> <span class="n">transformation_pipeline</span> <span class="ow">in</span> <span class="n">PIPELINE</span><span class="o">.</span><span class="n">transformation_pipelines</span><span class="p">:</span>
-<a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a>            <span class="n">task_id</span> <span class="o">=</span> <span class="n">transformation_pipeline</span><span class="p">[</span><span class="s2">&quot;table_name&quot;</span><span class="p">]</span>
-<a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a>            <span class="n">task_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-<a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a>                <span class="n">PythonOperator</span><span class="p">(</span>
-<a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a>                    <span class="n">task_id</span><span class="o">=</span><span class="n">task_id</span><span class="p">,</span>
-<a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a>                    <span class="n">python_callable</span><span class="o">=</span><span class="n">PIPELINE</span><span class="o">.</span><span class="n">run_transform</span><span class="p">,</span>
-<a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a>                    <span class="n">op_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="n">task_id</span><span class="p">},</span>
-<a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a>                <span class="p">)</span>
-<a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a>            <span class="p">)</span>
-<a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a>            <span class="k">for</span> <span class="n">pos</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">task_list</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
-<a id="__codelineno-1-57" name="__codelineno-1-57" href="#__codelineno-1-57"></a>                <span class="n">task_list</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">task_list</span><span class="p">[</span><span class="n">pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-<a id="__codelineno-1-58" name="__codelineno-1-58" href="#__codelineno-1-58"></a>
-<a id="__codelineno-1-59" name="__codelineno-1-59" href="#__codelineno-1-59"></a>    <span class="n">load_data</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s2">&quot;load&quot;</span><span class="p">,</span> <span class="n">python_callable</span><span class="o">=</span><span class="n">PIPELINE</span><span class="o">.</span><span class="n">run_load</span><span class="p">)</span>
-<a id="__codelineno-1-60" name="__codelineno-1-60" href="#__codelineno-1-60"></a>
-<a id="__codelineno-1-61" name="__codelineno-1-61" href="#__codelineno-1-61"></a>
-<a id="__codelineno-1-62" name="__codelineno-1-62" href="#__codelineno-1-62"></a><span class="n">extract_limesurvey_data</span> <span class="o">&gt;&gt;</span> <span class="n">transform</span> <span class="o">&gt;&gt;</span> <span class="n">load_data</span>
-</code></pre></div></li>
+<li>The data extraction DAG is scheduled at 5 AM every day</li>
+<li>Upon successful completion of the extract steps, the dbt-DAGs are triggered automatically</li>
 </ul>
-<h2 id="step-3-monitoring-running-a-dag">Step 3: Monitoring / running a DAG</h2>
-<p>Save the changes you made. You should now be able to see the DAG with your <code>DAG_ID</code> in the Airflow UI. You can click on the DAG to open Airflow's grid view and monitor the DAG runs.</p>
+<h1 id="viewing-the-reporting-data">Viewing the reporting data</h1>
+<p>When you run the <code>docker compose up</code> command with the <code>--profile fullDeployment</code> flag, a target database will be created for you. It is served at <code>localhost:5433</code> and you can access it using a tool like <a href="https://www.pgcli.com/">pgcli</a> or <a href="https://dbeaver.io/">dbeaver</a>.</p>
+<p>For example, you can connect using pgcli using the following command in your terminal:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pgcli<span class="w"> </span>-u<span class="w"> </span>&lt;TARGET_DB_USERNAME&gt;<span class="w"> </span>-p<span class="w"> </span><span class="m">5433</span><span class="w"> </span>-h<span class="w"> </span>localhost<span class="w"> </span>-d<span class="w"> </span>&lt;TARGET_DB_NAME&gt;
+</code></pre></div>
+You will be asked to enter your password, i.e., <code>&lt;TARGET_DB_PASSWORD&gt;</code>.</p>
+<h1 id="data-model">Data Model</h1>
+<p><img alt="this image" src="../../data_model.png" />.</p>
+
+
+
+
+
+
+
 
 
 
@@ -626,6 +553,7 @@ In this example, the table <code>lime_questions</code> is extracted from Limesur
           
   <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
 
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
           <button type="button" class="md-top md-icon" data-md-component="top" hidden>
@@ -660,10 +588,10 @@ In this example, the table <code>lime_questions</code> is extracted from Limesur
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.aecac24b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.3220b9d7.min.js"></script>
       
     
   </body>
