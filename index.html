@@ -346,16 +346,7 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#project-organization" class="md-nav__link">
-    <span class="md-ellipsis">
-      Project Organization
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Project Organization">
+    <nav class="md-nav" aria-label="What is this project about? - The Problem & Goal">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -560,34 +551,6 @@
 <p>The goal is that the resulting code is not specific to CFE data, but can be used by CFE and other NPOs working with Limesurvey in a “plug-and-play” way.</p>
 <p>(from the <a href="https://citizensforeurope.notion.site/Calls-for-Applications-Data4Good-Projects-A-survey-research-ecosystem-for-diversity-and-visibility-ed7b72486a8d4bff8b74eaa851b3f029#873799b87fff4abe86b932e9a261972f">Calls for
 Applications</a>)</p>
-<h2 id="project-organization">Project Organization</h2>
-<p>TO BE DISCUSSED:</p>
-<hr />
-<div class="highlight"><pre><span></span><code>├── LICENSE
-├── README.md           &lt;- The top-level README for developers using this project.
-│
-├── docs               &lt;- Markdown files used my [mkdocs](https://www.mkdocs.org/) to generate documentation.
-│
-├── requirements.txt   &lt;- The requirements file used in the docker-compose.yml
-│
-├── limesurvey_etl     &lt;- Source code for use in this project.
-│   ├── config         &lt;- Contains the pydantic models for configuring ETL jobs
-│   │   └── extract_config
-│   │   └── transform_config
-│   │   └── load_config
-│   │
-│   ├── connectors         &lt;- Contains the code used to connect to external systems
-│   ├── extract            &lt;- Contains the code used to extract data
-│   │
-│   ├── transform          &lt;- Contains the code used to transform data
-│   │
-│   ├── load               &lt;- Contains the code used to load data to target systems
-│   │
-│   ├── etl_pipeline.py               &lt;- Contains code used to define an ETL pipeline
-│   └── transformation_pipline.py &lt;- Contains code defining a transformation pipeline
-│
-└── poetry.
-</code></pre></div>
 <h3 id="access-data-in-limesurvey-playground-server">Access Data in Limesurvey Playground Server</h3>
 <p><a href="https://yopass.se/#/s/f3683c87-c3ee-42f6-affa-f0a94ac596c1">Yopass Link</a></p>
 <p>To access the data from the self-hosted Limesurvey Server and its MariaDB, you need to:</p>
