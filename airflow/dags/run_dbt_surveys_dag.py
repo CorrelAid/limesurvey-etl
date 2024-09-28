@@ -14,7 +14,7 @@ profile_config = ProfileConfig(
     target_name="dev",
     profile_mapping=PostgresUserPasswordProfileMapping(
         conn_id="target_db",
-        profile_args={"schema": "staging"},
+        profile_args={"schema": "reporting"},
     ),
 )
 
@@ -36,7 +36,7 @@ basic_cosmos_dag = DbtDag(
         dbt_project_path=DBT_ROOT_PATH, seeds_relative_path="seeds"
     ),
     render_config=RenderConfig(
-        emit_datasets=False, select=["staging.surveys", "config.schema:staging"]
+        emit_datasets=False, select=["surveys", "config.schema:staging"]
     ),
     profile_config=profile_config,
     operator_args={

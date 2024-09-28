@@ -4,7 +4,7 @@ To become more data driven in their work, non-profits need to collect data. As a
 
 CFE uses Limesurvey to collect anti-discrimination and inclusion data (also known as equality data). Right now, data extraction from Limesurvey and initial data cleaning is done with a quite hacky R script with 1500 lines.
 
-The goal of this  project track is to design a pipeline to
+The goal of this  project track is to design a generic pipeline to
 
 1. **extract** data from Limesurvey from its database via SSH tunnel
 2. perform necessary **transformations** to clean the raw data such as flagging speeders, creating variables for GDPR consent etc. and log the number of affected respondents for each step.
@@ -12,60 +12,8 @@ The goal of this  project track is to design a pipeline to
 
 The goal is that the resulting code is not specific to CFE data, but can be used by CFE and other NPOs working with Limesurvey in a “plug-and-play” way.
 
-# Setup
-
-## Project Organization
-
-TO BE DISCUSSED:
-
-------------
-
-    ├── LICENSE
-    ├── Makefile            <- Makefile with commands like `make data` or `make train`
-    ├── README.md           <- The top-level README for developers using this project.
-    ├── data                <- see README in data folder
-    │   ├── processed_gdpr
-    │   ├── processed
-    │   └── raw
-    │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         and a short `-` delimited description, e.g.
-    │                         `01-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
-
-
---------
-## Dependency Management: Installing Packages
-
-TODO add information on python package management
-
-How can an environment for your project be created/updated?
-
-Please make sure that the setup steps are:
-
-- platform-independent (e.g. be aware of issues [like this](https://stackoverflow.com/questions/41274007/anaconda-export-environment-file)), at least MacOS and Windows (this is important in case CorrelAid employees have to provide support after the project has ended.
-- computer-independent: must work for all team members!
+# Getting Started
+To get started with deploying ETL pipelines, checkout the [project documentation](https://correlaid.github.io/limesurvey-etl/).
 
 ## Data Access
 

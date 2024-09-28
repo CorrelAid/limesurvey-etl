@@ -10,7 +10,7 @@ RUN apt-get update \
 USER airflow
 WORKDIR "/usr/bin/airflow"
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+COPY poetry.lock pyproject.toml
+RUN poetry export --without dev -f requirements.txt | pip install -r /dev/stdin
 RUN python -m venv dbt_venv && source dbt_venv/bin/activate && \
     pip install --no-cache-dir dbt-core==1.7.* dbt-postgres==1.7.* && deactivate

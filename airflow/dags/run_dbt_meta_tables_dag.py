@@ -14,7 +14,7 @@ profile_config = ProfileConfig(
     target_name="dev",
     profile_mapping=PostgresUserPasswordProfileMapping(
         conn_id="target_db",
-        profile_args={"schema": "staging"},
+        profile_args={"schema": "reporting"},
     ),
 )
 
@@ -37,7 +37,7 @@ basic_cosmos_dag = DbtDag(
     ),
     render_config=RenderConfig(
         emit_datasets=False,
-        select=["staging.meta_tables", "tag:limesurvey_seeds", "config.schema:staging"],
+        select=["meta_tables", "tag:limesurvey_seeds", "config.schema:staging"],
     ),
     profile_config=profile_config,
     operator_args={

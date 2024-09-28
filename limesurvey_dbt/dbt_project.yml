@@ -32,10 +32,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   limesurvey_dbt:
-    staging:
-      +materialized: table
-    reporting:
-      +materialized: table
+    +materialized: table
 
 seeds:
   limesurvey_dbt:

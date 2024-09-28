@@ -1,3 +1,12 @@
+{#
+Transform a LimeSurvey survey table.
+
+Example usage: {{ transform_survey(survey_table_name='lime_survey_123456') }}
+
+Arguments:
+    survey_table_name: Name of the survey table relation object, required.
+#}
+
 {% macro transform_survey(survey_table_name) %}
     WITH intermediary_1 AS (
         {{ unpivot(

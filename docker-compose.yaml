@@ -51,15 +51,16 @@ x-airflow-common:
   environment: &airflow-common-env
     ROOT_DIR: '/opt'
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
-    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${AIRFLOW_PG_USER}:${AIRFLOW_PG_PASSWORD}@airflow-postgres/${AIRFLOW_PG_DB}
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${AIRFLOW_PG_USER}:${AIRFLOW_PG_PASSWORD}@airflow-postgres/${AIRFLOW_PG_DB:-airflow}
     # For backward compatibility, with Airflow <2.3
     AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${AIRFLOW_PG_USER}:${AIRFLOW_PG_PASSWORD}@airflow-postgres/${AIRFLOW_PG_DB}
-    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://${AIRFLOW_PG_USER}:${AIRFLOW_PG_PASSWORD}@airflow-postgres/${AIRFLOW_PG_DB}
+    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://${AIRFLOW_PG_USER:-airflow}:${AIRFLOW_PG_PASSWORD}@airflow-postgres/${AIRFLOW_PG_DB}
     AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
     AIRFLOW__CORE__FERNET_KEY: ''
-    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'false'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth'
+    AIRFLOW_CONN_TARGET_DB: "postgres://${TARGET_DB_USERNAME}:${TARGET_DB_PASSWORD}@${TARGET_DB_HOST:-limesurvey_postgres}:${TARGET_DB_PORT:-5432}/${TARGET_DB_NAME}"
     _PIP_ADDITIONAL_REQUIREMENTS: ''
     PYTHONPATH: '$PYTHONPATH:/opt/airflow'
   env_file: ./.env
@@ -67,7 +68,6 @@ x-airflow-common:
     - ./airflow/dags:/opt/airflow/dags
     - ./airflow/logs:/opt/airflow/logs
     - ./airflow/include:/opt/airflow/include
-    - ./airflow/plugins:/opt/airflow/plugins
     - ./limesurvey_dbt:/opt/airflow/limesurvey_dbt
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on: &airflow-common-depends-on
