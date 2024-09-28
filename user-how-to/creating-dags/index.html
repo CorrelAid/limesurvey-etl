@@ -425,9 +425,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#adding-a-new-survey" class="md-nav__link">
+  <a href="#adding-a-new-survey-to-the-etl-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
-      Adding a new survey
+      Adding a new survey to the ETL pipeline
     </span>
   </a>
   
@@ -501,7 +501,7 @@
 <li><code>run_dbt_meta_tables</code>: This DAG runs the dbt models to transform the meta tables, e.g., question answers, question items, respondents, etc. After successful completion, the transformed data will be available in the reporting schema of the target database. The <a href="../../limesurvey_dbt/models/meta_tables/">dbt models</a> used for these transformations use some <a href="../../limesurvey_dbt/seeds/">seed data</a> to replace values based on some mappings. The replacement values in the .csv files are fictional, so you might want to add you own values here. </li>
 <li><code>run_dbt_surveys</code>: This DAG runs the dbt models to transform the actual survey data. After successful completion, the transformed data will be available in the reporting schema of the target database. The dbt models to transform the survey data are located in <a href="../../limesurvey_dbt/models/surveys/">limesurvey_dbt/models/surveys</a>. The folder currently contains a demo model <a href="../../limesurvey_dbt/models/surveys/lime_survey_977429.sql"><code>lime_survey_977429.sql</code></a>. Note that <code>lime_survey_977429</code> is also part of the extracted tables specified in line 14 in <a href="../../airflow/dags/extract_limesurvey_data.py">airflow/dags/extract_limesurvey_data.py</a>. </li>
 </ul>
-<h2 id="adding-a-new-survey">Adding a new survey</h2>
+<h2 id="adding-a-new-survey-to-the-etl-pipeline">Adding a new survey to the ETL pipeline</h2>
 <p>Adding a new survey is simple. It only requires you to make a few changes. Let's say you want to add a survey that is called <code>lime_survey_123456</code>: </p>
 <ol>
 <li>Add the table <code>lime_survey_123456</code> to the list of extracted tables in line 14 of <a href="../../airflow/dags/extract_limesurvey_data.py">airflow/dags/extract_limesurvey_data.py</a>.</li>
